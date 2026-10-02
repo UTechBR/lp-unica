@@ -8,21 +8,16 @@ import {
 } from '../components/SocialIcons';
 
 export const TRABALHE_CONOSCO_URL = 'https://forms.gle/nk5JjHSgHQUt8e8CA';
-export const DADOS_TITULARIDADE_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSccO1zGQdZh2gYiKB78XxJCeg4WXSeZs--Ijfo3O7kax5v3Kg/viewform';
+export const DADOS_TITULARIDADE_URL = 'https://share.google/LoVjPdisKzClKI77t';
 export const PARTNER_SYSTEM_URL = 'https://sistema.unicapromotora.com.br/';
 export const CONTACT_EMAIL = 'contato@unicapromotora.com.br';
 export const CONTACT_GMAIL_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`;
 
 export const POLICY_URLS = {
-  compliance:
-    'https://unicapromotora.com.br/wp-content/uploads/2026/03/codigo-de-conduta-2026-oficial-4.pdf',
-  privacidade:
-    'https://unicapromotora.com.br/wp-content/uploads/2026/04/POLITICA-DE-PRIVACIDADE-DE-DADOS_UNICA-PROMORORA_V4.R4.pdf',
-  cookies:
-    'https://unicapromotora.com.br/wp-content/uploads/2026/04/POLITICA-DE-COOKIES_UNICAPROMOTORA_V1.R4.pdf',
-  incidentes:
-    'https://unicapromotora.com.br/wp-content/uploads/2026/04/POLITICA-GESTAO-INCID_UNICA-PROMOTORA_V2.R4.pdf',
+  compliance: '/assets_docs/compliance.pdf',
+  privacidade: '/assets_docs/POLITICA-DE-PRIVACIDADE-DE-DADOS.pdf',
+  cookies: '/assets_docs/POLITICA-DE-COOKIES.pdf',
+  incidentes: '/assets_docs/POLITICA-GESTAO-INCID.pdf',
 } as const;
 
 export const mainNav: NavItem[] = [
