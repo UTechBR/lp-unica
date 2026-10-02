@@ -9,7 +9,7 @@ const logoBranca = '/images/logo-unica-branca.png';
 export function Footer() {
   return (
     <footer id="contato" className="scroll-mt-32 bg-black text-white">
-      <Container className="grid grid-cols-1 gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+      <Container className="grid grid-cols-1 gap-12 py-12 md:grid-cols-2 md:py-16 lg:grid-cols-4">
         <div>
           <img src={logoBranca} alt="Única Promotora" className="h-24 w-auto" width={880} height={890} />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">

@@ -3,9 +3,9 @@ import { LeadForm } from './LeadForm';
 
 export function Hero() {
   return (
-    <section id="parceirounica" className="scroll-mt-32 bg-white md:pt-[58px]">
-      <Container className="px-0 sm:px-0 lg:px-0">
-        <h1 className="pb-[80px] pt-[80px] px-[20px] text-center text-[45px] font-heading font-thin leading-[1.1] text-secondary md:px-0 md:pb-[100px] md:pr-[500px] md:pt-[80px] md:text-left md:text-[73px] md:leading-[75px]">
+    <section id="parceirounica" className="scroll-mt-32 bg-white">
+      <Container>
+        <h1 className="pb-16 pt-16 text-center text-[45px] font-heading font-thin leading-[1.1] text-secondary md:pb-24 md:pr-[420px] md:pt-16 md:text-left md:text-[73px] md:leading-[75px]">
           Transformando vidas com <span className="font-bold text-secondary">Conexões Únicas</span>
         </h1>
 

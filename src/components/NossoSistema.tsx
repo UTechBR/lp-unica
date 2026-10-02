@@ -26,8 +26,8 @@ function BrandBadge({ brand }: { brand: SystemBrand }) {
 
 export function NossoSistema() {
   return (
-    <section id="sistemas" className="scroll-mt-32 bg-[#F4F4F4]">
-      <Container className="py-16 md:py-20 lg:py-24">
+    <section id="sistemas" className="scroll-mt-32 bg-[#F4F4F4] py-16 md:py-24">
+      <Container>
         <AnimatedSection className="mx-auto max-w-3xl text-center">
           <h2 className="text-[clamp(2rem,1.5rem+3vw,3.5rem)] font-heading font-bold leading-tight text-[#111111]">
             Nosso Sistema

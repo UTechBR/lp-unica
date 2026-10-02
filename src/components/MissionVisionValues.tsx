@@ -21,7 +21,7 @@ export function MissionVisionValues() {
           até md. A partir de lg (>=1024px) o padding e a tipografia são compactados e
           Missão/Visão/Valores passam de pilha vertical pra grid, pra a seção caber inteira
           em 1920x1080 sem scroll. */}
-      <Container className="relative pb-[80px] pt-[80px] md:pb-[150px] md:pt-[170px] lg:py-20">
+      <Container className="relative py-16 md:py-24">
         <div className="max-w-2xl lg:max-w-none">
           <h2 className="font-heading leading-[36px] tracking-tight text-white md:leading-[90px] lg:text-[60px] lg:leading-[1.05]">
             <span className="relative inline-block pl-5 text-[40px] font-bold md:text-[96px] lg:text-[60px]">

@@ -50,7 +50,7 @@ export function BancosSection() {
   };
 
   return (
-    <section id="parceiros" className="scroll-mt-32 bg-black pb-[80px] pt-[100px] md:py-[80px]">
+    <section id="parceiros" className="scroll-mt-32 bg-black py-12 md:py-16">
       <Container>
         <div className="mb-10 text-center">
           <h2 className="font-heading text-[40px] font-normal leading-[36px] text-white md:text-[32px] md:leading-[16px]">

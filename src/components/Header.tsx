@@ -32,7 +32,7 @@ export function Header({ currentPath }: HeaderProps) {
         >
           <Container
             className={cn(
-              'flex items-center justify-between gap-6 px-[20px] sm:px-[20px] md:px-0 lg:px-0 transition-all duration-300',
+              'flex items-center justify-between gap-6 transition-all duration-300',
               scrolled ? 'py-[14px]' : 'py-[24px]',
             )}
           >
