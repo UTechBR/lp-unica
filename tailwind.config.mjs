@@ -66,7 +66,12 @@ export default {
           subtle: '#F5F5F5',
           border: '#E7E7E7',
           borderMuted: '#D7D7D7',
+          dark: '#373435',
+          'dark-muted': '#66605F',
         },
+        'on-dark': '#FFFFFF',
+        'on-dark-muted': '#D7D7D7',
+        brand: '#D5040C',
       },
       fontFamily: {
         heading: ['"Exo Soft"', '"Exo"', 'ui-sans-serif', 'system-ui', 'sans-serif'],

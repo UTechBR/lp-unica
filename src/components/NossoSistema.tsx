@@ -16,7 +16,7 @@ function BrandBadge({ brand }: { brand: SystemBrand }) {
 
   return (
     <div className="flex h-16 w-full max-w-[150px] items-center gap-3 rounded-full border border-black/10 bg-white px-5 shadow-soft sm:h-20">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E30613] font-heading text-sm font-bold text-white">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand font-heading text-sm font-bold text-white">
         {brand.name.charAt(0)}
       </span>
       <span className="truncate font-heading text-base font-bold text-[#111111]">{brand.name}</span>
@@ -54,7 +54,7 @@ export function NossoSistema() {
 
           <motion.div
             variants={staggerItem}
-            className="flex flex-col justify-center gap-4 rounded-2xl bg-[#2F2C31] p-7 md:col-span-2 lg:col-span-1"
+            className="flex flex-col justify-center gap-4 rounded-2xl bg-surface-dark p-7 md:col-span-2 lg:col-span-1"
           >
             <p className="text-[clamp(1rem,0.9rem+0.5vw,1.25rem)] font-heading font-bold leading-snug text-white">
               Mais tecnologia, mais <strong className="font-extrabold">oportunidades</strong> e mais{' '}

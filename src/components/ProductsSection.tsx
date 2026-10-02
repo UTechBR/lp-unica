@@ -5,7 +5,7 @@ import { cn } from '../utils/cn';
 
 export function ProductsSection() {
   return (
-    <section id="produtos" className="scroll-mt-32 bg-dark-gradient py-16 md:py-24">
+    <section id="produtos" className="scroll-mt-32 bg-surface-dark py-16 md:py-24">
       <Container>
         <h2 className="text-center font-heading text-white">
           <span className="text-3xl font-thin md:text-5xl">Nossos </span>

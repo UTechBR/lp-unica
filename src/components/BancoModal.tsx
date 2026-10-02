@@ -96,7 +96,7 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-[95%] max-h-[85vh] overflow-y-auto rounded-[20px] border border-white/10 bg-[#1f1f1f] p-6 shadow-2xl sm:w-[90%] md:p-8 lg:w-[800px]"
+            className="relative z-10 w-[95%] max-h-[85vh] overflow-y-auto rounded-[20px] border border-white/10 bg-surface-dark p-6 shadow-2xl sm:w-[90%] md:p-8 lg:w-[800px]"
           >
             <button
               type="button"

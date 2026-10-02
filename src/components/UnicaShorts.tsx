@@ -61,9 +61,9 @@ export function UnicaShorts() {
                 alt={`Única shorts ${i + 1}`}
                 className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105"
               />
-              <span className="absolute inset-0 bg-primary/45 mix-blend-multiply transition-opacity group-hover:bg-primary/30" />
+              <span className="absolute inset-0 bg-[#111111]/70 transition-opacity group-hover:bg-[#111111]/50" />
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform group-hover:scale-110">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-surface-dark/80 text-white shadow-lg transition-transform group-hover:scale-110">
                   <Play size={22} fill="currentColor" className="translate-x-[1px]" />
                 </span>
               </span>
