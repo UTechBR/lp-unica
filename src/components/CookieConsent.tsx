@@ -89,7 +89,7 @@ export function CookieConsent() {
             role="dialog"
             aria-modal="true"
             aria-label="Gerenciar Consentimento de Cookies"
-            className="fixed bottom-4 right-4 z-[110] w-[calc(100vw-2rem)] max-w-[380px] overflow-hidden rounded-lg bg-white text-secondary shadow-card"
+            className="fixed bottom-[90px] right-[105px] z-[110] w-[calc(100vw-2rem)] max-w-[380px] overflow-hidden rounded-lg bg-white text-secondary shadow-card max-sm:bottom-[90px] max-sm:right-4"
           >
             <div className="flex items-center gap-3 px-4 pt-4">
               <img src={logo} alt="Única Promotora" width={28} height={28} className="h-7 w-7 shrink-0 rounded" />
@@ -236,7 +236,7 @@ export function CookieConsent() {
           transition={{ type: 'spring', stiffness: 200, damping: 15 }}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed bottom-6 right-6 z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary shadow-card ring-1 ring-surface-border transition-colors hover:bg-primary hover:text-white"
+          className="fixed bottom-[35px] right-[105px] z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary shadow-card ring-1 ring-surface-border transition-colors hover:bg-primary hover:text-white max-sm:bottom-6 max-sm:right-20"
         >
           <Cookie size={22} />
         </motion.button>

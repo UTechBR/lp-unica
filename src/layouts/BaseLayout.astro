@@ -1,7 +1,6 @@
 ---
 import { Header } from "../components/Header.tsx";
 import { Footer } from "../components/Footer.tsx";
-import { WhatsappButton } from "../components/WhatsappButton.tsx";
 import { AnecPopup } from "../components/AnecPopup.tsx";
 import { CookieConsent } from "../components/CookieConsent.tsx";
 import "../styles/global.css";
@@ -84,7 +83,6 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
         <slot />
       </main>
       <Footer />
-      <WhatsappButton client:idle />
       <AnecPopup client:idle />
       <CookieConsent client:idle />
     </div>
@@ -92,8 +90,8 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
     ></script>
     <script>
       (function () {
-        window.onload = function () {
-          new BlipChat()
+        window.addEventListener("load", function () {
+          const blipChat = new BlipChat()
             .withAppKey(
               "dW5pY2FwYXJjZWlybzFwcmQ6NjAxNDJkOWQtMGM2OS00NzA3LTgzNjUtZmMzZGFlY2FlMjM1",
             )
@@ -101,9 +99,9 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
               color: "#e50e0a",
               icon: "https://blipmediastore.blob.core.windows.net/permanent/Media_4_59b1da4c-a9f3-4f9b-a9d5-7d1e8cd4b739",
             })
-            .withCustomCommonUrl("https://unicapromotora.chat.blip.ai/")
-            .build();
-        };
+            .withCustomCommonUrl("https://unicapromotora.chat.blip.ai/");
+          blipChat.build();
+        });
       })();
     </script>
   </body>
