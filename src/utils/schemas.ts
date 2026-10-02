@@ -21,6 +21,7 @@ export const leadFormSchema = z.object({
   email: emailField,
   city: z.string().trim().min(2, 'Informe sua cidade'),
   state: z.enum(brazilianStates, { message: 'Selecione um estado' }),
+  consent: z.literal(true, { message: 'Autorize o contato para continuar' }),
 });
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;
