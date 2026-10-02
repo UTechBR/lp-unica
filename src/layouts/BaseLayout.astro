@@ -1,10 +1,10 @@
 ---
-import { Header } from '../components/Header.tsx';
-import { Footer } from '../components/Footer.tsx';
-import { WhatsappButton } from '../components/WhatsappButton.tsx';
-import { AnecPopup } from '../components/AnecPopup.tsx';
-import { CookieConsent } from '../components/CookieConsent.tsx';
-import '../styles/global.css';
+import { Header } from "../components/Header.tsx";
+import { Footer } from "../components/Footer.tsx";
+import { WhatsappButton } from "../components/WhatsappButton.tsx";
+import { AnecPopup } from "../components/AnecPopup.tsx";
+import { CookieConsent } from "../components/CookieConsent.tsx";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -30,7 +30,10 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="crédito consignado, FGTS, promotora de crédito, empréstimo, cartão consignado, seguro prestamista, Única Promotora" />
+    <meta
+      name="keywords"
+      content="crédito consignado, FGTS, promotora de crédito, empréstimo, cartão consignado, seguro prestamista, Única Promotora"
+    />
     <meta name="author" content="Única Promotora" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
@@ -85,5 +88,23 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
       <AnecPopup client:idle />
       <CookieConsent client:idle />
     </div>
+    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"
+    ></script>
+    <script>
+      (function () {
+        window.onload = function () {
+          new BlipChat()
+            .withAppKey(
+              "dW5pY2FwYXJjZWlybzFwcmQ6NjAxNDJkOWQtMGM2OS00NzA3LTgzNjUtZmMzZGFlY2FlMjM1",
+            )
+            .withButton({
+              color: "#e50e0a",
+              icon: "https://blipmediastore.blob.core.windows.net/permanent/Media_4_59b1da4c-a9f3-4f9b-a9d5-7d1e8cd4b739",
+            })
+            .withCustomCommonUrl("https://unicapromotora.chat.blip.ai/")
+            .build();
+        };
+      })();
+    </script>
   </body>
 </html>
