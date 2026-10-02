@@ -43,10 +43,10 @@ const stateOptions: { label: string; value: string }[] = [
 ].map(([label, value]) => ({ label, value }));
 
 const fieldWrap = 'flex min-w-0 flex-col gap-1.5';
-const labelCls = 'font-heading text-[14px] font-medium leading-6 text-white';
+const labelCls = 'text-sm font-medium text-secondary-700';
 const controlCls =
-  'min-h-11 w-full min-w-0 max-w-full border-0 border-b border-white/40 bg-transparent px-[14px] py-2 text-[15px] text-white placeholder:text-white/75 focus-visible:border-[var(--accent-on-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-on-dark)] focus-visible:ring-offset-2 focus-visible:ring-offset-secondary';
-const errorCls = 'block h-8 overflow-hidden text-xs leading-tight text-primary-200';
+  'h-12 w-full rounded-md border border-surface-borderMuted bg-white px-3.5 text-base text-secondary placeholder:text-secondary-300 focus-visible:border-secondary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-200';
+const errorCls = 'min-h-4 text-xs leading-tight text-primary-600';
 
 export function LeadForm() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -59,7 +59,7 @@ export function LeadForm() {
     formState: { errors, isSubmitting },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
-    defaultValues: { name: '', phone: '', email: '', city: '', state: undefined },
+    defaultValues: { name: '', phone: '', email: '', city: '', state: undefined, consent: false },
   });
 
   const onSubmit = async (data: LeadFormData) => {
@@ -98,13 +98,13 @@ export function LeadForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex w-full max-w-full flex-col border-t-[10px] border-t-primary px-[20px] py-[80px] md:grid md:grid-cols-[repeat(5,minmax(0,1fr))_auto] md:items-end md:gap-x-[18px] md:border-t-0 md:px-[24px] md:py-[32px]"
+        className="flex w-full max-w-full flex-col gap-4"
       >
         <div className={fieldWrap}>
           <label htmlFor="lead-nome" className={labelCls}>
             Nome
           </label>
-          <input id="lead-nome" className={controlCls} placeholder="Seu nome ..." {...register('name')} />
+          <input id="lead-nome" autoComplete="name" required className={controlCls} {...register('name')} />
           <span className={errorCls} aria-live="polite">
             {errors.name?.message}
           </span>
@@ -120,9 +120,12 @@ export function LeadForm() {
               </label>
               <input
                 id="lead-whatsapp"
+                type="tel"
                 inputMode="tel"
+                autoComplete="tel"
                 className={controlCls}
-                placeholder="(00) 12345-6789 ..."
+                placeholder="(31) 99999-9999"
+                required
                 value={field.value}
                 onChange={(event) => field.onChange(maskPhone(event.target.value))}
               />
@@ -140,8 +143,9 @@ export function LeadForm() {
           <input
             id="lead-email"
             type="email"
+            autoComplete="email"
+            required
             className={controlCls}
-            placeholder="Seu email ..."
             {...register('email')}
           />
           <span className={errorCls} aria-live="polite">
@@ -149,60 +153,49 @@ export function LeadForm() {
           </span>
         </div>
 
-        <div className={fieldWrap}>
-          <label htmlFor="lead-cidade" className={labelCls}>
-            Cidade
-          </label>
-          <input
-            id="lead-cidade"
-            className={controlCls}
-            placeholder="Sua cidade ..."
-            {...register('city')}
-          />
-          <span className={errorCls} aria-live="polite">
-            {errors.city?.message}
-          </span>
-        </div>
-
-        <Controller
-          control={control}
-          name="state"
-          render={({ field }) => (
-            <div className={fieldWrap}>
-              <label htmlFor="lead-estado" className={labelCls}>
-                Estado
-              </label>
-              <div className="relative">
+        <div className="grid grid-cols-[minmax(0,1fr)_96px] gap-3">
+          <div className={fieldWrap}>
+            <label htmlFor="lead-cidade" className={labelCls}>
+              Cidade
+            </label>
+            <input id="lead-cidade" autoComplete="address-level2" required className={controlCls} {...register('city')} />
+            <span className={errorCls} aria-live="polite">{errors.city?.message}</span>
+          </div>
+          <Controller
+            control={control}
+            name="state"
+            render={({ field }) => (
+              <div className={fieldWrap}>
+                <label htmlFor="lead-estado" className={labelCls}>UF</label>
                 <select
                   id="lead-estado"
-                  className={cn(controlCls, 'appearance-none pr-8 [&>option]:text-secondary')}
+                  autoComplete="address-level1"
+                  required
+                  className={cn(controlCls, 'appearance-none [&>option]:text-secondary')}
                   value={field.value ?? ''}
                   onChange={(event) => field.onChange(event.target.value)}
                 >
-                  <option value="" disabled>
-                    Selecione ...
-                  </option>
-                  {stateOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
+                  <option value="" disabled>UF</option>
+                  {stateOptions.map((option) => <option key={option.value} value={option.value}>{option.value}</option>)}
                 </select>
-                <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/60">▾</span>
+                <span className={errorCls} aria-live="polite">{errors.state?.message}</span>
               </div>
-              <span className={errorCls} aria-live="polite">
-                {errors.state?.message}
-              </span>
-            </div>
-          )}
-        />
+            )}
+          />
+        </div>
+
+        <label className="flex items-start gap-2 text-xs leading-relaxed text-secondary-400">
+          <input type="checkbox" className="mt-0.5 h-4 w-4 shrink-0 accent-primary" {...register('consent')} />
+          <span>Autorizo a Única Promotora a entrar em contato sobre oportunidades de parceria.</span>
+        </label>
+        <span className={errorCls} aria-live="polite">{errors.consent?.message}</span>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-4 min-h-[40px] rounded-[3px] bg-primary px-[24px] text-[15px] font-normal uppercase leading-none text-white transition-colors hover:bg-white hover:text-primary disabled:opacity-60 md:mb-8 md:mt-0 md:self-end md:whitespace-nowrap"
+          className="mt-2 h-12 w-full rounded-md bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
         >
-          {isSubmitting ? 'Enviando...' : 'Enviar'}
+          {isSubmitting ? 'Enviando...' : 'Quero ser parceiro'}
         </button>
       </form>
     </>
