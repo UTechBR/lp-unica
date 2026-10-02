@@ -69,6 +69,7 @@ export default {
           dark: '#373435',
           'dark-muted': '#66605F',
         },
+        'surface-dark': '#373435',
         'on-dark': '#FFFFFF',
         'on-dark-muted': '#D7D7D7',
         brand: '#D5040C',

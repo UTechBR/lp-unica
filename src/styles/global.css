@@ -110,6 +110,10 @@
 }
 
 @layer utilities {
+  .bg-brand {
+    background-color: var(--brand);
+  }
+
   .text-balance {
     text-wrap: balance;
   }

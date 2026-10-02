@@ -22,7 +22,7 @@ export function BancoCard({ banco, onSelect }: BancoCardProps) {
         src={banco.logo}
         alt={banco.nome}
         loading="lazy"
-        className="max-h-16 w-auto max-w-[180px] object-contain"
+        className="max-h-16 w-auto max-w-[180px] object-contain grayscale opacity-60 transition-[filter,opacity] duration-300 hover:grayscale-0 hover:opacity-100"
       />
     </motion.button>
   );

@@ -18,9 +18,9 @@ const AUTOPLAY_RESUME_DELAY = 1500;
 
 const arrowButtonCls =
   'group absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full ' +
-  'border border-white/30 bg-white/10 text-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.65)] backdrop-blur-md transition-all duration-300 ease-out ' +
-  'hover:scale-110 hover:border-white hover:bg-white hover:text-black hover:shadow-[0_0_28px_rgba(255,255,255,0.45)] ' +
-  'active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black ' +
+  'border border-secondary/20 bg-white text-secondary shadow-soft transition-all duration-300 ease-out ' +
+  'hover:scale-110 hover:border-secondary hover:bg-secondary hover:text-white ' +
+  'active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-muted ' +
   'sm:h-12 sm:w-12';
 
 export function BancosSection() {
@@ -50,10 +50,10 @@ export function BancosSection() {
   };
 
   return (
-    <section id="parceiros" className="scroll-mt-32 bg-surface-dark py-12 md:py-16">
+    <section id="parceiros" className="scroll-mt-32 bg-surface-muted py-12 md:py-16">
       <Container>
         <div className="mb-10 text-center">
-          <h2 className="font-heading text-[40px] font-normal leading-[36px] text-white md:text-[32px] md:leading-[16px]">
+          <h2 className="font-heading text-[40px] font-normal leading-[36px] text-secondary md:text-[32px] md:leading-[16px]">
             <span className="font-bold">Bancos</span> Parceiros
           </h2>
         </div>
