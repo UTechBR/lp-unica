@@ -20,13 +20,13 @@ export function BancoCard({ banco, onSelect, decorative = false }: BancoCardProp
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.97 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className="flex h-24 w-auto items-center justify-center opacity-70 transition-opacity duration-300 hover:opacity-100 focus-visible:opacity-100"
+      className="group flex h-24 w-auto items-center justify-center"
     >
       <img
         src={banco.logo}
         alt={banco.nome}
         loading="lazy"
-        className="max-h-16 w-auto max-w-[180px] object-contain grayscale opacity-60 transition-[filter,opacity] duration-300 hover:grayscale-0 hover:opacity-100"
+        className="max-h-16 w-auto max-w-[180px] object-contain opacity-90 contrast-125 grayscale transition-[filter,opacity] duration-300 group-hover:opacity-100 group-hover:contrast-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:contrast-100 group-focus-visible:grayscale-0"
       />
     </motion.button>
   );

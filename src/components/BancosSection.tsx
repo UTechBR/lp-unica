@@ -18,9 +18,9 @@ const AUTOPLAY_RESUME_DELAY = 1500;
 
 const arrowButtonCls =
   'group absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full ' +
-  'border border-secondary/20 bg-white text-secondary shadow-soft transition-all duration-300 ease-out ' +
-  'hover:scale-110 hover:border-secondary hover:bg-secondary hover:text-white ' +
-  'active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-muted ' +
+  'border border-secondary/20 bg-white text-secondary shadow-sm transition-colors duration-300 ' +
+  'hover:border-transparent hover:bg-brand hover:text-white ' +
+  'focus-visible:border-transparent focus-visible:bg-brand focus-visible:text-white ' +
   'sm:h-12 sm:w-12';
 
 export function BancosSection() {
