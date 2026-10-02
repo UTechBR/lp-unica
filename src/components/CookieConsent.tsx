@@ -236,7 +236,7 @@ export function CookieConsent() {
           transition={{ type: 'spring', stiffness: 200, damping: 15 }}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed bottom-[35px] right-[105px] z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary shadow-card ring-1 ring-surface-border transition-colors hover:bg-primary hover:text-white max-sm:bottom-6 max-sm:right-20"
+          className="fixed bottom-[35px] right-[105px] z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary shadow-card ring-1 ring-surface-border transition-colors hover:bg-primary hover:text-white max-sm:bottom-[35px] max-sm:right-[108px]"
         >
           <Cookie size={22} />
         </motion.button>

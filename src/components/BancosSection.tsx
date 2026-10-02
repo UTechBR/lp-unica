@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
@@ -11,11 +11,8 @@ import { BancoModal } from './BancoModal';
 import { bancos } from '../data/bancos';
 import type { Banco } from '../types/banco';
 
-// A esteira roda em autoplay contínuo (delay 0, speed 5000 encadeando uma
-// transição na outra). Se as setas chamassem slidePrev/slideNext direto, o
-// clique concorria com essa transição perpétua e não surtia efeito nenhum
-// visível. Por isso as setas pausam o autoplay, dão um passo rápido (500ms)
-// e retomam a esteira em seguida.
+// A esteira pausa durante a navegação manual para que o passo da seta fique
+// visível antes de o autoplay ser retomado.
 const MANUAL_STEP_SPEED = 500;
 const AUTOPLAY_RESUME_DELAY = 1500;
 
@@ -43,11 +40,8 @@ export function BancosSection() {
     if (!swiper) return;
 
     swiper.autoplay?.stop();
-    if (direction === 'prev') {
-      swiper.slidePrev(MANUAL_STEP_SPEED);
-    } else {
-      swiper.slideNext(MANUAL_STEP_SPEED);
-    }
+    const targetIndex = direction === 'prev' ? swiper.realIndex - 1 : swiper.realIndex + 1;
+    swiper.slideToLoop(targetIndex, MANUAL_STEP_SPEED);
 
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = setTimeout(() => {
@@ -96,16 +90,15 @@ export function BancosSection() {
 
         <div className="mask-fade-x h-24 overflow-hidden">
           <Swiper
-            modules={[Autoplay, FreeMode]}
+            modules={[Autoplay]}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
             slidesPerView="auto"
             spaceBetween={64}
             loop
-            freeMode={{ enabled: true, momentum: false }}
             speed={5000}
-            autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            autoplay={{ delay: 1, disableOnInteraction: false, pauseOnMouseEnter: false }}
             allowTouchMove={false}
             loopPreventsSliding={false}
             className="!h-24 !px-8"

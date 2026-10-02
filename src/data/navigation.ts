@@ -4,7 +4,6 @@ import {
   GoogleIcon,
   InstagramIcon,
   LinkedinIcon,
-  WhatsappIcon,
 } from '../components/SocialIcons';
 
 export const TRABALHE_CONOSCO_URL = 'https://forms.gle/nk5JjHSgHQUt8e8CA';
@@ -34,9 +33,4 @@ export const socialLinks: SocialLink[] = [
   { label: 'Instagram', href: 'https://instagram.com/unicapromotora/', icon: InstagramIcon },
   { label: 'Google', href: 'https://g.page/unicapromotora/', icon: GoogleIcon },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/unicapromotora/', icon: LinkedinIcon },
-  {
-    label: 'WhatsApp',
-    href: 'https://api.whatsapp.com/send/?phone=553121165020&text&type=phone_number&app_absent=0',
-    icon: WhatsappIcon,
-  },
 ];
