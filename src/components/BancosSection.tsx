@@ -105,7 +105,7 @@ export function BancosSection() {
           >
             {[...bancos, ...bancos].map((banco, index) => (
               <SwiperSlide key={`${banco.id}-${index}`} className="!flex !h-24 !w-auto items-center justify-center">
-                <BancoCard banco={banco} onSelect={setSelected} />
+                <BancoCard banco={banco} onSelect={setSelected} decorative={index >= bancos.length} />
               </SwiperSlide>
             ))}
           </Swiper>

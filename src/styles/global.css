@@ -52,7 +52,9 @@
   }
 
   body {
-    @apply font-body text-secondary text-base antialiased bg-white overflow-x-hidden;
+    /* clip (e não hidden): hidden transforma o body em contêiner de rolagem e
+       quebra o header sticky. */
+    @apply font-body text-secondary text-base antialiased bg-white overflow-x-clip;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -106,6 +108,11 @@
 
   .card-surface {
     @apply bg-white rounded-lg border border-surface-border shadow-soft;
+  }
+
+  /* Anel de foco claro para áreas grafite (topbar, header, rodapé). */
+  .focus-on-dark :focus-visible {
+    @apply ring-white ring-offset-secondary;
   }
 }
 

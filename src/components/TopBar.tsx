@@ -4,7 +4,7 @@ import { Container } from './Container';
 
 export function TopBar() {
   return (
-    <div className="bg-secondary text-white">
+    <div className="focus-on-dark bg-secondary text-white">
       <Container className="flex flex-wrap items-center justify-between gap-3 py-[24px]">
         <div className="flex items-center gap-2.5">
           {socialLinks.map(({ label, href, icon: Icon }) => (

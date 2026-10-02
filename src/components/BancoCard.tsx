@@ -4,13 +4,17 @@ import type { Banco } from '../types/banco';
 interface BancoCardProps {
   banco: Banco;
   onSelect: (banco: Banco) => void;
+  /** Cópia visual usada só para preencher a esteira contínua. */
+  decorative?: boolean;
 }
 
-export function BancoCard({ banco, onSelect }: BancoCardProps) {
+export function BancoCard({ banco, onSelect, decorative = false }: BancoCardProps) {
   return (
     <motion.button
       type="button"
       onClick={() => onSelect(banco)}
+      aria-hidden={decorative || undefined}
+      tabIndex={decorative ? -1 : undefined}
       aria-haspopup="dialog"
       aria-label={`Ver canais de atendimento do ${banco.nome}`}
       whileHover={{ scale: 1.05 }}

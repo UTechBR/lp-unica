@@ -25,14 +25,14 @@ export function Header({ currentPath }: HeaderProps) {
       <header className="sticky top-0 z-50">
         <div
           className={cn(
-            'bg-secondary text-white transition-shadow duration-300',
+            'focus-on-dark bg-secondary text-white transition-shadow duration-300',
             scrolled ? 'shadow-header' : 'shadow-none',
           )}
         >
           <Container
             className={cn(
               'flex items-center justify-between gap-6 transition-all duration-300',
-              scrolled ? 'py-[14px]' : 'py-[24px]',
+              scrolled ? 'py-2' : 'py-[24px]',
             )}
           >
             <a href="/" className="inline-flex shrink-0 items-center" aria-label="Única Promotora">
@@ -42,8 +42,8 @@ export function Header({ currentPath }: HeaderProps) {
                 width={879}
                 height={892}
                 className={cn(
-                  'h-14 w-auto object-contain transition-all duration-300 sm:h-16',
-                  scrolled ? 'lg:h-14' : 'lg:h-16',
+                  'w-auto object-contain transition-all duration-300',
+                  scrolled ? 'h-11' : 'h-14 sm:h-16',
                 )}
               />
             </a>

@@ -13,7 +13,10 @@ interface Props {
 const { title, description } = Astro.props;
 const currentPath = Astro.url.pathname;
 const fullTitle = `Única Promotora | ${title}`;
-const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
+const siteUrl = "https://unicapromotora.com.br";
+const canonicalUrl = `${siteUrl}${currentPath}`;
+// Crawlers de Open Graph/Twitter não resolvem caminhos relativos.
+const ogImageUrl = `${siteUrl}/og-image.jpg`;
 ---
 
 <!doctype html>
@@ -44,13 +47,14 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="Única Promotora" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/og-image.jpg" />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <script type="application/ld+json">
       {
@@ -98,14 +102,34 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
         }
       }
 
+      @keyframes chat-pulse-on-dark {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+        }
+        100% {
+          box-shadow: 0 0 0 16px rgba(255, 255, 255, 0);
+        }
+      }
+
       :global(#blip-chat-open-iframe:not(.opened)) {
         animation: cookie-consent-pulse 2s infinite;
+      }
+
+      /* Sobre fundos escuros ou vermelhos o anel vermelho some ou pesa demais;
+         usa um pulso claro e discreto. */
+      :global(html.chat-on-dark #blip-chat-open-iframe:not(.opened)) {
+        animation-name: chat-pulse-on-dark;
       }
 
       @media (prefers-reduced-motion: reduce) {
         :global(#blip-chat-open-iframe:not(.opened)) {
           animation: none;
           box-shadow: 0 0 0 5px rgba(213, 4, 12, 0.55);
+        }
+
+        :global(html.chat-on-dark #blip-chat-open-iframe:not(.opened)) {
+          animation: none;
+          box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.45);
         }
       }
     </style>
@@ -122,7 +146,45 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
             })
             .withCustomCommonUrl("https://unicapromotora.chat.blip.ai/");
           blipChat.build();
+          watchChatBackground();
         });
+
+        // Marca <html> com .chat-on-dark quando o botão do chat está sobre uma
+        // superfície escura, para trocar o pulso vermelho por um claro.
+        function isDarkSurface(el: Element) {
+          for (let node: Element | null = el; node && node !== document.documentElement; node = node.parentElement) {
+            const style = getComputedStyle(node);
+            if (style.backgroundImage !== "none" && node.tagName !== "IMG") return true;
+            const match = style.backgroundColor.match(/\d+(\.\d+)?/g);
+            if (!match) continue;
+            const [r, g, b, a = 1] = match.map(Number);
+            if (a === 0) continue;
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b < 140;
+          }
+          return false;
+        }
+
+        function watchChatBackground() {
+          let frame = 0;
+          const update = () => {
+            frame = 0;
+            const button = document.getElementById("blip-chat-open-iframe");
+            if (!button) return;
+            const rect = button.getBoundingClientRect();
+            const behind = document
+              .elementsFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2)
+              .find((el) => el.tagName !== "IFRAME" && !el.closest("#blip-chat-container"));
+            document.documentElement.classList.toggle("chat-on-dark", !!behind && isDarkSurface(behind));
+          };
+          const schedule = () => {
+            if (!frame) frame = requestAnimationFrame(update);
+          };
+          window.addEventListener("scroll", schedule, { passive: true });
+          window.addEventListener("resize", schedule);
+          // O botão é inserido de forma assíncrona pelo widget.
+          setTimeout(schedule, 500);
+          setTimeout(schedule, 2000);
+        }
       })();
     </script>
   </body>

@@ -57,8 +57,12 @@ export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
         >
           Sou Parceiro
         </Button>
-        <a href="/#parceirounica" onClick={onNavigate}>
-          <Button fullWidth>Quero ser parceiro agora</Button>
+        <a
+          href="/#parceirounica"
+          onClick={onNavigate}
+          className="inline-flex w-full items-center justify-center rounded-[3px] bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
+        >
+          Quero ser parceiro agora
         </a>
 
         <div className="mt-2 flex items-center justify-center gap-3">
