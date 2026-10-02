@@ -55,12 +55,14 @@ export function LeadForm() {
     register,
     handleSubmit,
     control,
+    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
     defaultValues: { name: '', phone: '', email: '', city: '', state: undefined, consent: false },
   });
+  const consentGiven = watch('consent');
 
   const onSubmit = async (data: LeadFormData) => {
     const result = await submitLead(data);
@@ -98,7 +100,7 @@ export function LeadForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex w-full max-w-full flex-col gap-4"
+        className="flex w-full max-w-full flex-col gap-2"
       >
         <div className={fieldWrap}>
           <label htmlFor="lead-nome" className={labelCls}>
@@ -192,8 +194,8 @@ export function LeadForm() {
 
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="mt-2 h-12 w-full rounded-md bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
+          disabled={isSubmitting || !consentGiven}
+          className="h-12 w-full rounded-md bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
         >
           {isSubmitting ? 'Enviando...' : 'Quero ser parceiro'}
         </button>

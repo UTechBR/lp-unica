@@ -9,8 +9,7 @@ import { useScrollPosition } from '../hooks/useScrollPosition';
 import { useDisclosure } from '../hooks/useDisclosure';
 import { cn } from '../utils/cn';
 
-const logoCompleta = '/images/Logo-unica-completa.svg';
-const logoIcon = '/images/Logo-Unica3.svg';
+const logoBranca = '/images/logo-unica-branca.png';
 
 interface HeaderProps {
   currentPath: string;
@@ -38,25 +37,14 @@ export function Header({ currentPath }: HeaderProps) {
           >
             <a href="/" className="inline-flex shrink-0 items-center" aria-label="Única Promotora">
               <img
-                src={logoCompleta}
+                src={logoBranca}
                 alt="Única Promotora"
-                width={281}
-                height={87}
-                className="hidden h-[37px] w-auto sm:block md:h-[87px] lg:hidden"
-              />
-              <img
-                src={logoCompleta}
-                alt="Única Promotora"
-                width={281}
-                height={87}
-                className="block h-[37px] w-auto sm:hidden"
-              />
-              <img
-                src={logoIcon}
-                alt="Única Promotora"
-                width={80}
-                height={82}
-                className="hidden h-[82px] w-auto lg:block"
+                width={879}
+                height={892}
+                className={cn(
+                  'h-14 w-auto object-contain transition-all duration-300 sm:h-16',
+                  scrolled ? 'lg:h-14' : 'lg:h-16',
+                )}
               />
             </a>
             <div className="flex items-center gap-3">

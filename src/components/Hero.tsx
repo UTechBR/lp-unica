@@ -4,8 +4,8 @@ import { LeadForm } from './LeadForm';
 export function Hero() {
   return (
     <section id="parceirounica" className="scroll-mt-32 bg-white">
-      <Container className="grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center">
-        <div>
+      <Container className="grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
+        <div className="lg:pt-8">
           <h1 className="text-[45px] font-heading font-light leading-[1.1] text-secondary md:text-[64px]">
             Transformando vidas com <strong className="font-bold">Conexões Únicas</strong>
           </h1>
