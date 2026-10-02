@@ -59,11 +59,17 @@ export function UnicaShorts() {
               <img
                 src={short.thumb}
                 alt={`Única shorts ${i + 1}`}
-                className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105"
+                className="h-full w-full object-cover brightness-[.85] grayscale transition duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0 group-focus-visible:brightness-100 group-focus-visible:grayscale-0"
               />
-              <span className="absolute inset-0 bg-[#111111]/70 transition-opacity group-hover:bg-[#111111]/50" />
+              {/* Duotone vermelho suave: unifica fotos de origens diferentes. Só em seção
+                  clara e nesta intensidade — a seção de Produtos, logo abaixo, já é
+                  vermelho sólido. A interação revela a foto real. */}
+              <span
+                className="absolute inset-0 bg-brand opacity-[.55] mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 group-focus-visible:opacity-0"
+                aria-hidden="true"
+              />
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-surface-dark/80 text-white shadow-lg transition-transform group-hover:scale-110">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-brand shadow-md transition-transform group-hover:scale-110">
                   <Play size={22} fill="currentColor" className="translate-x-[1px]" />
                 </span>
               </span>
