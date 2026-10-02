@@ -32,7 +32,7 @@ export function NossoSistema() {
           <h2 className="text-[clamp(2rem,1.5rem+3vw,3.5rem)] font-heading font-bold leading-tight text-[#111111]">
             Nosso Sistema
           </h2>
-          <p className="mt-4 text-[clamp(1rem,0.85rem+1vw,1.25rem)] font-heading font-bold text-[#E30613]">
+          <p className="mt-4 text-[clamp(1rem,0.85rem+1vw,1.25rem)] font-heading font-bold text-[#111111]">
             5 Ferramentas: Oportunidades e Benefícios para Parceiros Única
           </p>
           <p className="mt-4 text-[clamp(0.9rem,0.85rem+0.3vw,1rem)] font-brand font-normal leading-relaxed text-[#111111]/70">
@@ -56,11 +56,10 @@ export function NossoSistema() {
             variants={staggerItem}
             className="flex flex-col justify-center gap-4 rounded-2xl bg-[#2F2C31] p-7 md:col-span-2 lg:col-span-1"
           >
-            <span className="h-1 w-10 rounded-full bg-[#E30613]" aria-hidden="true" />
             <p className="text-[clamp(1rem,0.9rem+0.5vw,1.25rem)] font-heading font-bold leading-snug text-white">
-              Mais tecnologia, mais <span className="text-[#E30613]">oportunidades</span> e mais{' '}
-              <span className="text-[#E30613]">suporte</span> para{' '}
-              <span className="text-[#E30613]">ajudar você</span> a escalar sua produção.
+              Mais tecnologia, mais <strong className="font-extrabold">oportunidades</strong> e mais{' '}
+              <strong className="font-extrabold">suporte</strong> para{' '}
+              <strong className="font-extrabold">ajudar você</strong> a escalar sua produção.
             </p>
           </motion.div>
         </motion.div>

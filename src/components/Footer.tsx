@@ -24,7 +24,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white transition-transform hover:scale-110"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-secondary-700 text-white transition-transform hover:scale-110 hover:border-white"
               >
                 <Icon width={15} height={15} />
               </a>
@@ -34,7 +34,7 @@ export function Footer() {
 
         {footerColumns.map((column) => (
           <div key={column.title}>
-            <h2 className="font-brand text-lg font-bold text-primary">{column.title}</h2>
+            <h2 className="font-brand text-lg font-bold text-[var(--accent-on-dark)]">{column.title}</h2>
             <ul className="mt-4 flex flex-col gap-3">
               {column.links.map((link) => (
                 <li key={link.label}>
@@ -43,13 +43,13 @@ export function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm text-white/80 hover:text-primary"
+                      className="text-sm text-white/80 hover:text-[var(--accent-on-dark)]"
                     >
                       {link.label}
                     </a>
                   ) : (
-                    <a href={link.href} className="flex items-center gap-1.5 text-sm text-white/80 hover:text-primary">
-                      {link.label === 'Denuncie' && <Info size={14} className="text-primary" aria-hidden="true" />}
+                    <a href={link.href} className="flex items-center gap-1.5 text-sm text-white/80 hover:text-[var(--accent-on-dark)]">
+                      {link.label === 'Denuncie' && <Info size={14} className="text-[var(--accent-on-dark)]" aria-hidden="true" />}
                       {link.label}
                     </a>
                   )}
@@ -60,10 +60,10 @@ export function Footer() {
         ))}
 
         <div>
-          <h2 className="font-brand text-lg font-bold text-primary">Contato</h2>
+          <h2 className="font-brand text-lg font-bold text-[var(--accent-on-dark)]">Contato</h2>
           <ul className="mt-4 flex flex-col gap-3 text-sm text-white/80">
             <li>
-              <a href={companyInfo.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-primary">
+              <a href={companyInfo.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-[var(--accent-on-dark)]">
                 R. Rio de Janeiro, 600
                 <br />
                 Sala 401 a 408 - Centro
@@ -72,24 +72,24 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${companyInfo.email}`} className="hover:text-primary">
+              <a href={`mailto:${companyInfo.email}`} className="hover:text-[var(--accent-on-dark)]">
                 {companyInfo.email}
               </a>
             </li>
             <li>
-              <a href={`tel:${companyInfo.phoneRaw}`} className="hover:text-primary">
+              <a href={`tel:${companyInfo.phoneRaw}`} className="hover:text-[var(--accent-on-dark)]">
                 {companyInfo.phone}
               </a>
             </li>
             <li>
-              <a href={`mailto:${companyInfo.privacyEmail}`} className="hover:text-primary">
+              <a href={`mailto:${companyInfo.privacyEmail}`} className="hover:text-[var(--accent-on-dark)]">
                 DPO {companyInfo.dpo}
               </a>
             </li>
             <li>
               Envie seu currículo para:
               <br />
-              <a href={`mailto:${companyInfo.rhEmail}`} className="hover:text-primary">
+              <a href={`mailto:${companyInfo.rhEmail}`} className="hover:text-[var(--accent-on-dark)]">
                 {companyInfo.rhEmail}
               </a>
             </li>

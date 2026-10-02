@@ -43,9 +43,9 @@ const stateOptions: { label: string; value: string }[] = [
 ].map(([label, value]) => ({ label, value }));
 
 const fieldWrap = 'flex min-w-0 flex-col gap-1.5';
-const labelCls = 'font-heading text-[22px] font-bold leading-[48px] text-white';
+const labelCls = 'font-heading text-[14px] font-medium leading-6 text-white';
 const controlCls =
-  'w-full min-w-0 max-w-full border-0 border-b border-[#4D4D4D] bg-transparent px-[14px] py-[5px] text-[10px] text-white placeholder:text-white/60 focus:border-white focus:outline-none focus:ring-0';
+  'min-h-11 w-full min-w-0 max-w-full border-0 border-b border-white/40 bg-transparent px-[14px] py-2 text-[15px] text-white placeholder:text-white/75 focus-visible:border-[var(--accent-on-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-on-dark)] focus-visible:ring-offset-2 focus-visible:ring-offset-secondary';
 const errorCls = 'block h-8 overflow-hidden text-xs leading-tight text-primary-200';
 
 export function LeadForm() {

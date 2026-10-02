@@ -25,7 +25,6 @@ export function MissionVisionValues() {
         <div className="max-w-2xl lg:max-w-none">
           <h2 className="font-heading leading-[36px] tracking-tight text-white md:leading-[90px] lg:text-[60px] lg:leading-[1.05]">
             <span className="relative inline-block pl-5 text-[40px] font-bold md:text-[96px] lg:text-[60px]">
-              <span className="absolute left-0 top-1.5 h-[0.8em] w-1 bg-primary" aria-hidden="true" />
               União,
             </span>
             <br />
@@ -59,7 +58,7 @@ export function MissionVisionValues() {
                       <p key={value.title} className="lg:flex lg:items-start lg:gap-2.5 lg:text-[14px] lg:leading-snug">
                         <Icon
                           size={16}
-                          className="hidden shrink-0 text-primary lg:mt-0.5 lg:block"
+                          className="hidden shrink-0 text-[var(--accent-on-dark)] lg:mt-0.5 lg:block"
                           aria-hidden="true"
                         />
                         <span>

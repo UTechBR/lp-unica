@@ -2,18 +2,11 @@ import { mainNav } from '../data/navigation';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { cn } from '../utils/cn';
 
-// Quadrado vermelho atrás do texto (::before): escondido em repouso, aparece (cresce)
-// quando o item está com o mouse em cima OU quando é a seção em que o usuário está
-// agora. "Contato" é exceção: nunca fica marcado como "seção atual", só reage ao hover.
-// "isolate" cria um contexto de empilhamento próprio no item — sem isso, o z-index
-// negativo do quadrado escapa para o header (que é sticky) e fica escondido atrás
-// do fundo escuro da barra, em vez de só atrás do texto.
 const baseItemCls =
-  'relative isolate px-3 py-2 font-heading text-xl font-normal text-white ' +
-  "before:absolute before:inset-0 before:-z-10 before:bg-primary before:transition before:duration-300 before:content-[''] " +
-  'hover:before:scale-100 hover:before:opacity-100 focus-visible:before:scale-100 focus-visible:before:opacity-100';
-const restingCls = 'before:scale-75 before:opacity-0';
-const activeItemCls = 'before:scale-100 before:opacity-100';
+  'relative px-3 py-2 font-heading text-xl font-normal text-white transition-colors ' +
+  'after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-[var(--accent-on-dark)] after:transition-transform after:duration-300 after:content-[""]';
+const restingCls = 'after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100';
+const activeItemCls = 'after:scale-x-100';
 
 // ids em ordem de topo a baixo na Home — usados pelo scroll-spy para saber em
 // qual seção o usuário está de fato, em vez de confiar na hash.
