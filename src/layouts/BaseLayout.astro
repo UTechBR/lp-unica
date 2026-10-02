@@ -79,11 +79,11 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
            página, então o navegador cuida disso nativamente (inclusive rolagem de
            âncora com scroll-margin, sem hook nenhum). -->
       <Header currentPath={currentPath} client:load />
+      <AnecPopup client:idle />
       <main id="main-content" class="flex-1">
         <slot />
       </main>
       <Footer />
-      <AnecPopup client:idle />
       <CookieConsent client:idle />
     </div>
     <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"

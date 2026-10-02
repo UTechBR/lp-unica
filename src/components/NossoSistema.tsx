@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Container } from './Container';
 import { SystemCard } from './SystemCard';
-import { TriangleDivider } from './TriangleDivider';
 import { AnimatedSection, staggerContainer, staggerItem } from './AnimatedSection';
 import { systemBrands, systemTools } from '../data/sistemas';
 import type { SystemBrand } from '../types';
@@ -28,8 +27,6 @@ function BrandBadge({ brand }: { brand: SystemBrand }) {
 export function NossoSistema() {
   return (
     <section id="sistemas" className="scroll-mt-32 bg-[#F4F4F4]">
-      <TriangleDivider />
-
       <Container className="py-16 md:py-20 lg:py-24">
         <AnimatedSection className="mx-auto max-w-3xl text-center">
           <h2 className="text-[clamp(2rem,1.5rem+3vw,3.5rem)] font-heading font-bold leading-tight text-[#111111]">
@@ -88,7 +85,6 @@ export function NossoSistema() {
         </AnimatedSection>
       </Container>
 
-      <TriangleDivider flip />
     </section>
   );
 }

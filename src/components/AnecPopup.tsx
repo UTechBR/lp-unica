@@ -1,71 +1,46 @@
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 import { X } from 'lucide-react';
-import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
 
 const anecImage = '/images/card-1118-1.jpg';
 
 const ANEC_LINK = 'https://anecbrasil.com.br/certificaco';
 
-// Popup real do site (elementor-id 968): trigger "page_load" com delay de 1s,
-// imagem única (card-1118-1.jpg, 800x450) linkando para a ANEC.
+// Faixa promocional discreta, sem bloquear a primeira impressão da página.
 export function AnecPopup() {
-  const [isOpen, setIsOpen] = useState(false);
-  useLockBodyScroll(isOpen);
+  const [isOpen, setIsOpen] = useState(true);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => setIsOpen(true), 1000);
-    return () => window.clearTimeout(timer);
-  }, []);
+  if (!isOpen) return null;
 
-  const close = () => setIsOpen(false);
-
-  if (typeof document === 'undefined') return null;
-
-  return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={close}
-            className="absolute inset-0 bg-secondary-900/70 backdrop-blur-sm"
-            aria-hidden="true"
+  return (
+    <aside
+      aria-label="Certificação ANEC com desconto exclusivo"
+      className="relative border-b border-primary/20 bg-secondary px-4 py-2 text-white"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 pr-8 sm:gap-5">
+        <a
+          href={ANEC_LINK}
+          target="_blank"
+          rel="noreferrer"
+          className="flex min-w-0 items-center gap-3 text-sm font-semibold transition-opacity hover:opacity-85 sm:text-base"
+        >
+          <img
+            src={anecImage}
+            alt=""
+            width={96}
+            height={54}
+            className="h-10 w-[72px] shrink-0 rounded object-cover sm:h-12 sm:w-[86px]"
           />
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Certificação ANEC com desconto exclusivo"
-            initial={{ opacity: 0, scale: 0.95, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 12 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-[800px] overflow-hidden rounded-lg shadow-card"
-          >
-            <button
-              type="button"
-              onClick={close}
-              aria-label="Fechar"
-              className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-secondary shadow-soft hover:bg-surface-subtle"
-            >
-              <X size={18} />
-            </button>
-            <a href={ANEC_LINK} target="_blank" rel="noreferrer" onClick={close}>
-              <img
-                src={anecImage}
-                alt="Adquira sua Certificação ANEC com desconto exclusivo da Única Promotora — cupom UNICA20"
-                width={800}
-                height={450}
-                className="block h-auto w-full"
-              />
-            </a>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>,
-    document.body,
+          <span className="truncate">Certificação ANEC com desconto exclusivo: use o cupom UNICA20</span>
+        </a>
+        <button
+          type="button"
+          onClick={() => setIsOpen(false)}
+          aria-label="Fechar aviso da ANEC"
+          className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <X size={18} />
+        </button>
+      </div>
+    </aside>
   );
 }
