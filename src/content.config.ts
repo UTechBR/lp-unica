@@ -40,7 +40,7 @@ const categoriasProduto = defineCollection({
     descricao: z.string().optional(),
     itens: z.array(z.string()).min(1),
     /**
-     * Conteúdo da página /produtos (portfólio para o parceiro). Separado dos campos da Home
+     * Conteúdo da página /portfolio (portfólio para o parceiro). Separado dos campos da Home
      * para a página poder mudar sem alterar os cards já publicados.
      * Regras de texto: descrever, nunca prometer (ver README desta pasta).
      */

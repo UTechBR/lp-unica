@@ -1,6 +1,6 @@
 import { Container } from './Container';
 import { icones } from '../lib/icones';
-import { produtosPublicado } from '../config/publicacao';
+import { portfolioPublicado } from '../config/publicacao';
 import type { CategoriaProduto } from '../types/conteudo';
 import { cn } from '../utils/cn';
 
@@ -59,10 +59,10 @@ export function ProductsSection({ categorias }: { categorias: CategoriaProduto[]
                   </ul>
                 )}
 
-                {/* Link para o detalhe na /produtos, só depois de publicada (config/publicacao.ts). */}
-                {produtosPublicado && category.pagina && (
+                {/* Link para o detalhe na /portfolio, só depois de publicada (config/publicacao.ts). */}
+                {portfolioPublicado && category.pagina && (
                   <a
-                    href={`/produtos#${category.id}`}
+                    href={`/portfolio#${category.id}`}
                     className="mt-auto inline-block pt-5 text-sm font-semibold text-secondary underline underline-offset-4 hover:text-primary"
                   >
                     Ver detalhes <span aria-hidden="true">→</span>

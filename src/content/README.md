@@ -26,7 +26,7 @@ Tudo o que o site exibe e que alguém pode querer trocar (bancos, produtos, víd
 | Coleção | Arquivo | Onde aparece |
 |---|---|---|
 | `bancos` | `bancos.json` | Grade do hero e modal de canais (Home), `/bancos-parceiros` |
-| `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home); o campo `pagina` alimenta `/produtos` |
+| `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home); o campo `pagina` alimenta `/portfolio` |
 | `ecossistema` | `ecossistema.json` | Seção Ecossistema (Home) |
 | `valores` | `valores.json` | Seção Sobre (Home e `/sobre`), com o `resumo`; a `descricao` guarda o texto oficial |
 | `shorts` | `shorts.json` | Seção Única shorts (Home) |
