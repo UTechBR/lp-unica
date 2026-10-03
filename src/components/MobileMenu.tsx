@@ -82,7 +82,7 @@ export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
         <a
           href={LEAD_FORM_HREF}
           onClick={onNavigate}
-          className="inline-flex w-full items-center justify-center rounded-[3px] bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
+          className="inline-flex w-full items-center justify-center rounded-button bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
         >
           Quero ser parceiro
         </a>

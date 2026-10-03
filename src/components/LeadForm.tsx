@@ -55,14 +55,12 @@ export function LeadForm() {
     register,
     handleSubmit,
     control,
-    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
     defaultValues: { name: '', phone: '', email: '', city: '', state: undefined, consent: false },
   });
-  const consentGiven = watch('consent');
 
   const onSubmit = async (data: LeadFormData) => {
     const result = await submitLead(data);
@@ -187,15 +185,22 @@ export function LeadForm() {
         </div>
 
         <label className="flex items-start gap-2 text-xs leading-relaxed text-secondary-400">
-          <input type="checkbox" className="mt-0.5 h-4 w-4 shrink-0 accent-primary" {...register('consent')} />
+          <input
+            type="checkbox"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+            aria-invalid={errors.consent ? true : undefined}
+            aria-describedby="lead-consent-erro"
+            {...register('consent')}
+          />
           <span>Autorizo a Única Promotora a entrar em contato sobre oportunidades de parceria.</span>
         </label>
-        <span className={errorCls} aria-live="polite">{errors.consent?.message}</span>
+        <span id="lead-consent-erro" className={errorCls} aria-live="polite">{errors.consent?.message}</span>
 
+        {/* Sempre habilitado: sem consentimento, o envio mostra o erro acima (ver schemas.ts). */}
         <button
           type="submit"
-          disabled={isSubmitting || !consentGiven}
-          className="h-12 w-full rounded-md bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
+          disabled={isSubmitting}
+          className="h-12 w-full rounded-button bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
         >
           {isSubmitting ? 'Enviando...' : 'Quero ser parceiro'}
         </button>

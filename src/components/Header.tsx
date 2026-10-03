@@ -49,7 +49,7 @@ export function Header({ currentPath }: HeaderProps) {
             <SystemsMenu />
             <a
               href={LEAD_FORM_HREF}
-              className="rounded-md bg-brand px-5 py-2.5 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
+              className="rounded-button bg-brand px-5 py-2.5 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
             >
               Quero ser parceiro
             </a>

@@ -171,7 +171,7 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Acessar site do ${banco.nome} (abre em nova aba)`}
-                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-[3px] bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-600 sm:w-auto"
+                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-button bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-600 sm:w-auto"
               >
                 Acessar Site
                 <ExternalLink size={16} aria-hidden="true" />

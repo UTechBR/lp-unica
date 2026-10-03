@@ -55,7 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         whileTap={{ scale: disabled || isLoading ? 1 : 0.97 }}
         disabled={disabled || isLoading}
         className={cn(
-          'inline-flex items-center justify-center rounded-[3px] font-heading font-bold transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed',
+          'inline-flex items-center justify-center rounded-button font-heading font-bold transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed',
           variantStyles[variant],
           sizeStyles[size],
           fullWidth && 'w-full',

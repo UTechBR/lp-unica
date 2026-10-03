@@ -106,6 +106,9 @@ export default {
         xl: '1.5rem',
         '2xl': '2rem',
         pill: '9999px',
+        // Padrão para botões com texto (mesmo raio dos campos de formulário).
+        // Botões só de ícone usam rounded-full.
+        button: '0.75rem',
       },
       boxShadow: {
         soft: '0 4px 24px -4px rgba(55, 52, 53, 0.08)',

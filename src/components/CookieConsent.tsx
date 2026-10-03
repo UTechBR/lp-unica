@@ -183,14 +183,14 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={acceptAll}
-                className="flex-1 rounded-[3px] bg-primary px-4 py-2 text-xs font-bold uppercase text-white transition-colors hover:bg-primary-600"
+                className="flex-1 rounded-button bg-primary px-4 py-2 text-xs font-bold uppercase text-white transition-colors hover:bg-primary-600"
               >
                 Aceitar
               </button>
               <button
                 type="button"
                 onClick={denyAll}
-                className="flex-1 rounded-[3px] border border-surface-borderMuted px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                className="flex-1 rounded-button border border-surface-borderMuted px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
               >
                 Negar
               </button>
@@ -198,7 +198,7 @@ export function CookieConsent() {
                 <button
                   type="button"
                   onClick={savePreferences}
-                  className="flex-1 rounded-[3px] border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                  className="flex-1 rounded-button border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
                 >
                   Salvar preferências
                 </button>
@@ -206,7 +206,7 @@ export function CookieConsent() {
                 <button
                   type="button"
                   onClick={() => setShowPreferences(true)}
-                  className="flex-1 rounded-[3px] border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                  className="flex-1 rounded-button border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
                 >
                   Ver preferências
                 </button>
