@@ -18,13 +18,12 @@ export const homePositioning =
  * Números da empresa ("A Única em números", na página /sobre). Só aparecem os marcados
  * `confirmado: true`, e a faixa só é exibida com pelo menos dois. O total de bancos não
  * entra aqui: é calculado da lista em src/content/bancos.json.
- * TODO(diretoria): confirmar cada número com fonte. Os valores abaixo vêm da página
- * antiga e não foram verificados ("10+ anos" contrasta com o "Grupo Única 5 anos" dos vídeos).
+ * Números confirmados pela empresa em 03/10/2026.
  */
 export const numerosEmpresa: { valor: string; rotulo: string; confirmado: boolean }[] = [
-  { valor: '27', rotulo: 'estados atendidos', confirmado: false },
-  { valor: '500+', rotulo: 'parceiros ativos', confirmado: false },
-  { valor: '10+', rotulo: 'anos de mercado', confirmado: false },
+  { valor: '27', rotulo: 'estados atendidos', confirmado: true },
+  { valor: '500+', rotulo: 'parceiros ativos', confirmado: true },
+  { valor: '10+', rotulo: 'anos de mercado', confirmado: true },
 ];
 
 export const companyInfo = {
