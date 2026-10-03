@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Container } from './Container';
 import { SystemCard } from './SystemCard';
 import { AnimatedSection, staggerContainer, staggerItem } from './AnimatedSection';
@@ -25,6 +25,8 @@ function BrandBadge({ brand }: { brand: SystemBrand }) {
 }
 
 export function NossoSistema() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="sistemas" className="scroll-mt-20 bg-[#F4F4F4] py-16 md:py-24">
       <Container>
@@ -43,7 +45,7 @@ export function NossoSistema() {
 
         <motion.div
           variants={staggerContainer}
-          initial="hidden"
+          initial={reduceMotion ? false : 'hidden'}
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
           className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 min-[1440px]:grid-cols-6"

@@ -59,9 +59,9 @@ export function Header({ currentPath }: HeaderProps) {
             type="button"
             onClick={open}
             aria-label="Abrir menu"
-            className="flex h-[33px] w-[33px] items-center justify-center rounded-[3px] bg-white text-primary lg:hidden"
+            className="-mr-2.5 flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10 lg:hidden"
           >
-            <Menu size={22} />
+            <Menu size={26} aria-hidden="true" />
           </button>
         </Container>
       </div>

@@ -24,23 +24,23 @@ function embaralhar<T>(lista: T[]): T[] {
 
 function LogoBanco({ banco, onSelect }: { banco: Banco; onSelect: (banco: Banco) => void }) {
   return (
-    <li className="flex h-10 items-center">
+    <li className="flex h-10 min-w-0 items-center">
       <button
         type="button"
         onClick={() => onSelect(banco)}
         aria-haspopup="dialog"
         aria-label={`Ver canais de atendimento do ${banco.nome}`}
-        className="group flex h-full items-center rounded-sm"
+        className="group flex h-full max-w-full items-center rounded-sm"
       >
         {/* Os arquivos são silhuetas brancas: a <img> invisível só define o tamanho e a
             cor vem de um <span> mascarado pelo logo (cinza médio → grafite no hover). */}
-        <span className="relative inline-flex">
+        <span className="relative flex max-w-full">
           <img
             src={banco.logo}
             alt=""
             loading="lazy"
             decoding="async"
-            className="w-auto max-w-[110px] object-contain opacity-0"
+            className="w-auto max-w-[min(100%,110px)] object-contain opacity-0"
             style={{ maxHeight: ALTURA_POR_LOGO[banco.logo] ?? 30 }}
           />
           <span
@@ -105,7 +105,7 @@ export function BancosHero() {
       <ul
         aria-label="Bancos e financeiras parceiros"
         className={cn(
-          'bancos-hero-grid grid max-w-[560px] grid-cols-3 items-center gap-x-8 gap-y-6 transition-opacity duration-300 sm:grid-cols-4',
+          'bancos-hero-grid grid max-w-[560px] grid-cols-3 items-center gap-x-5 gap-y-6 sm:gap-x-8 transition-opacity duration-300 sm:grid-cols-4',
           pronto ? 'opacity-100' : 'opacity-0',
         )}
       >
@@ -132,7 +132,7 @@ export function BancosHero() {
             hidden={!popAberto}
             className="z-30 mt-4 w-full max-w-[560px] rounded-xl border border-surface-border bg-white p-5 lg:absolute lg:left-0 lg:top-full lg:mt-3 lg:shadow-card"
           >
-            <ul className="grid grid-cols-3 items-center gap-x-6 gap-y-4 sm:grid-cols-4">
+            <ul className="grid grid-cols-3 items-center gap-x-5 gap-y-4 sm:grid-cols-4 sm:gap-x-6">
               {restantes.map((banco) => (
                 <LogoBanco key={banco.id} banco={banco} onSelect={setSelecionado} />
               ))}

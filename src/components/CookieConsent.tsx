@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, Cookie, X } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 import { POLICY_URLS } from '../data/navigation';
 import { cn } from '../utils/cn';
 
@@ -46,12 +46,11 @@ function readStoredConsent(): Consent | null {
   }
 }
 
-// Réplica do banner real (plugin Complianz): cartão no canto inferior direito,
-// categorias em acordeão (Funcional sempre ativo) e botão flutuante pra reabrir
-// as preferências depois que o usuário já decidiu.
+// Réplica do banner real (plugin Complianz): cartão no canto inferior direito e
+// categorias em acordeão (Funcional sempre ativo). Depois da decisão, as
+// preferências são reabertas pelo link do rodapé.
 export function CookieConsent() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasConsent, setHasConsent] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
   const [openCategory, setOpenCategory] = useState<Category | null>(null);
   const [choices, setChoices] = useState<Record<Category, boolean>>({
@@ -61,14 +60,30 @@ export function CookieConsent() {
   });
 
   useEffect(() => {
-    const stored = readStoredConsent();
-    if (stored) setHasConsent(true);
-    else setIsOpen(true);
+    if (!readStoredConsent()) setIsOpen(true);
+  }, []);
+
+  // Reabertura pelo link "Preferências de cookies" do rodapé (HTML estático, sem
+  // hidratação): qualquer elemento com data-cookie-preferences abre as preferências.
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      if (!(event.target as Element).closest?.('[data-cookie-preferences]')) return;
+      event.preventDefault();
+      const stored = readStoredConsent();
+      if (stored) setChoices({ preferences: stored.preferences, statistics: stored.statistics, marketing: stored.marketing });
+      setShowPreferences(true);
+      setIsOpen(true);
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
   }, []);
 
   const persist = (consent: Consent) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
-    setHasConsent(true);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+    } catch {
+      // armazenamento bloqueado: a escolha vale só para esta visita
+    }
     setIsOpen(false);
     setShowPreferences(false);
   };
@@ -226,21 +241,6 @@ export function CookieConsent() {
         )}
       </AnimatePresence>
 
-      {!isOpen && hasConsent && (
-        <motion.button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          aria-label="Gerenciar o consentimento de cookies"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-          className="fixed bottom-[35px] right-[105px] z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary shadow-card ring-1 ring-surface-border transition-colors hover:bg-primary hover:text-white max-sm:bottom-[35px] max-sm:right-[108px]"
-        >
-          <Cookie size={22} />
-        </motion.button>
-      )}
     </>
   );
 }

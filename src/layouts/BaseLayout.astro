@@ -88,7 +88,9 @@ const ogImageUrl = `${siteUrl}/og-image.jpg`;
         <slot />
       </main>
       <Footer />
-      <CookieConsent client:idle />
+      <!-- client:load: o banner de consentimento deve aparecer logo, e o link
+           "Preferências de cookies" do rodapé depende dele já hidratado. -->
+      <CookieConsent client:load />
     </div>
     <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"
     ></script>
@@ -113,6 +115,13 @@ const ogImageUrl = `${siteUrl}/og-image.jpg`;
 
       :global(#blip-chat-open-iframe:not(.opened)) {
         animation: cookie-consent-pulse 2s infinite;
+      }
+
+      /* Drawer, modais e popups abertos (ver useLockBodyScroll): o botão do chat
+         não pode ficar por cima deles. Com o chat já aberto, ele permanece.
+         !important: o widget da Blip define display inline. */
+      :global(html.overlay-open #blip-chat-open-iframe:not(.opened)) {
+        display: none !important;
       }
 
       /* Sobre fundos escuros ou vermelhos o anel vermelho some ou pesa demais;

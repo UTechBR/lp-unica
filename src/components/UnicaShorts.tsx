@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Play, X } from 'lucide-react';
 import { Container } from './Container';
 import { LegacyAnchor } from './LegacyAnchor';
+import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
 
 const capa01 = '/images/CAPA-VIDEO.-01.jpg.jpeg';
 const capa02 = '/images/CAPA-VIDEO.-02.jpg.jpeg';
@@ -19,16 +20,13 @@ const shorts = [
 
 export function UnicaShorts() {
   const [active, setActive] = useState<string | null>(null);
+  useLockBodyScroll(active !== null);
 
   useEffect(() => {
     if (!active) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setActive(null);
     document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [active]);
 
   return (

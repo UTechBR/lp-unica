@@ -9,8 +9,9 @@ const logoBranca = '/images/logo-unica-branca.png';
 export function Footer() {
   return (
     <footer id="contato" className="focus-on-dark scroll-mt-20 bg-surface-dark text-white">
-      <Container className="grid grid-cols-1 gap-12 py-12 md:grid-cols-2 md:py-16 lg:grid-cols-4">
-        <div>
+      {/* Mobile: as duas colunas de links lado a lado; marca e contato ocupam a linha toda. */}
+      <Container className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-2 md:gap-12 md:py-16 lg:grid-cols-4">
+        <div className="col-span-2 md:col-span-1">
           <img src={logoBranca} alt="Única Promotora" className="h-24 w-auto" width={880} height={890} />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
             Utilizamos nossa experiência e conhecimento diariamente para oferecer a solução mais eficaz{' '}
@@ -59,7 +60,7 @@ export function Footer() {
           </div>
         ))}
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <h2 className="font-brand text-lg font-bold text-[var(--accent-on-dark)]">Contato</h2>
           <ul className="mt-4 flex flex-col gap-3 text-sm text-white/80">
             <li>
@@ -98,8 +99,13 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-white/10">
-        <Container className="py-6 text-center text-xs text-white/50">
+        {/* pb extra no mobile: o botão flutuante do chat não cobre o fim do rodapé */}
+        <Container className="flex flex-col items-center gap-3 pb-24 pt-6 text-center text-xs text-white/50 md:flex-row md:justify-between md:pb-6">
           <p>{companyInfo.copyright}</p>
+          {/* Aberto pelo CookieConsent via data-cookie-preferences (o rodapé não é hidratado). */}
+          <button type="button" data-cookie-preferences className="underline underline-offset-4 hover:text-white">
+            Preferências de cookies
+          </button>
         </Container>
       </div>
     </footer>
