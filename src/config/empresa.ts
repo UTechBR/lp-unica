@@ -40,5 +40,6 @@ export const companyInfo = {
   phone: '(31) 2116-5020',
   phoneRaw: '+553121165020',
   dpo: 'Karla Josiane Teodoro',
-  mapsUrl: 'https://maps.google.com/?q=%C3%9Anica+Promotora,+R.+Rio+de+Janeiro,+600,+Belo+Horizonte+-+MG',
+  /** Perfil da empresa no Google Maps (endereço, rotas e avaliações). */
+  mapsUrl: 'https://maps.app.goo.gl/mz2vqj4nc4Ry3nB79',
 };

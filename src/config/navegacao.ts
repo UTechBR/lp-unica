@@ -5,6 +5,7 @@ import {
   LinkedinIcon,
 } from '../components/SocialIcons';
 import { MapPin } from 'lucide-react';
+import { companyInfo } from './empresa';
 
 export const TRABALHE_CONOSCO_URL = 'https://forms.gle/nk5JjHSgHQUt8e8CA';
 export const DADOS_TITULARIDADE_URL = 'https://share.google/LoVjPdisKzClKI77t';
@@ -39,6 +40,6 @@ export const socialLinks: SocialLink[] = [
   { label: 'Facebook', href: 'https://facebook.com/unicapromotora/', icon: FacebookIcon },
   { label: 'Instagram', href: 'https://instagram.com/unicapromotora/', icon: InstagramIcon },
   // Perfil no Google Meu Negócio: o pino comunica localização e avaliações melhor que um "G" solto.
-  { label: 'Google Meu Negócio', href: 'https://g.page/unicapromotora/', icon: MapPin },
+  { label: 'Google Meu Negócio', href: companyInfo.mapsUrl, icon: MapPin },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/unicapromotora/', icon: LinkedinIcon },
 ];
