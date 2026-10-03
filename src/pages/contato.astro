@@ -3,6 +3,7 @@ import { Handshake, Headphones, Landmark, LogIn, Mail, MapPin, Phone, ShieldAler
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { ContatoForm } from '../components/ContatoForm.tsx';
+import { cardCls, cardTituloCls } from '../components/form/estilos';
 import { companyInfo } from '../config/empresa';
 import { LEAD_FORM_HREF, PARTNER_SYSTEM_URL } from '../config/navegacao';
 
@@ -83,8 +84,8 @@ const iconeCls = 'flex h-11 w-11 shrink-0 items-center justify-center rounded-fu
         </ul>
       </div>
 
-      <div class="rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-7">
-        <h2 class="font-heading text-[22px] font-semibold text-secondary">Envie uma mensagem</h2>
+      <div class={cardCls}>
+        <h2 class={cardTituloCls}>Envie uma mensagem</h2>
         <div class="mt-6">
           <ContatoForm client:load />
         </div>

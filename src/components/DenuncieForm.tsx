@@ -1,25 +1,26 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckCircle2, Upload, X } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 import { Input } from './Input';
 import { Select } from './Select';
 import { TextArea } from './TextArea';
+import {
+  AvisoObrigatorios,
+  AvisoPrivacidade,
+  BotaoEnviar,
+  ErroEnvio,
+  LinkPrivacidade,
+  SucessoEnvio,
+  mensagemDeErro,
+} from './form/Envio';
+import { ajudaCls, campoWrapCls, erroCls, formCls, opcionalCls, rotuloCls } from './form/estilos';
 import { denunciaAnexos, denuncieCategories, denuncieFormSchema } from '../utils/schemas';
 import type { DenuncieFormData } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
 import { submitDenuncia } from '../services/leadService';
 
 const categoryOptions = denuncieCategories.map((category) => ({ label: category, value: category }));
-
-const mensagensErro: Record<string, string> = {
-  file_too_large: 'Os anexos passaram do tamanho permitido. Reduza ou remova algum arquivo e tente de novo.',
-  too_many_files: `Envie no máximo ${denunciaAnexos.maxArquivos} arquivos.`,
-  file_type_not_allowed: 'Um dos anexos tem um tipo de arquivo não aceito.',
-  network: 'Não foi possível conectar. Verifique sua internet e tente de novo.',
-};
-const erroPadrao = 'Não foi possível registrar a denúncia agora. Tente de novo em alguns minutos.';
-
 const accept = denunciaAnexos.extensoes.map((ext) => `.${ext}`).join(',');
 
 export function DenuncieForm() {
@@ -45,59 +46,50 @@ export function DenuncieForm() {
     setErroEnvio(null);
     const result = await submitDenuncia(data);
     if (result.success) {
-      setProtocolo(result.protocolo);
+      setProtocolo(result.protocolo ?? '');
       reset();
     } else {
-      setErroEnvio(mensagensErro[result.error] ?? erroPadrao);
+      setErroEnvio(mensagemDeErro(result.error));
     }
   };
 
-  if (protocolo) {
+  if (protocolo !== null) {
     return (
-      <div role="status" className="flex flex-col items-center gap-3 py-6 text-center">
-        <CheckCircle2 size={44} className="text-primary" aria-hidden="true" />
-        <h3 className="font-heading text-xl font-semibold text-secondary">Denúncia registrada</h3>
-        <p className="text-sm text-secondary-400">Guarde o número do protocolo:</p>
-        <p className="rounded-control bg-secondary-50 px-4 py-2 font-heading text-lg font-bold tracking-wide text-secondary">
-          {protocolo}
-        </p>
-        <p className="max-w-sm text-sm text-secondary-400">
-          Sua denúncia foi encaminhada à área de compliance e será tratada com sigilo.
-        </p>
-        <button
-          type="button"
-          onClick={() => setProtocolo(null)}
-          className="mt-2 text-sm font-semibold text-secondary underline underline-offset-4 hover:text-primary"
-        >
-          Registrar outra denúncia
-        </button>
-      </div>
+      <SucessoEnvio
+        titulo="Denúncia registrada"
+        destaque={protocolo || undefined}
+        acao={{ rotulo: 'Registrar outra denúncia', onClick: () => setProtocolo(null) }}
+      >
+        {protocolo && <p className="mb-2">Guarde o número do protocolo acima.</p>}
+        Sua denúncia foi encaminhada à área de compliance e será tratada com sigilo.
+      </SucessoEnvio>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
-      <label className="flex cursor-pointer items-center gap-2.5 text-[15px] text-secondary">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <AvisoObrigatorios />
+
+      <label className="mb-3 flex cursor-pointer items-center gap-2.5 text-[15px] text-secondary">
         <input type="checkbox" className="h-[18px] w-[18px] shrink-0 accent-secondary" {...register('anonimo')} />
         Quero denunciar sem me identificar
       </label>
 
       {/* Em modo anônimo os campos somem e não são enviados (ver submitDenuncia). */}
       {anonimo ? (
-        <p className="rounded-control bg-secondary-50 px-4 py-3 text-sm text-secondary-400">
+        <p className="mb-3 rounded-control bg-secondary-50 px-4 py-3 text-sm text-secondary-400">
           Sua denúncia será registrada sem nome, contato ou endereço IP. Sem um contato, não conseguiremos pedir mais
           detalhes: descreva os fatos da forma mais completa possível.
         </p>
       ) : (
-        <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <fieldset className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
           <legend className="sr-only">Identificação</legend>
           <div className="sm:col-span-2">
-            <Input id="denuncie-nome" label="Nome" required autoComplete="name" error={errors.name?.message} {...register('name')} />
+            <Input id="denuncie-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
           </div>
           <Input
             id="denuncie-email"
             label="E-mail"
-            required
             type="email"
             autoComplete="email"
             error={errors.email?.message}
@@ -108,12 +100,13 @@ export function DenuncieForm() {
             name="phone"
             render={({ field }) => (
               <Input
+                ref={field.ref}
                 id="denuncie-telefone"
                 label="Telefone"
-                required
                 type="tel"
                 inputMode="tel"
                 autoComplete="tel"
+                placeholder="(31) 99999-9999"
                 error={errors.phone?.message}
                 value={field.value}
                 onChange={(event) => field.onChange(maskPhone(event.target.value))}
@@ -128,9 +121,9 @@ export function DenuncieForm() {
         name="category"
         render={({ field }) => (
           <Select
+            ref={field.ref}
             id="denuncie-categoria"
             label="Categoria"
-            required
             placeholder="Selecione"
             options={categoryOptions}
             error={errors.category?.message}
@@ -143,16 +136,15 @@ export function DenuncieForm() {
       <TextArea
         id="denuncie-mensagem"
         label="Mensagem"
-        required
         rows={5}
-        placeholder="Descreva a denúncia com o máximo de detalhes"
+        placeholder="Descreva os fatos com o máximo de detalhes"
         error={errors.description?.message}
         {...register('description')}
       />
 
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="denuncie-arquivos" className="text-sm font-semibold text-secondary">
-          Arquivos <span className="font-normal text-secondary-300">(opcional)</span>
+      <div className={campoWrapCls}>
+        <label htmlFor="denuncie-arquivos" className={rotuloCls}>
+          Arquivos <span className={opcionalCls}>(opcional)</span>
         </label>
         <label
           htmlFor="denuncie-arquivos"
@@ -167,14 +159,15 @@ export function DenuncieForm() {
           multiple
           accept={accept}
           className="sr-only"
-          aria-describedby="denuncie-arquivos-ajuda"
+          aria-invalid={errors.files ? true : undefined}
+          aria-describedby="denuncie-arquivos-ajuda denuncie-arquivos-error"
           onChange={(event) => {
             const novos = Array.from(event.target.files ?? []);
             setValue('files', [...files, ...novos], { shouldValidate: true });
             event.target.value = ''; // permite escolher o mesmo arquivo de novo depois de remover
           }}
         />
-        <p id="denuncie-arquivos-ajuda" className="text-xs text-secondary-400">
+        <p id="denuncie-arquivos-ajuda" className={ajudaCls}>
           Até {denunciaAnexos.maxArquivos} arquivos, {denunciaAnexos.maxBytesArquivo / 1024 / 1024} MB cada.
         </p>
         {files.length > 0 && (
@@ -203,24 +196,17 @@ export function DenuncieForm() {
             ))}
           </ul>
         )}
-        {errors.files?.message && (
-          <p className="text-xs font-medium text-primary" role="alert">
-            {errors.files.message}
-          </p>
-        )}
+        <span id="denuncie-arquivos-error" className={erroCls} aria-live="polite">
+          {errors.files?.message}
+        </span>
       </div>
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="h-12 w-full rounded-control bg-brand font-heading text-base font-bold text-white transition-colors hover:bg-primary-600 disabled:opacity-60"
-      >
-        {isSubmitting ? 'Enviando...' : 'Enviar denúncia'}
-      </button>
+      <AvisoPrivacidade>
+        Os dados informados são usados apenas para apurar a denúncia, conforme a <LinkPrivacidade />.
+      </AvisoPrivacidade>
 
-      <p role="status" aria-live="polite" className="text-sm font-medium text-primary empty:hidden">
-        {erroEnvio}
-      </p>
+      <BotaoEnviar enviando={isSubmitting}>Enviar denúncia</BotaoEnviar>
+      <ErroEnvio mensagem={erroEnvio} />
     </form>
   );
 }

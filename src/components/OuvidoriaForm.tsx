@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'framer-motion';
-import { CheckCircle2, Send } from 'lucide-react';
 import { Input } from './Input';
 import { TextArea } from './TextArea';
-import { Button } from './Button';
+import {
+  AvisoObrigatorios,
+  AvisoPrivacidade,
+  BotaoEnviar,
+  ErroEnvio,
+  LinkPrivacidade,
+  SucessoEnvio,
+  mensagemDeErro,
+} from './form/Envio';
+import { formCls } from './form/estilos';
 import { ouvidoriaFormSchema } from '../utils/schemas';
 import type { OuvidoriaFormData } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
 import { submitOuvidoria } from '../services/leadService';
 
 export function OuvidoriaForm() {
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erroEnvio, setErroEnvio] = useState<string | null>(null);
 
   const {
     register,
@@ -26,67 +34,65 @@ export function OuvidoriaForm() {
   });
 
   const onSubmit = async (data: OuvidoriaFormData) => {
+    setErroEnvio(null);
     const result = await submitOuvidoria(data);
     if (result.success) {
-      setIsSuccess(true);
+      setEnviado(true);
       reset();
+    } else {
+      setErroEnvio(mensagemDeErro(result.error));
     }
   };
 
-  if (isSuccess) {
+  if (enviado) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center gap-3 rounded-surface bg-white p-8 text-center shadow-card"
-      >
-        <CheckCircle2 size={48} className="text-primary" />
-        <h3 className="heading-md">Manifestação registrada!</h3>
-        <p className="text-secondary-400">
-          Sua manifestação foi recebida pela Ouvidoria e será respondida em até 10 dias úteis.
-        </p>
-        <Button variant="outline" onClick={() => setIsSuccess(false)}>
-          Nova manifestação
-        </Button>
-      </motion.div>
+      <SucessoEnvio titulo="Manifestação registrada" acao={{ rotulo: 'Registrar nova manifestação', onClick: () => setEnviado(false) }}>
+        Sua manifestação foi recebida pela Ouvidoria e será respondida em até 10 dias úteis.
+      </SucessoEnvio>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Input label="Nome" required placeholder="Nome" error={errors.name?.message} {...register('name')} />
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <AvisoObrigatorios />
+      <div className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
+        <Input id="ouvidoria-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
         <Input
+          id="ouvidoria-email"
           label="E-mail"
-          required
           type="email"
-          placeholder="Email"
+          autoComplete="email"
           error={errors.email?.message}
           {...register('email')}
         />
-      </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Controller
           control={control}
           name="phone"
           render={({ field }) => (
             <Input
+              ref={field.ref}
+              id="ouvidoria-telefone"
               label="Telefone"
-              required
+              type="tel"
               inputMode="tel"
-              placeholder="Telefone"
+              autoComplete="tel"
+              placeholder="(31) 99999-9999"
               error={errors.phone?.message}
               value={field.value}
               onChange={(event) => field.onChange(maskPhone(event.target.value))}
             />
           )}
         />
-        <Input label="Assunto" required placeholder="Assunto" error={errors.subject?.message} {...register('subject')} />
+        <Input id="ouvidoria-assunto" label="Assunto" error={errors.subject?.message} {...register('subject')} />
       </div>
-      <TextArea label="Mensagem" hint="Opcional" error={errors.message?.message} {...register('message')} />
-      <Button type="submit" isLoading={isSubmitting} rightIcon={<Send size={18} aria-hidden="true" />} className="self-start">
-        Enviar
-      </Button>
+      <TextArea id="ouvidoria-mensagem" label="Mensagem" optional error={errors.message?.message} {...register('message')} />
+
+      <AvisoPrivacidade>
+        Os dados informados são usados para analisar e responder à sua manifestação, conforme a <LinkPrivacidade />.
+      </AvisoPrivacidade>
+
+      <BotaoEnviar enviando={isSubmitting}>Enviar manifestação</BotaoEnviar>
+      <ErroEnvio mensagem={erroEnvio} />
     </form>
   );
 }

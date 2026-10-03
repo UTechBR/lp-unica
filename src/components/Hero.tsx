@@ -1,6 +1,8 @@
 import { Container } from './Container';
 import { LegacyAnchor } from './LegacyAnchor';
 import { LeadForm } from './LeadForm';
+import { cardCls, cardSubtituloCls, cardTituloCls } from './form/estilos';
+import { cn } from '../utils/cn';
 import { BancosHero } from './BancosHero';
 import type { Banco } from '../types/conteudo';
 
@@ -26,11 +28,11 @@ export function Hero({ bancos }: { bancos: Banco[] }) {
 
           <div
             id="seja-parceiro"
-            className="scroll-mt-24 rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+            className={cn(cardCls, 'scroll-mt-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start')}
           >
             <div className="mb-6">
-              <h2 className="font-heading text-2xl font-semibold text-secondary">Seja um parceiro Única</h2>
-              <p className="mt-1 text-sm text-secondary-400">Preencha e nosso time fala com você pelo WhatsApp.</p>
+              <h2 className={cardTituloCls}>Seja um parceiro Única</h2>
+              <p className={cardSubtituloCls}>Preencha e nosso time fala com você pelo WhatsApp.</p>
             </div>
             <LeadForm />
           </div>

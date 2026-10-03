@@ -2,6 +2,7 @@
 import { EyeOff, Lock, ShieldCheck } from 'lucide-react';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { DenuncieForm } from '../components/DenuncieForm.tsx';
+import { cardCls, cardSubtituloCls, cardTituloCls } from '../components/form/estilos';
 
 // TODO(compliance): validar os textos das garantias (só prometer o que o processo cumpre).
 const garantias = [
@@ -47,9 +48,9 @@ const garantias = [
         </ul>
       </div>
 
-      <div class="rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-7">
-        <h2 class="font-heading text-[22px] font-semibold text-secondary">Faça sua denúncia</h2>
-        <p class="mt-1 text-sm text-secondary-400">Descreva os fatos com o máximo de detalhes possível.</p>
+      <div class={cardCls}>
+        <h2 class={cardTituloCls}>Faça sua denúncia</h2>
+        <p class={cardSubtituloCls}>Descreva os fatos com o máximo de detalhes possível.</p>
         <div class="mt-6">
           <!-- client:load: é o conteúdo principal da página, já visível ao abrir. -->
           <DenuncieForm client:load />

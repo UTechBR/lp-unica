@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckCircle2 } from 'lucide-react';
 import { Input } from './Input';
 import { Select } from './Select';
 import { TextArea } from './TextArea';
+import {
+  AvisoObrigatorios,
+  BotaoEnviar,
+  Consentimento,
+  ErroEnvio,
+  LinkPrivacidade,
+  SucessoEnvio,
+  mensagemDeErro,
+} from './form/Envio';
+import { formCls } from './form/estilos';
 import { contactFormSchema, contatoAssuntos } from '../utils/schemas';
 import type { ContactFormData, ContatoAssunto } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
@@ -14,12 +23,12 @@ import { LEAD_FORM_HREF } from '../config/navegacao';
 const assuntoOptions = contatoAssuntos.map((a) => ({ label: a.rotulo, value: a.valor }));
 const ehAssunto = (valor: string | null): valor is ContatoAssunto => contatoAssuntos.some((a) => a.valor === valor);
 
-const avisoCls = 'rounded-control bg-surface-muted p-3.5 text-sm text-secondary';
+const avisoCls = 'mb-3 rounded-control bg-surface-muted p-3.5 text-sm text-secondary';
 const linkAvisoCls = 'font-semibold underline underline-offset-4 hover:text-primary';
 
 export function ContatoForm() {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [erroEnvio, setErroEnvio] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erroEnvio, setErroEnvio] = useState<string | null>(null);
 
   const {
     register,
@@ -31,7 +40,7 @@ export function ContatoForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
-    defaultValues: { name: '', email: '', phone: '', subject: undefined, message: '' },
+    defaultValues: { name: '', email: '', phone: '', subject: undefined, message: '', consent: undefined },
   });
   const assunto = watch('subject');
 
@@ -42,43 +51,35 @@ export function ContatoForm() {
   }, [setValue]);
 
   const onSubmit = async (data: ContactFormData) => {
-    setErroEnvio(false);
+    setErroEnvio(null);
     const result = await submitContact(data);
     if (result.success) {
-      setIsSuccess(true);
+      setEnviado(true);
       reset();
     } else {
-      setErroEnvio(true);
+      setErroEnvio(mensagemDeErro(result.error));
     }
   };
 
-  if (isSuccess) {
+  if (enviado) {
     return (
-      <div role="status" className="flex flex-col items-center gap-3 py-6 text-center">
-        <CheckCircle2 size={44} className="text-primary" aria-hidden="true" />
-        <h3 className="font-heading text-xl font-semibold text-secondary">Mensagem enviada</h3>
-        <p className="text-sm text-secondary-400">Obrigado pelo contato. Nosso time vai responder pelo e-mail ou telefone informado.</p>
-        <button
-          type="button"
-          onClick={() => setIsSuccess(false)}
-          className="mt-2 text-sm font-semibold text-secondary underline underline-offset-4 hover:text-primary"
-        >
-          Enviar outra mensagem
-        </button>
-      </div>
+      <SucessoEnvio titulo="Mensagem enviada" acao={{ rotulo: 'Enviar outra mensagem', onClick: () => setEnviado(false) }}>
+        Obrigado pelo contato. Nosso time vai responder pelo e-mail ou telefone informado.
+      </SucessoEnvio>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <AvisoObrigatorios />
       <Controller
         control={control}
         name="subject"
         render={({ field }) => (
           <Select
+            ref={field.ref}
             id="contato-assunto"
             label="Assunto"
-            required
             placeholder="Selecione"
             options={assuntoOptions}
             error={errors.subject?.message}
@@ -107,12 +108,11 @@ export function ContatoForm() {
             </p>
           )}
 
-          <Input id="contato-nome" label="Nome completo" required autoComplete="name" error={errors.name?.message} {...register('name')} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Input id="contato-nome" label="Nome completo" autoComplete="name" error={errors.name?.message} {...register('name')} />
+          <div className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
             <Input
               id="contato-email"
               label="E-mail"
-              required
               type="email"
               autoComplete="email"
               error={errors.email?.message}
@@ -123,9 +123,9 @@ export function ContatoForm() {
               name="phone"
               render={({ field }) => (
                 <Input
+                  ref={field.ref}
                   id="contato-telefone"
                   label="Telefone"
-                  required
                   type="tel"
                   inputMode="tel"
                   autoComplete="tel"
@@ -137,32 +137,14 @@ export function ContatoForm() {
               )}
             />
           </div>
-          <TextArea id="contato-mensagem" label="Mensagem" required rows={5} error={errors.message?.message} {...register('message')} />
+          <TextArea id="contato-mensagem" label="Mensagem" rows={5} error={errors.message?.message} {...register('message')} />
 
-          <label className="flex items-start gap-2.5 text-sm text-secondary-400">
-            <input
-              type="checkbox"
-              className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
-              aria-invalid={errors.consent ? true : undefined}
-              aria-describedby="contato-consent-erro"
-              {...register('consent')}
-            />
-            Autorizo a Única Promotora a usar estes dados para responder ao meu contato.
-          </label>
-          <span id="contato-consent-erro" className="-mt-2 text-xs font-medium text-primary empty:hidden" aria-live="polite">
-            {errors.consent?.message}
-          </span>
+          <Consentimento id="contato-consent" error={errors.consent?.message} {...register('consent')}>
+            Autorizo a Única Promotora a usar estes dados para responder ao meu contato, conforme a <LinkPrivacidade />.
+          </Consentimento>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="h-12 w-full rounded-control bg-brand font-heading text-base font-bold text-white transition-colors hover:bg-primary-600 disabled:opacity-60"
-          >
-            {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
-          </button>
-          <p role="status" aria-live="polite" className="text-sm font-medium text-primary empty:hidden">
-            {erroEnvio && 'Não foi possível enviar agora. Tente de novo em alguns minutos ou ligue para nós.'}
-          </p>
+          <BotaoEnviar enviando={isSubmitting}>Enviar mensagem</BotaoEnviar>
+          <ErroEnvio mensagem={erroEnvio} />
         </>
       )}
     </form>

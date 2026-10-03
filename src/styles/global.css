@@ -69,6 +69,14 @@
     @apply bg-primary/20 text-secondary;
   }
 
+  /* Ao focar um campo (ex.: o primeiro com erro no envio), o navegador rola até ele:
+     a margem evita que fique escondido atrás do header fixo. */
+  input,
+  select,
+  textarea {
+    scroll-margin-top: 7rem;
+  }
+
   :focus-visible {
     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-white rounded-sm;
   }

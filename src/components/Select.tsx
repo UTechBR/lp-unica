@@ -2,36 +2,34 @@ import { forwardRef } from 'react';
 import type { SelectHTMLAttributes } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { alturaCls, campoWrapCls, controleCls, erroCls, opcionalCls, rotuloCls } from './form/estilos';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   error?: string;
   options: { label: string; value: string }[];
   placeholder?: string;
+  optional?: boolean;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, error, options, placeholder, id, className, required, ...rest }, ref) => {
+  ({ label, error, options, placeholder, optional, id, className, ...rest }, ref) => {
     const selectId = id ?? label.toLowerCase().replace(/\s+/g, '-');
     const errorId = `${selectId}-error`;
 
     return (
-      <div className="flex flex-col gap-1.5 text-left">
-        <label htmlFor={selectId} className="text-sm font-semibold text-secondary">
-          {label} {required && <span className="text-primary">*</span>}
+      <div className={campoWrapCls}>
+        <label htmlFor={selectId} className={rotuloCls}>
+          {label} {optional && <span className={opcionalCls}>(opcional)</span>}
         </label>
         <div className="relative">
           <select
             ref={ref}
             id={selectId}
-            aria-invalid={Boolean(error)}
+            required={!optional}
+            aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
-            className={cn(
-              'w-full appearance-none rounded-control border border-surface-borderMuted bg-white px-4 py-3 pr-10 text-secondary transition-colors duration-200',
-              'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
-              error && 'border-primary-400 focus:border-primary-500 focus:ring-primary/30',
-              className,
-            )}
+            className={cn(controleCls, alturaCls, 'appearance-none pr-10', className)}
             {...rest}
           >
             {placeholder && (
@@ -51,11 +49,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             aria-hidden="true"
           />
         </div>
-        {error && (
-          <p id={errorId} role="alert" className="text-xs font-medium text-primary-600">
-            {error}
-          </p>
-        )}
+        <span id={errorId} className={erroCls} aria-live="polite">
+          {error}
+        </span>
       </div>
     );
   },

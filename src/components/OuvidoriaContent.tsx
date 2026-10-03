@@ -1,6 +1,8 @@
 import { Container } from './Container';
 import { AnimatedSection } from './AnimatedSection';
 import { OuvidoriaForm } from './OuvidoriaForm';
+import { cardCls, cardTituloCls } from './form/estilos';
+import { cn } from '../utils/cn';
 
 export function OuvidoriaContent() {
   return (
@@ -23,8 +25,11 @@ export function OuvidoriaContent() {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection direction="up" delay={0.15} className="card-surface mt-8 p-6 md:p-8">
-          <OuvidoriaForm />
+        <AnimatedSection direction="up" delay={0.15} className={cn(cardCls, 'mt-8')}>
+          <h2 className={cardTituloCls}>Registre sua manifestação</h2>
+          <div className="mt-6">
+            <OuvidoriaForm />
+          </div>
         </AnimatedSection>
       </Container>
     </section>

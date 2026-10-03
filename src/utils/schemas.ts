@@ -2,26 +2,38 @@ import { z } from 'zod';
 import { brazilianStates } from '../types';
 import { unmaskDigits } from './masks';
 
+// Mensagens de erro: o mesmo texto para o mesmo tipo de erro em todos os formulários.
+export const msg = {
+  nome: 'Informe seu nome completo',
+  email: 'Informe um e-mail válido',
+  telefone: 'Informe um telefone válido com DDD',
+  selecione: (campo: string) => `Selecione ${campo}`,
+  informe: (campo: string) => `Informe ${campo}`,
+  minimo: (n: number) => `Escreva pelo menos ${n} caracteres`,
+  maximo: (n: number) => `Use no máximo ${n} caracteres`,
+  consentimento: 'Marque a autorização para continuar',
+};
+
 const nameField = z
   .string()
   .trim()
-  .min(3, 'Informe seu nome completo')
-  .max(100, 'Nome muito longo');
+  .min(3, msg.nome)
+  .max(100, msg.maximo(100));
 
 const phoneField = z
   .string()
   .trim()
-  .refine((value) => unmaskDigits(value).length >= 10, 'Informe um telefone válido com DDD');
+  .refine((value) => unmaskDigits(value).length >= 10, msg.telefone);
 
-const emailField = z.string().trim().email('Informe um e-mail válido');
+const emailField = z.string().trim().email(msg.email);
 
 export const leadFormSchema = z.object({
   name: nameField,
   phone: phoneField,
   email: emailField,
-  city: z.string().trim().min(2, 'Informe sua cidade'),
-  state: z.enum(brazilianStates, { message: 'Selecione um estado' }),
-  consent: z.literal(true, { message: 'Autorize o contato para continuar' }),
+  city: z.string().trim().min(2, msg.informe('sua cidade')),
+  state: z.enum(brazilianStates, { message: msg.selecione('a UF') }),
+  consent: z.literal(true, { message: msg.consentimento }),
 });
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;
@@ -43,10 +55,10 @@ export const contactFormSchema = z.object({
   phone: phoneField,
   subject: z.enum(
     contatoAssuntos.map((a) => a.valor) as [ContatoAssunto, ...ContatoAssunto[]],
-    { message: 'Selecione o assunto' },
+    { message: msg.selecione('o assunto') },
   ),
-  message: z.string().trim().min(10, 'Sua mensagem precisa ter pelo menos 10 caracteres').max(1000),
-  consent: z.literal(true, { message: 'Autorize o uso dos dados para continuar' }),
+  message: z.string().trim().min(10, msg.minimo(10)).max(1000, msg.maximo(1000)),
+  consent: z.literal(true, { message: msg.consentimento }),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -57,8 +69,8 @@ export const ouvidoriaFormSchema = z.object({
   name: nameField,
   email: emailField,
   phone: phoneField,
-  subject: z.string().trim().min(3, 'Informe o assunto'),
-  message: z.string().trim().max(2000).optional(),
+  subject: z.string().trim().min(3, msg.informe('o assunto')),
+  message: z.string().trim().max(2000, msg.maximo(2000)).optional(),
 });
 
 export type OuvidoriaFormData = z.infer<typeof ouvidoriaFormSchema>;
@@ -84,8 +96,8 @@ export const denunciaAnexos = {
   extensoes: ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'doc', 'docx', 'xls', 'xlsx', 'txt', 'mp3', 'm4a', 'mp4', 'mov'],
 } as const;
 
-const categoryField = z.enum(denuncieCategories, { message: 'Selecione a categoria' });
-const descriptionField = z.string().trim().min(20, 'Descreva a denúncia com pelo menos 20 caracteres').max(3000);
+const categoryField = z.enum(denuncieCategories, { message: msg.selecione('a categoria') });
+const descriptionField = z.string().trim().min(20, msg.minimo(20)).max(3000, msg.maximo(3000));
 
 // Identificação só é exigida quando a denúncia não é anônima. Todas as regras ficam no
 // superRefine, que o zod só executa se o objeto-base for válido: assim todos os erros
