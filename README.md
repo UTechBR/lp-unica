@@ -23,11 +23,15 @@ Sem backend Node em produção: o build é 100% estático e os `.php` sobem junt
 
 ```bash
 npm install
-npm run dev                        # frontend em http://localhost:4321
-php -S localhost:8001 -t public    # backend PHP local (necessário pros formulários funcionarem)
+npm run dev        # frontend em http://localhost:4321
+npm run dev:php    # backend PHP local em http://localhost:8001 (outro terminal; necessário pros formulários)
 ```
 
 O `astro.config.mjs` já proxeia `/api/*` para `localhost:8001` em dev. Sem o servidor PHP rodando, os formulários retornam erro de rede (comportamento esperado, não é bug).
+
+O `dev:php` precisa do PHP 8+ no PATH (no Windows: `winget install PHP.PHP.8.4`). Ele passa os limites de upload por `-d` porque o servidor embutido não lê o `public/api/.user.ini`; sem isso, anexos da denúncia acima de 2 MB falham.
+
+Os formulários enviados em dev gravam CSVs (e anexos) reais em `public/api/`, que o `npm run build` copia para `dist/api/`. Apague-os do `dist/` antes de subir, ou eles sobrescrevem as planilhas de produção.
 
 ```bash
 npm run build      # build de produção em /dist

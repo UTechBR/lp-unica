@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "dev:php": "php -d upload_max_filesize=10M -d post_max_size=30M -d max_file_uploads=10 -S localhost:8001 -t public",
     "build": "astro build",
     "lint": "oxlint",
     "preview": "astro preview"
