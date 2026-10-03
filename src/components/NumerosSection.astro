@@ -1,0 +1,41 @@
+---
+import { numerosEmpresa } from '../config/empresa';
+import { listar } from '../lib/conteudo';
+
+// "A Única em números": números grafite em cards claros (o destaque vem do tamanho, não
+// da cor; vermelho só no filete do título). Só números confirmados, e a faixa some se
+// houver menos de dois.
+const totalBancos = (await listar('bancos')).length;
+// Dezena abaixo do total, como no hero: 22 vira "20+" e acompanha a lista.
+const bancosArredondado = Math.floor((totalBancos - 1) / 10) * 10;
+
+const numeros = [
+  { valor: `${bancosArredondado}+`, rotulo: 'bancos e financeiras parceiros' },
+  ...numerosEmpresa.filter((n) => n.confirmado),
+];
+---
+
+{
+  numeros.length >= 2 && (
+    <section class="bg-white">
+      <div class="container-app py-16 md:py-20">
+        <div class="flex items-center gap-3">
+          <span class="h-0.5 w-7 shrink-0 bg-brand" aria-hidden="true" />
+          <h2 class="font-heading text-lg font-normal text-secondary">
+            A Única em <strong class="font-bold">números</strong>
+          </h2>
+        </div>
+        <dl class="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {numeros.map(({ valor, rotulo }) => (
+            <div class="flex flex-col-reverse rounded-surface border border-surface-border p-6">
+              <dt class="mt-2 text-[15px] text-secondary-400">{rotulo}</dt>
+              <dd class="font-heading text-[clamp(2.25rem,1.8rem+2vw,3rem)] font-bold leading-none text-secondary">
+                {valor}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )
+}
