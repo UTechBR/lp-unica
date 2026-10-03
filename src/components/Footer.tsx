@@ -12,24 +12,29 @@ const linkCls =
   'group text-white/70 decoration-white/40 underline-offset-4 transition-colors duration-150 ' +
   'hover:text-white hover:underline focus-visible:text-white focus-visible:underline';
 
-function FooterLink({ link, className }: { link: NavItem; className?: string }) {
+interface FooterLinkProps {
+  link: NavItem;
+  className?: string;
+  /** Sem a seta de link externo (ex.: barra legal, onde todos os links são PDFs em nova aba). */
+  semSeta?: boolean;
+}
+
+function FooterLink({ link, className, semSeta = false }: FooterLinkProps) {
   return (
     <a
       href={link.href}
-      className={cn(linkCls, className)}
+      className={cn(linkCls, 'whitespace-pre-line', className)}
       {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {link.label}
-      {link.external && (
-        <>
-          <ArrowUpRight
-            size={12}
-            className="ml-1 inline-block align-[-1px] text-white/40 group-hover:text-white/80"
-            aria-hidden="true"
-          />
-          <span className="sr-only"> (abre em nova aba)</span>
-        </>
+      {link.external && !semSeta && (
+        <ArrowUpRight
+          size={12}
+          className="ml-1 inline-block align-[-1px] text-white/40 group-hover:text-white/80"
+          aria-hidden="true"
+        />
       )}
+      {link.external && <span className="sr-only"> (abre em nova aba)</span>}
     </a>
   );
 }
@@ -98,7 +103,7 @@ export function Footer() {
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {legalLinks.map((link) => (
               <li key={link.label}>
-                <FooterLink link={link} />
+                <FooterLink link={link} semSeta />
               </li>
             ))}
             <li>

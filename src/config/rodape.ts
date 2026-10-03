@@ -27,7 +27,8 @@ export const footerColumns: FooterLinkColumn[] = [
     title: 'Atendimento',
     links: [
       {
-        label: 'R. Rio de Janeiro, 600, salas 401 a 408 · Centro, Belo Horizonte/MG · 30160-041',
+        // \n vira quebra de linha no rodapé (a seta de link externo fica só no fim).
+        label: 'R. Rio de Janeiro, 600, salas 401 a 408\nCentro, Belo Horizonte/MG · 30160-041',
         href: companyInfo.mapsUrl,
         external: true,
       },
