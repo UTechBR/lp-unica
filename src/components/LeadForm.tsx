@@ -9,7 +9,6 @@ import { submitLead } from '../services/leadService';
 import { Input } from './Input';
 import { Select } from './Select';
 import {
-  AvisoObrigatorios,
   BotaoEnviar,
   Consentimento,
   ErroEnvio,
@@ -57,7 +56,6 @@ export function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
-      <AvisoObrigatorios />
       <Input id="lead-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
 
       <Controller

@@ -17,15 +17,25 @@ if (!is_array($data)) {
     exit;
 }
 
+// Tipos aceitos: espelham ouvidoriaTipos em src/utils/schemas.ts.
+const TIPOS = ['Reclamação', 'Solicitação', 'Sugestão', 'Elogio'];
+
 $name    = trim((string) ($data['name'] ?? ''));
 $email   = trim((string) ($data['email'] ?? ''));
 $phone   = trim((string) ($data['phone'] ?? ''));
-$subject = trim((string) ($data['subject'] ?? ''));
-$message = trim((string) ($data['message'] ?? '')); // opcional
+$tipo    = trim((string) ($data['tipo'] ?? ''));
+$banco   = trim((string) ($data['banco'] ?? '')); // opcional
+$message = trim((string) ($data['message'] ?? ''));
 
-if ($name === '' || $email === '' || $phone === '' || $subject === '') {
+if ($name === '' || $email === '' || $phone === '' || $tipo === '' || $message === '') {
     http_response_code(422);
     echo json_encode(['success' => false, 'error' => 'missing_fields']);
+    exit;
+}
+
+if (!in_array($tipo, TIPOS, true)) {
+    http_response_code(422);
+    echo json_encode(['success' => false, 'error' => 'invalid_type']);
     exit;
 }
 
@@ -41,17 +51,23 @@ function csv_safe(string $value): string
     return preg_match('/^[=+\-@]/', $value) === 1 ? "'" . $value : $value;
 }
 
+// Protocolo devolvido à pessoa e registrado na planilha.
+$protocolo = 'OUV-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
+
 $row = [
     date('Y-m-d H:i:s'),
+    $protocolo,
+    csv_safe($tipo),
+    csv_safe($banco),
     csv_safe($name),
     csv_safe($email),
     csv_safe($phone),
-    csv_safe($subject),
     csv_safe($message),
     $_SERVER['REMOTE_ADDR'] ?? '',
 ];
 
-$file = __DIR__ . '/ouvidoria.csv';
+// ouvidoria-manifestacoes.csv substitui ouvidoria.csv (que tinha outras colunas e segue guardado).
+$file = __DIR__ . '/ouvidoria-manifestacoes.csv';
 $isNew = !file_exists($file);
 
 $fp = fopen($file, 'ab');
@@ -63,11 +79,11 @@ if ($fp === false) {
 
 if (flock($fp, LOCK_EX)) {
     if ($isNew) {
-        fputcsv($fp, ['data_hora', 'nome', 'email', 'telefone', 'assunto', 'mensagem', 'ip']);
+        fputcsv($fp, ['data_hora', 'protocolo', 'tipo', 'banco', 'nome', 'email', 'telefone', 'mensagem', 'ip']);
     }
     fputcsv($fp, $row);
     flock($fp, LOCK_UN);
 }
 fclose($fp);
 
-echo json_encode(['success' => true]);
+echo json_encode(['success' => true, 'protocolo' => $protocolo]);

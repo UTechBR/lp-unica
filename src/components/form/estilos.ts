@@ -4,8 +4,8 @@
 // visível, foco grafite e erro num espaço reservado abaixo do campo (o layout não pula).
 //
 // Comportamento (para um formulário novo, siga LeadForm ou ContatoForm):
-// - Campos: Input, Select e TextArea. Todo campo é obrigatório; os opcionais recebem
-//   `optional` e mostram "(opcional)". O formulário começa com <AvisoObrigatorios />.
+// - Campos: Input, Select e TextArea. Todo campo é obrigatório; só os opcionais são
+//   sinalizados, com `optional` ("(opcional)" no rótulo). Não há asterisco nem aviso geral.
 // - Validação: zod + react-hook-form, só no envio; depois revalida ao digitar. Todos os
 //   erros aparecem juntos e o foco vai ao primeiro (em Controller, passe ref={field.ref}).
 // - Mensagens de erro: sempre de `msg` em utils/schemas.ts.

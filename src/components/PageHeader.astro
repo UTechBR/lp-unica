@@ -3,7 +3,8 @@
 // (o mesmo ritmo dos títulos da Home) e subtítulo. Conteúdo extra (ex.: busca) via slot.
 interface Props {
   eyebrow?: string;
-  leve: string;
+  /** Parte leve do título; opcional para títulos de uma palavra (ex.: "Ouvidoria"). */
+  leve?: string;
   forte: string;
   subtitulo?: string;
 }
@@ -15,7 +16,7 @@ const { eyebrow, leve, forte, subtitulo } = Astro.props;
   <div class="container-app py-14 md:py-16">
     {eyebrow && <p class="mb-3.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-white/60">{eyebrow}</p>}
     <h1 class="font-heading text-[clamp(2.25rem,1.6rem+2.6vw,3.5rem)] leading-[1.08] text-white">
-      <span class="font-light">{leve}</span> <strong class="font-bold">{forte}</strong>
+      {leve && <span class="font-light">{leve} </span>}<strong class="font-bold">{forte}</strong>
     </h1>
     {subtitulo && <p class="mt-4 max-w-[60ch] text-[17px] leading-relaxed text-white/80">{subtitulo}</p>}
     <slot />

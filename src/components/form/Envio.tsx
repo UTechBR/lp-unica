@@ -4,14 +4,8 @@ import { CheckCircle2 } from 'lucide-react';
 import { erroCls } from './estilos';
 import { documentos } from '../../config/documentos';
 
-// Peças comuns a todo formulário: aviso de obrigatórios (no início), consentimento ou
-// aviso de privacidade, botão de envio, erro de envio e o estado de sucesso, que
-// substitui o formulário no mesmo card.
-
-/** Primeira linha de todo formulário: todos os campos são obrigatórios, salvo "(opcional)". */
-export function AvisoObrigatorios() {
-  return <p className="mb-2 text-xs text-secondary-400">Todos os campos são obrigatórios, exceto os marcados como opcionais.</p>;
-}
+// Peças comuns a todo formulário: consentimento ou aviso de privacidade, botão de envio,
+// erro de envio e o estado de sucesso, que substitui o formulário no mesmo card.
 
 export function LinkPrivacidade() {
   return (

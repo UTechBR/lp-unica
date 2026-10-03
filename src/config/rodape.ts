@@ -21,13 +21,16 @@ export const footerColumns: FooterLinkColumn[] = [
       { label: 'Sobre nós', href: '/#sobre' },
       { label: 'Única shorts', href: '/#shorts' },
       { label: 'Trabalhe conosco', href: TRABALHE_CONOSCO_URL, external: true },
-      { label: 'Canais de atendimento dos bancos', href: '/bancos-parceiros' },
     ],
   },
   {
     title: 'Atendimento',
     links: [
+      // Do canal mais comum ao mais específico.
       { label: 'Fale conosco', href: '/contato' },
+      { label: 'Canais dos bancos', href: '/bancos-parceiros' },
+      { label: 'Ouvidoria', href: '/ouvidoria' },
+      { label: 'Canal de denúncias', href: '/denuncie' },
       {
         // \n vira quebra de linha no rodapé (a seta de link externo fica só no fim).
         label: companyInfo.addressLines.join('\n'),

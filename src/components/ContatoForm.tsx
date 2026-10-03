@@ -5,7 +5,6 @@ import { Input } from './Input';
 import { Select } from './Select';
 import { TextArea } from './TextArea';
 import {
-  AvisoObrigatorios,
   BotaoEnviar,
   Consentimento,
   ErroEnvio,
@@ -71,7 +70,6 @@ export function ContatoForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
-      <AvisoObrigatorios />
       <Controller
         control={control}
         name="subject"

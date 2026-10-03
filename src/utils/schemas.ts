@@ -63,14 +63,18 @@ export const contactFormSchema = z.object({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
-// Campos replicados do popup real "Ouvidoria" (o mesmo que o link "Contato" do rodapé abre):
-// Nome, Email, Telefone, Assunto, Mensagem (opcional).
+// Ouvidoria: nome, e-mail, telefone, tipo de manifestação, banco relacionado (opcional)
+// e mensagem. Tipos de manifestação: espelham TIPOS em public/api/ouvidoria.php.
+export const ouvidoriaTipos = ['Reclamação', 'Solicitação', 'Sugestão', 'Elogio'] as const;
+
 export const ouvidoriaFormSchema = z.object({
   name: nameField,
   email: emailField,
   phone: phoneField,
-  subject: z.string().trim().min(3, msg.informe('o assunto')),
-  message: z.string().trim().max(2000, msg.maximo(2000)).optional(),
+  tipo: z.enum(ouvidoriaTipos, { message: msg.selecione('o tipo de manifestação') }),
+  /** Nome do banco (bancos.json) ou vazio; opcional. */
+  banco: z.string().optional(),
+  message: z.string().trim().min(20, msg.minimo(20)).max(2000, msg.maximo(2000)),
 });
 
 export type OuvidoriaFormData = z.infer<typeof ouvidoriaFormSchema>;

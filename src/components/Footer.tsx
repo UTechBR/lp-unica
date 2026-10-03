@@ -1,4 +1,4 @@
-import { ArrowUpRight, ShieldAlert } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Container } from './Container';
 import { footerColumns, legalLinks } from '../config/rodape';
 import { socialLinks } from '../config/navegacao';
@@ -106,12 +106,6 @@ export function Footer() {
                 <FooterLink link={link} semSeta />
               </li>
             ))}
-            <li>
-              <a href="/denuncie" className={cn(linkCls, 'inline-flex items-center gap-1.5')}>
-                <ShieldAlert size={14} aria-hidden="true" />
-                Denuncie
-              </a>
-            </li>
             <li>
               {/* Aberto pelo CookieConsent via data-cookie-preferences (o rodapé não é hidratado). */}
               <button type="button" data-cookie-preferences className={linkCls}>

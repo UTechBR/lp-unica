@@ -1,13 +1,78 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { OuvidoriaHero } from '../components/OuvidoriaHero.tsx';
-import { OuvidoriaContent } from '../components/OuvidoriaContent.tsx';
+import PageHeader from '../components/PageHeader.astro';
+import { OuvidoriaForm } from '../components/OuvidoriaForm.tsx';
+import { cardCls, cardTituloCls } from '../components/form/estilos';
+import { listar } from '../lib/conteudo';
+
+const bancos = (await listar('bancos')).map((banco) => banco.nome).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+const linkCls = 'font-semibold text-secondary underline underline-offset-4 hover:text-primary';
+
+// TODO(compliance): confirmar se a ouvidoria é formal (protocolo, prazo e responsável),
+// o texto do passo 3, os tipos de manifestação e o destino do formulário.
 ---
 
 <BaseLayout
   title="Ouvidoria"
-  description="Canal de Ouvidoria da Única Promotora para reclamações, sugestões e manifestações dos nossos clientes."
+  description="Ouvidoria da Única Promotora: segunda instância para reclamações, solicitações, sugestões e elogios quando o atendimento habitual não resolveu."
 >
-  <OuvidoriaHero />
-  <OuvidoriaContent client:visible />
+  <PageHeader
+    eyebrow="Atendimento"
+    forte="Ouvidoria"
+    subtitulo="A segunda instância de atendimento, para quando o atendimento habitual não resolveu a sua questão."
+  />
+
+  <section class="bg-white">
+    <div class="container-app grid gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_460px] lg:items-start">
+      <div>
+        <h2 class="font-heading text-2xl font-semibold text-secondary">Como funciona</h2>
+        <ol class="mt-6 grid gap-6">
+          <li class="flex gap-4">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary-100 font-heading font-bold text-secondary" aria-hidden="true">1</span>
+            <div>
+              <p class="font-heading text-base font-semibold text-secondary">Procure o atendimento habitual</p>
+              <p class="mt-1 text-[15px] leading-relaxed text-secondary-400">
+                A maioria das questões se resolve no primeiro contato. <a href="/contato" class={linkCls}>Fale conosco</a>.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary-100 font-heading font-bold text-secondary" aria-hidden="true">2</span>
+            <div>
+              <p class="font-heading text-base font-semibold text-secondary">Dúvida sobre o seu contrato?</p>
+              <p class="mt-1 text-[15px] leading-relaxed text-secondary-400">
+                O contrato é com o banco. Fale com o SAC ou a ouvidoria da instituição em
+                <a href="/bancos-parceiros" class={linkCls}>Bancos parceiros</a>.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary-100 font-heading font-bold text-secondary" aria-hidden="true">3</span>
+            <div>
+              <p class="font-heading text-base font-semibold text-secondary">Não foi resolvido?</p>
+              <p class="mt-1 text-[15px] leading-relaxed text-secondary-400">
+                Registre sua manifestação aqui. Você recebe um número de protocolo, e a resposta vem em até 10 dias úteis.
+              </p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="mt-10 border-t border-surface-border pt-6 text-sm leading-relaxed text-secondary-400">
+          Você também pode buscar o
+          <a href="https://www.consumidor.gov.br" target="_blank" rel="noopener noreferrer" class={linkCls}>
+            consumidor.gov.br<span class="sr-only"> (abre em nova aba)</span>
+          </a>
+          para soluções alternativas de conflito.
+        </p>
+      </div>
+
+      <div class={cardCls}>
+        <h2 class={cardTituloCls}>Registre sua manifestação</h2>
+        <div class="mt-6">
+          <OuvidoriaForm client:load bancos={bancos} />
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
