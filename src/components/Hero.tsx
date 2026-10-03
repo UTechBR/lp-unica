@@ -7,11 +7,12 @@ import type { Banco } from '../types/conteudo';
 export function Hero({ bancos }: { bancos: Banco[] }) {
   return (
     <>
-      {/* ids antigos: o hero e a antiga seção de bancos, para links já distribuídos */}
+      {/* ids antigos do hero e da antiga seção de bancos, para links já distribuídos.
+          "#seja-parceiro" fica no card do formulário: todo CTA cai direto nele. */}
       <LegacyAnchor id="parceirounica" />
       <LegacyAnchor id="bancos" />
       <LegacyAnchor id="parceiros" />
-      <section id="seja-parceiro" className="scroll-mt-20 bg-white">
+      <section className="bg-white">
         {/* Mobile: texto, formulário, bancos. Desktop: texto e bancos à esquerda, formulário à direita. */}
         <Container className="grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_420px] lg:grid-rows-[auto_1fr] lg:gap-y-10">
           <div className="lg:pt-8">
@@ -24,8 +25,8 @@ export function Hero({ bancos }: { bancos: Banco[] }) {
           </div>
 
           <div
-            id="lead-form"
-            className="scroll-mt-20 rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+            id="seja-parceiro"
+            className="scroll-mt-24 rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
           >
             <div className="mb-6">
               <h2 className="font-heading text-2xl font-semibold text-secondary">Seja um parceiro Única</h2>

@@ -1,15 +1,24 @@
 import { ArrowRight } from 'lucide-react';
 import { Container } from './Container';
+import { cn } from '../utils/cn';
 
-// Fecha a página: o formulário só existe no topo, então quem chega convencido ao
-// fim ganha um atalho de volta, sem um segundo formulário.
-export function FinalCta() {
+interface FinalCtaProps {
+  /** Título em duas partes: "{titulo} {destaque}?", com o destaque em negrito. */
+  titulo?: string;
+  destaque?: string;
+  /** Fundo da faixa: contraste com a seção anterior. */
+  fundo?: 'muted' | 'white';
+}
+
+// Fecha a página: o formulário só existe no topo da Home, então quem chega convencido
+// ao fim ganha um atalho de volta, sem um segundo formulário.
+export function FinalCta({ titulo = 'Pronto para crescer com a', destaque = 'Única', fundo = 'muted' }: FinalCtaProps) {
   return (
-    <section className="bg-surface-muted py-12 md:py-16">
+    <section className={cn('py-12 md:py-16', fundo === 'muted' ? 'bg-surface-muted' : 'bg-white')}>
       <Container className="flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left">
         <div>
           <h2 className="font-heading text-3xl font-light text-secondary md:text-4xl">
-            Pronto para crescer com a <strong className="font-bold">Única</strong>?
+            {titulo} <strong className="font-bold">{destaque}</strong>?
           </h2>
           <p className="mt-2 text-secondary-400">Cadastre-se e nosso time fala com você pelo WhatsApp.</p>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BancoModal } from './BancoModal';
 import type { Banco } from '../types/conteudo';
 import { cn } from '../utils/cn';
@@ -50,14 +50,11 @@ function LogoBanco({ banco, onSelect }: { banco: Banco; onSelect: (banco: Banco)
 
 // Grade de bancos do hero. A ordem é embaralhada a cada visita para nenhum banco
 // ficar sempre em destaque; até lá a grade fica transparente, para não "pular".
+// A lista completa fica em /bancos-parceiros (busca e canais), no link abaixo da grade.
 export function BancosHero({ bancos }: { bancos: Banco[] }) {
   const [ordem, setOrdem] = useState(bancos);
   const [pronto, setPronto] = useState(false);
-  const [popAberto, setPopAberto] = useState(false);
   const [selecionado, setSelecionado] = useState<Banco | null>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const botaoRef = useRef<HTMLButtonElement>(null);
-  const popId = useId();
 
   // Embaralha só depois da hidratação: fazer isso no estado inicial geraria HTML do
   // servidor diferente do cliente.
@@ -66,32 +63,12 @@ export function BancosHero({ bancos }: { bancos: Banco[] }) {
     setPronto(true);
   }, [bancos]);
 
-  useEffect(() => {
-    if (!popAberto) return;
-    const onPointerDown = (e: PointerEvent) => {
-      if (selecionado) return; // clique dentro do modal não fecha o popover
-      if (!rootRef.current?.contains(e.target as Node)) setPopAberto(false);
-    };
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape' || selecionado) return;
-      setPopAberto(false);
-      botaoRef.current?.focus();
-    };
-    document.addEventListener('pointerdown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [popAberto, selecionado]);
-
   // Dezena abaixo do total, para "mais de N" seguir verdadeiro quando a lista mudar (22 → 20).
   const maisDe = Math.floor((bancos.length - 1) / 10) * 10;
   const visiveis = ordem.slice(0, VISIVEIS);
-  const restantes = ordem.slice(VISIVEIS);
 
   return (
-    <div ref={rootRef} className="relative">
+    <div>
       <div className="mb-6 flex items-center gap-3">
         <span className="h-0.5 w-7 shrink-0 bg-brand" aria-hidden="true" />
         <p className="text-lg leading-snug text-secondary">
@@ -111,37 +88,14 @@ export function BancosHero({ bancos }: { bancos: Banco[] }) {
         ))}
       </ul>
 
-      {restantes.length > 0 && (
-        <>
-          <button
-            ref={botaoRef}
-            type="button"
-            onClick={() => setPopAberto((aberto) => !aberto)}
-            aria-expanded={popAberto}
-            aria-controls={popId}
-            className="mt-5 text-sm text-secondary underline underline-offset-4 hover:text-black"
-          >
-            + {restantes.length} instituições
-          </button>
-
-          <div
-            id={popId}
-            hidden={!popAberto}
-            className="z-30 mt-4 w-full max-w-[560px] rounded-surface border border-surface-border bg-white p-5 lg:absolute lg:left-0 lg:top-full lg:mt-3 lg:shadow-card"
-          >
-            <ul className="grid grid-cols-3 items-center gap-x-5 gap-y-4 sm:grid-cols-4 sm:gap-x-6">
-              {restantes.map((banco) => (
-                <LogoBanco key={banco.id} banco={banco} onSelect={setSelecionado} />
-              ))}
-            </ul>
-            <a
-              href="/bancos-parceiros"
-              className="mt-4 inline-block text-sm text-secondary underline underline-offset-4 hover:text-primary"
-            >
-              Ver todos os bancos parceiros →
-            </a>
-          </div>
-        </>
+      {/* Link de navegação (mesma aba): a página de bancos termina com o caminho de volta ao formulário. */}
+      {bancos.length > VISIVEIS && (
+        <a
+          href="/bancos-parceiros"
+          className="mt-5 inline-flex items-center gap-1.5 text-sm text-secondary underline underline-offset-4 hover:text-primary"
+        >
+          Ver todos os bancos parceiros <span aria-hidden="true">→</span>
+        </a>
       )}
 
       <BancoModal banco={selecionado} onClose={() => setSelecionado(null)} />
