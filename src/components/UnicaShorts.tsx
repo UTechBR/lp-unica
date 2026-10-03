@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Play, X } from 'lucide-react';
 import { Container } from './Container';
+import { LegacyAnchor } from './LegacyAnchor';
 
 const capa01 = '/images/CAPA-VIDEO.-01.jpg.jpeg';
 const capa02 = '/images/CAPA-VIDEO.-02.jpg.jpeg';
@@ -31,7 +32,9 @@ export function UnicaShorts() {
   }, [active]);
 
   return (
-    <section id="blog" className="scroll-mt-32 bg-white py-16 md:py-24">
+    <>
+    <LegacyAnchor id="blog" />
+    <section id="shorts" className="scroll-mt-20 bg-white py-16 md:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="font-heading text-[40px] leading-[36px] tracking-tight text-secondary md:text-[96px] md:leading-[90px]">
@@ -105,5 +108,6 @@ export function UnicaShorts() {
         </div>
       )}
     </section>
+    </>
   );
 }

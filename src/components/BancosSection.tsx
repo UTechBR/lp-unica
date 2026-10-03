@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import { Container } from './Container';
+import { LegacyAnchor } from './LegacyAnchor';
 import { BancoCard } from './BancoCard';
 import { BancoModal } from './BancoModal';
 import { bancos } from '../data/bancos';
@@ -50,7 +51,9 @@ export function BancosSection() {
   };
 
   return (
-    <section id="parceiros" className="scroll-mt-32 bg-surface-muted py-12 md:py-16">
+    <>
+    <LegacyAnchor id="parceiros" />
+    <section id="bancos" className="scroll-mt-20 bg-surface-muted py-12 md:py-16">
       <Container>
         <div className="mb-10 text-center">
           <h2 className="font-heading text-[40px] font-normal leading-[36px] text-secondary md:text-[32px] md:leading-[16px]">
@@ -114,5 +117,6 @@ export function BancosSection() {
 
       <BancoModal banco={selected} onClose={() => setSelected(null)} />
     </section>
+    </>
   );
 }

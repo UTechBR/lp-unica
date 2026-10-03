@@ -6,12 +6,16 @@ import { MissionVisionValues } from '../components/MissionVisionValues.tsx';
 import { UnicaShorts } from '../components/UnicaShorts.tsx';
 import { NossoSistema } from '../components/NossoSistema.tsx';
 import { ProductsSection } from '../components/ProductsSection.tsx';
+import { FinalCta } from '../components/FinalCta.tsx';
 ---
 
 <BaseLayout
   title="A solução mais eficaz para você"
   description="Utilizamos nossa experiência e conhecimento diariamente para oferecer a solução mais eficaz para você."
 >
+  <!-- Ordem segue a jornada de quem avalia a parceria: primeiro o valor (bancos,
+       produtos, sistemas), depois a confiança (sobre, shorts) e o fechamento. -->
+
   <!-- Hidratada logo (client:load): é o formulário de lead, o objetivo comercial
        principal do site — precisa estar interativo assim que a página carrega,
        sem esperar entrar na viewport (já está visível de cara). -->
@@ -20,16 +24,19 @@ import { ProductsSection } from '../components/ProductsSection.tsx';
   <!-- Hidratada: carrossel (Swiper) + modal de bancos com focus trap. -->
   <BancosSection client:visible />
 
-  <!-- Sem client:*: zero JavaScript — mesmo componente estático do piloto da Sobre. -->
-  <MissionVisionValues />
-
-  <!-- Hidratada: clique pra abrir vídeo em modal + ESC pra fechar. -->
-  <UnicaShorts client:visible />
-
   <!-- Sem client:*: grid de cards 100% estático, sem nenhuma interação/animação
        no componente original. -->
   <ProductsSection />
 
   <!-- Hidratada: cards com fade-in em cascata (Framer Motion). -->
   <NossoSistema client:visible />
+
+  <!-- Sem client:*: zero JavaScript — mesmo componente estático do piloto da Sobre. -->
+  <MissionVisionValues />
+
+  <!-- Hidratada: clique pra abrir vídeo em modal + ESC pra fechar. -->
+  <UnicaShorts client:visible />
+
+  <!-- Sem client:*: só uma âncora de volta ao formulário. -->
+  <FinalCta />
 </BaseLayout>

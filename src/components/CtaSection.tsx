@@ -37,7 +37,7 @@ export function CtaSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <a href="/#parceirounica">
+          <a href="/#seja-parceiro">
             <Button variant="secondary" size="lg" rightIcon={<ArrowRight size={20} aria-hidden="true" />}>
               Quero ser parceiro agora
             </Button>

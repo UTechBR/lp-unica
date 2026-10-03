@@ -82,16 +82,11 @@ export interface SacContact {
   deficient?: string;
 }
 
-export interface InternalTool {
+export interface SystemAccessLink {
   name: string;
   description: string;
-  href: string;
-  icon: IconComponent;
-}
-
-export interface InternalToolCategory {
-  label: string;
-  tools: InternalTool[];
+  /** Sem href = endereço ainda não definido; o item aparece como "em breve". */
+  href?: string;
 }
 
 export const brazilianStates = [

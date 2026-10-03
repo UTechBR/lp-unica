@@ -1,14 +1,16 @@
 import type { FooterLinkColumn, SacContact } from '../types';
-import { DADOS_TITULARIDADE_URL, POLICY_URLS, TRABALHE_CONOSCO_URL } from './navigation';
+import { DADOS_TITULARIDADE_URL, LEAD_FORM_HREF, POLICY_URLS, TRABALHE_CONOSCO_URL } from './navigation';
 
 export const footerColumns: FooterLinkColumn[] = [
   {
     title: 'Institucional',
     links: [
-      { label: 'Sobre Nós', href: '/#sobre-nos' },
+      { label: 'Seja parceiro', href: LEAD_FORM_HREF },
+      { label: 'Bancos parceiros', href: '/#bancos' },
       { label: 'Produtos', href: '/#produtos' },
-      { label: 'Parceiros', href: '/#parceiros' },
-      { label: 'Contato', href: '/#parceirounica' },
+      { label: 'Sistemas', href: '/#sistemas' },
+      { label: 'Sobre nós', href: '/#sobre' },
+      { label: 'Única shorts', href: '/#shorts' },
       { label: 'Trabalhe Conosco', href: TRABALHE_CONOSCO_URL, external: true },
     ],
   },

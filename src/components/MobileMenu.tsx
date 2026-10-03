@@ -1,6 +1,6 @@
-import { ChevronRight, LogIn } from 'lucide-react';
-import { mainNav, socialLinks, PARTNER_SYSTEM_URL } from '../data/navigation';
-import { Button } from './Button';
+import { useState } from 'react';
+import { ArrowUpRight, ChevronDown, ChevronRight } from 'lucide-react';
+import { mainNav, socialLinks, systemAccessLinks, LEAD_FORM_HREF } from '../data/navigation';
 import { cn } from '../utils/cn';
 
 interface MobileMenuProps {
@@ -9,7 +9,9 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
-  const isActive = (href: string) => (href.split('#')[0] || '/') === currentPath;
+  const [systemsOpen, setSystemsOpen] = useState(false);
+  // Âncoras da Home não têm estado ativo aqui: o drawer só fica aberto no topo da navegação.
+  const isActive = (href: string) => !href.includes('#') && href === currentPath;
 
   return (
     <div className="flex h-full flex-col">
@@ -17,52 +19,72 @@ export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
         <ul className="flex flex-col divide-y divide-surface-border">
           {mainNav.map((item) => (
             <li key={item.label}>
-              {item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={onNavigate}
-                  className="flex items-center justify-between py-4 font-heading font-semibold text-secondary hover:text-primary"
-                >
-                  {item.label}
-                  <ChevronRight size={18} aria-hidden="true" />
-                </a>
-              ) : (
-                <a
-                  href={item.href}
-                  onClick={onNavigate}
-                  className={cn(
-                    'flex items-center justify-between py-4 font-heading font-semibold text-secondary hover:text-primary',
-                    isActive(item.href) && 'text-primary',
-                  )}
-                >
-                  {item.label}
-                  <ChevronRight size={18} aria-hidden="true" />
-                </a>
-              )}
+              <a
+                href={item.href}
+                onClick={onNavigate}
+                className={cn(
+                  'flex items-center justify-between py-4 font-heading font-semibold text-secondary hover:text-primary',
+                  isActive(item.href) && 'text-primary',
+                )}
+              >
+                {item.label}
+                <ChevronRight size={18} aria-hidden="true" />
+              </a>
             </li>
           ))}
+
+          <li>
+            <button
+              type="button"
+              onClick={() => setSystemsOpen((open) => !open)}
+              aria-expanded={systemsOpen}
+              className="flex w-full items-center justify-between py-4 font-heading font-semibold text-secondary hover:text-primary"
+            >
+              Acessar sistemas
+              <ChevronDown
+                size={18}
+                className={cn('transition-transform duration-200', systemsOpen && 'rotate-180')}
+                aria-hidden="true"
+              />
+            </button>
+
+            {systemsOpen && (
+              <ul className="flex flex-col gap-1 pb-3">
+                {systemAccessLinks.map((item) => (
+                  <li key={item.name}>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={onNavigate}
+                        className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-secondary hover:bg-surface-subtle"
+                      >
+                        {item.name}
+                        <ArrowUpRight size={16} className="text-secondary-300" aria-hidden="true" />
+                        <span className="sr-only">(abre em nova aba)</span>
+                      </a>
+                    ) : (
+                      <span className="flex items-center justify-between px-3 py-2 text-sm text-secondary-300">
+                        {item.name}
+                        <span className="text-xs">em breve</span>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
         </ul>
       </nav>
 
       <div className="flex flex-col gap-3 border-t border-surface-border pt-6">
-        <Button
-          variant="outline"
-          leftIcon={<LogIn size={18} aria-hidden="true" />}
-          onClick={() => {
-            window.open(PARTNER_SYSTEM_URL, '_blank', 'noopener');
-            onNavigate();
-          }}
-        >
-          Sou Parceiro
-        </Button>
         <a
-          href="/#parceirounica"
+          href={LEAD_FORM_HREF}
           onClick={onNavigate}
           className="inline-flex w-full items-center justify-center rounded-[3px] bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
         >
-          Quero ser parceiro agora
+          Quero ser parceiro
         </a>
 
         <div className="mt-2 flex items-center justify-center gap-3">

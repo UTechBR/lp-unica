@@ -44,7 +44,7 @@ export function ProdutosContent() {
                 ))}
               </ul>
 
-              <a href="/#parceirounica" className="mt-8 inline-block">
+              <a href="/#seja-parceiro"className="mt-8 inline-block">
                 <Button rightIcon={<ArrowRight size={18} aria-hidden="true" />}>Simular agora</Button>
               </a>
             </div>

@@ -1,11 +1,14 @@
 import { Container } from './Container';
+import { LegacyAnchor } from './LegacyAnchor';
 import { mission, values, vision } from '../data/company';
 
 const bannerBruno = '/images/Banner-Bruno-1.png';
 
 export function MissionVisionValues() {
   return (
-    <section id="sobre-nos" className="relative scroll-mt-32 overflow-hidden bg-secondary text-white">
+    <>
+    <LegacyAnchor id="sobre-nos" />
+    <section id="sobre" className="relative scroll-mt-20 overflow-hidden bg-secondary text-white">
       <div className="absolute inset-0" aria-hidden="true">
         <img
           src={bannerBruno}
@@ -74,5 +77,6 @@ export function MissionVisionValues() {
         </div>
       </Container>
     </section>
+    </>
   );
 }

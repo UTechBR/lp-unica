@@ -10,7 +10,9 @@ const activeItemCls = 'after:scale-x-100';
 
 // ids em ordem de topo a baixo na Home — usados pelo scroll-spy para saber em
 // qual seção o usuário está de fato, em vez de confiar na hash.
-const SPY_IDS = ['produtos', 'sistemas', 'parceiros', 'blog'];
+const SPY_IDS = ['bancos', 'produtos', 'sistemas', 'sobre', 'shorts'];
+// Um pouco abaixo do header compactado (~60px).
+const SPY_OFFSET = 100;
 
 interface NavbarProps {
   /**
@@ -22,14 +24,12 @@ interface NavbarProps {
 }
 
 export function Navbar({ currentPath }: NavbarProps) {
-  const spyId = useScrollSpy(SPY_IDS);
+  const spyId = useScrollSpy(SPY_IDS, SPY_OFFSET);
   const onHome = currentPath === '/';
 
   const isItemActive = (href: string) => {
-    if (href === '/') return onHome && spyId === null;
     const [, hash] = href.split('#');
-    if (hash && SPY_IDS.includes(hash)) return onHome && spyId === hash;
-    if (hash) return onHome && spyId === null;
+    if (hash) return onHome && spyId === hash;
     return currentPath === href;
   };
 
@@ -37,7 +37,7 @@ export function Navbar({ currentPath }: NavbarProps) {
     <nav aria-label="Navegação principal" className="hidden lg:block">
       <ul className="flex items-center gap-2">
         {mainNav.map((item) => {
-          const active = item.label === 'Home' || (item.label !== 'Contato' && isItemActive(item.href));
+          const active = isItemActive(item.href);
           const classes = cn(baseItemCls, active ? activeItemCls : restingCls);
 
           return (
@@ -47,7 +47,7 @@ export function Navbar({ currentPath }: NavbarProps) {
                   {item.label}
                 </a>
               ) : (
-                <a href={item.href} className={classes} aria-current={active ? 'page' : undefined}>
+                <a href={item.href} className={classes} aria-current={active ? 'location' : undefined}>
                   {item.label}
                 </a>
               )}
