@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 // Canal de denúncias. Recebe multipart/form-data (campos + anexos), grava uma linha em
-// denuncias.csv e guarda os anexos fora do alcance público. Responde com um protocolo.
+// storage/denuncias.csv e os anexos em storage/denuncias-anexos/<protocolo>/.
+// Responde com um protocolo.
 
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/_seguranca.php';
@@ -96,31 +97,11 @@ if ($total > MAX_BYTES_TOTAL) {
     responder(413, ['success' => false, 'error' => 'file_too_large']);
 }
 
-/**
- * Pasta dos anexos: fora da raiz pública quando possível (um nível acima de public_html);
- * senão, ao lado deste script, bloqueada por .htaccess.
- */
-function pasta_anexos(): string
-{
-    $fora = dirname(__DIR__, 2) . '/denuncias-anexos';
-    if ((is_dir($fora) || @mkdir($fora, 0750, true)) && is_writable($fora)) {
-        return $fora;
-    }
-    $dentro = __DIR__ . '/denuncias-anexos';
-    if (!is_dir($dentro)) {
-        @mkdir($dentro, 0750, true);
-    }
-    if (!file_exists($dentro . '/.htaccess')) {
-        file_put_contents($dentro . '/.htaccess', "Require all denied\nOptions -Indexes\n");
-    }
-    return $dentro;
-}
-
 $protocolo = 'DEN-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
 $salvos = [];
 
 if ($anexos !== []) {
-    $pasta = pasta_anexos() . '/' . $protocolo;
+    $pasta = pasta_storage('denuncias-anexos') . '/' . $protocolo;
     if (!@mkdir($pasta, 0750, true)) {
         responder(500, ['success' => false, 'error' => 'storage_error']);
     }
@@ -151,7 +132,7 @@ $row = [
 ];
 
 // denuncias.csv substitui denuncie.csv (que tinha menos colunas e segue guardado).
-$file = __DIR__ . '/denuncias.csv';
+$file = pasta_storage() . '/denuncias.csv';
 $isNew = !file_exists($file);
 
 $fp = fopen($file, 'ab');
@@ -161,9 +142,9 @@ if ($fp === false) {
 
 if (flock($fp, LOCK_EX)) {
     if ($isNew) {
-        fputcsv($fp, ['data_hora', 'protocolo', 'anonimo', 'nome', 'email', 'telefone', 'categoria', 'descricao', 'anexos', 'ip']);
+        fputcsv($fp, ['data_hora', 'protocolo', 'anonimo', 'nome', 'email', 'telefone', 'categoria', 'descricao', 'anexos', 'ip'], ',', '"', '');
     }
-    fputcsv($fp, $row);
+    fputcsv($fp, $row, ',', '"', '');
     flock($fp, LOCK_UN);
 }
 fclose($fp);

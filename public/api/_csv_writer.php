@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/_seguranca.php';
 
 // LeadForm (Hero) e ContatoForm (página Contato) capturam o mesmo tipo de
-// contato de cliente, então gravam na mesma planilha leads.csv — a coluna
+// contato de cliente, então gravam na mesma planilha storage/leads.csv — a coluna
 // "origem" distingue de onde veio cada linha.
 function append_lead(
     string $origin,
@@ -33,7 +33,7 @@ function append_lead(
         $consent ? 'sim' : 'nao',
     ];
 
-    $file = __DIR__ . '/leads.csv';
+    $file = pasta_storage() . '/leads.csv';
     $isNew = !file_exists($file);
 
     $fp = fopen($file, 'ab');
@@ -44,9 +44,9 @@ function append_lead(
     $ok = true;
     if (flock($fp, LOCK_EX)) {
         if ($isNew) {
-            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip', 'consentimento']);
+            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip', 'consentimento'], ',', '"', '');
         }
-        fputcsv($fp, $row);
+        fputcsv($fp, $row, ',', '"', '');
         flock($fp, LOCK_UN);
     } else {
         $ok = false;

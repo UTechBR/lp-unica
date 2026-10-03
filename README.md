@@ -13,8 +13,7 @@ Site institucional da Única Promotora. Front-end estático (Astro + React) com 
 | Animações | Framer Motion |
 | Formulários | React Hook Form + Zod |
 | Ícones | Lucide React |
-| Carrossel | Swiper.js |
-| Persistência | PHP 8 standalone (sem framework) em `public/api/`, grava CSV |
+| Persistência | PHP 8 standalone (sem framework) em `public/api/`, grava CSV numa pasta privada `storage/` |
 | Lint | oxlint |
 
 Sem backend Node em produção: o build é 100% estático e os `.php` sobem junto na mesma hospedagem (mesma origem, sem CORS).
@@ -31,7 +30,7 @@ O `astro.config.mjs` já proxeia `/api/*` para `localhost:8001` em dev. Sem o se
 
 O `dev:php` precisa do PHP 8+ no PATH (no Windows: `winget install PHP.PHP.8.4`). Ele passa os limites de upload por `-d` porque o servidor embutido não lê o `public/api/.user.ini`; sem isso, anexos da denúncia acima de 2 MB falham.
 
-Os formulários enviados em dev gravam CSVs (e anexos) reais em `public/api/`, que o `npm run build` copia para `dist/api/`. Apague-os do `dist/` antes de subir, ou eles sobrescrevem as planilhas de produção.
+Os formulários enviados em dev gravam em `storage/`, na raiz do projeto (gitignorada e fora de `public/`, então o build não copia dados de teste para o `dist/`).
 
 ```bash
 npm run build      # build de produção em /dist
@@ -41,37 +40,58 @@ npm run lint        # oxlint
 
 ## Persistência de formulários
 
-Cada formulário grava numa planilha CSV própria em `public/api/`, via scripts PHP sem dependências:
+Os scripts em `public/api/` gravam tudo numa única pasta privada, `storage/`, resolvida por `pasta_storage()` em `_seguranca.php`:
 
-| Formulário | Endpoint | Arquivo |
+- **preferida:** um nível acima da raiz pública. Em dev é `lp-unica/storage/`; na Hostgator, `~/storage/`, fora de `public_html`;
+- **reserva**, se não der para criar ou escrever: `public/api/storage/`, bloqueada por `.htaccess` (`Require all denied`).
+
+| Formulário | Endpoint | Arquivo em `storage/` |
 |---|---|---|
-| LeadForm (Hero) e ContatoForm | `leads.php` / `contact.php` | `leads.csv` (coluna `origem` distingue a origem) |
-| OuvidoriaForm | `ouvidoria.php` | `ouvidoria.csv` |
-| DenuncieForm | `denuncie.php` | `denuncie.csv` |
+| Seja parceiro (Hero) e Fale conosco | `leads.php` / `contact.php` | `leads.csv` (coluna `origem` distingue a origem) |
+| Ouvidoria | `ouvidoria.php` | `ouvidoria-manifestacoes.csv` (com protocolo `OUV-…`) |
+| Canal de denúncias | `denuncie.php` | `denuncias.csv` (com protocolo `DEN-…`) e anexos em `denuncias-anexos/<protocolo>/` |
+| Limite de envios (todos) | `_seguranca.php` | `formularios-limites/` (contadores por hash de IP) |
 
-Os `.csv` são gitignorados (dados pessoais reais) e bloqueados por `.htaccess` (`Require all denied`) para não serem acessíveis via URL direta. `_csv_writer.php` também é bloqueado, por ser include interno.
+Proteções comuns (`_seguranca.php`): limite de tamanho por campo, campo-isca anti-robô, 5 envios por IP a cada 10 min por formulário, neutralização de fórmulas no CSV e datas no horário de Brasília. Os `_*.php` e qualquer `*.csv` em `public/api/` são bloqueados por `.htaccess`.
+
+### Migração em produção
+
+As versões anteriores gravavam dentro de `public_html/api/` (e os anexos em `~/denuncias-anexos/`). Ao publicar esta versão, mova para `~/storage/`:
+
+- `public_html/api/leads.csv`, `ouvidoria-manifestacoes.csv` e `denuncias.csv` → `~/storage/`
+- `~/denuncias-anexos/` → `~/storage/denuncias-anexos/`
+
+As planilhas mais antigas, com outras colunas (`ouvidoria.csv`, `denuncie.csv`), podem ir para `~/storage/` como arquivo histórico. Depois, confira que `https://unicapromotora.com.br/api/leads.csv` responde 403.
 
 ## Estrutura de pastas
 
 ```
 src/
- ├── assets/            # fontes estáticas (self-hosted, o resto de imagem mora em public/images)
- ├── components/        # Header, Footer, Navbar, Button, LeadForm, ProductsSection... (flat, 1 nível)
+ ├── assets/            # imagens processadas pelo Astro (marca, bancos, pessoas, shorts, campanhas) + fontes
+ ├── components/        # componentes React e Astro (flat); form/ tem o padrão dos formulários
+ ├── config/            # estrutura e dados fixos: navegacao, rodape, empresa, documentos
+ ├── content/           # biblioteca de conteúdo: coleções JSON (bancos, produtos, ecossistema...) + README
+ ├── content.config.ts  # esquemas das coleções (validados no build)
  ├── layouts/           # BaseLayout.astro — <head>/SEO, Header/Footer, popups globais
- ├── pages/              # roteamento por arquivo: index/sobre/parceiros/contato/ouvidoria/denuncie/produtos.astro + 404.astro
- ├── hooks/              # useScrollPosition, useDisclosure, useScrollSpy, useLockBodyScroll...
- ├── services/           # leadService.ts — fetch para public/api/*.php
- ├── data/               # conteúdo estático tipado (produtos, sistemas, bancos, footer...)
- ├── types/              # tipos compartilhados
- ├── utils/               # masks (telefone), schemas Zod, cn()
- └── styles/             # global.css (tokens, base, componentes Tailwind, fontes)
+ ├── lib/               # conteudo.ts (listar, paraIlha), icones.ts (registro de ícones)
+ ├── pages/             # index, bancos-parceiros, sobre, contato, ouvidoria, denuncie, 404, sitemap.xml.ts
+ ├── hooks/             # useScrollPosition, useDisclosure, useScrollSpy, useLockBodyScroll...
+ ├── services/          # leadService.ts — envio para public/api/*.php
+ ├── types/             # tipos compartilhados e dos itens de conteúdo
+ ├── utils/             # masks (telefone), schemas Zod e mensagens de erro, cn()
+ └── styles/            # global.css (tokens, base, componentes Tailwind, fontes)
 
 public/
- ├── api/                # scripts PHP (leads, contato, ouvidoria, denúncia) + .htaccess
- ├── images/             # imagens do site (logos, banners, ícones de bancos)
- ├── .htaccess           # ErrorDocument 404 -> /404.html
- └── ...                 # favicon, og-image, robots.txt, sitemap.xml
+ ├── api/               # endpoints PHP + _seguranca/_csv_writer + .htaccess
+ ├── documentos/        # PDFs legais (URL fixa)
+ ├── videos/            # vídeos de Única shorts (<id>.mp4)
+ ├── .htaccess          # 404 e redirecionamentos 301
+ └── ...                # favicon, og-image, robots.txt
+
+storage/                # dados gravados pelos formulários (gitignorada; ver acima)
 ```
+
+Como incluir ou trocar conteúdo (bancos, produtos, vídeos, documentos): [`src/content/README.md`](src/content/README.md).
 
 Cada componente React só hidrata no cliente quando precisa: sem `client:*` para
 seções puramente estáticas (sem framer-motion/interatividade), `client:visible`

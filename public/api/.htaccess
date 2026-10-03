@@ -29,8 +29,7 @@
     </IfModule>
 </Files>
 
-# Anexos do canal de denúncias, quando não for possível gravá-los fora de public_html
-# (denuncie.php também cria um .htaccess próprio dentro da pasta).
-RedirectMatch 403 ^/api/denuncias-anexos/
-# Contadores de envio por IP (_seguranca.php), quando não ficam fora de public_html.
-RedirectMatch 403 ^/api/formularios-limites/
+# Pasta de dados dos formulários quando não é possível gravá-la fora de public_html
+# (pasta_storage() em _seguranca.php também cria um .htaccess próprio dentro dela).
+# O bloqueio de *.csv acima fica para as planilhas legadas em produção.
+RedirectMatch 403 ^/api/storage/

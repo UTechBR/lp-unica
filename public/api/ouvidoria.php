@@ -65,7 +65,7 @@ $row = [
 ];
 
 // ouvidoria-manifestacoes.csv substitui ouvidoria.csv (que tinha outras colunas e segue guardado).
-$file = __DIR__ . '/ouvidoria-manifestacoes.csv';
+$file = pasta_storage() . '/ouvidoria-manifestacoes.csv';
 $isNew = !file_exists($file);
 
 $fp = fopen($file, 'ab');
@@ -77,9 +77,9 @@ if ($fp === false) {
 
 if (flock($fp, LOCK_EX)) {
     if ($isNew) {
-        fputcsv($fp, ['data_hora', 'protocolo', 'tipo', 'banco', 'nome', 'email', 'telefone', 'mensagem', 'ip']);
+        fputcsv($fp, ['data_hora', 'protocolo', 'tipo', 'banco', 'nome', 'email', 'telefone', 'mensagem', 'ip'], ',', '"', '');
     }
-    fputcsv($fp, $row);
+    fputcsv($fp, $row, ',', '"', '');
     flock($fp, LOCK_UN);
 }
 fclose($fp);

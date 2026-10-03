@@ -4,6 +4,9 @@ declare(strict_types=1);
 // Proteções comuns aos endpoints dos formulários (leads, contato, ouvidoria, denúncia).
 // Bloqueado para acesso direto em .htaccess (só é incluído pelos scripts).
 
+// Datas das planilhas e dos protocolos no horário de Brasília (o padrão do PHP é UTC).
+date_default_timezone_set('America/Sao_Paulo');
+
 function responder(int $status, array $corpo): void
 {
     http_response_code($status);
@@ -46,33 +49,42 @@ function verificar_isca(array $dados): void
 }
 
 /**
- * Pasta de dados internos (contadores de envio): fora da raiz pública quando possível;
- * senão, ao lado dos scripts, bloqueada por .htaccess.
+ * Pasta privada onde os formulários gravam tudo (planilhas, anexos, contadores).
+ * Preferida: um nível acima da raiz pública (em dev, lp-unica/storage; na Hostgator,
+ * ~/storage, fora de public_html). Se não der para criar ou escrever, cai para
+ * public/api/storage, bloqueada por .htaccess. `$sub` cria e devolve uma subpasta.
  */
-function pasta_privada(string $nome): string
+function pasta_storage(string $sub = ''): string
 {
-    $fora = dirname(__DIR__, 2) . '/' . $nome;
-    if ((is_dir($fora) || @mkdir($fora, 0750, true)) && is_writable($fora)) {
-        return $fora;
+    $base = dirname(__DIR__, 2) . '/storage';
+    if (!((is_dir($base) || @mkdir($base, 0750, true)) && is_writable($base))) {
+        $base = __DIR__ . '/storage';
+        if (!is_dir($base)) {
+            @mkdir($base, 0750, true);
+        }
+        if (!file_exists($base . '/.htaccess')) {
+            file_put_contents($base . '/.htaccess', "Require all denied\nOptions -Indexes\n");
+        }
     }
-    $dentro = __DIR__ . '/' . $nome;
-    if (!is_dir($dentro)) {
-        @mkdir($dentro, 0750, true);
+    if ($sub === '') {
+        return $base;
     }
-    if (!file_exists($dentro . '/.htaccess')) {
-        file_put_contents($dentro . '/.htaccess', "Require all denied\nOptions -Indexes\n");
+    $pasta = $base . '/' . $sub;
+    if (!is_dir($pasta)) {
+        @mkdir($pasta, 0750, true);
     }
-    return $dentro;
+    return $pasta;
 }
 
 /**
  * Limite de envios por IP e por formulário: no máximo $max envios a cada $janela segundos.
- * O IP é guardado só como hash, e os registros antigos são descartados a cada envio.
+ * Contadores em storage/formularios-limites/. O IP é guardado só como hash, e os
+ * registros antigos são descartados a cada envio.
  */
 function limitar_envios(string $formulario, int $max = 5, int $janela = 600): void
 {
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconhecido';
-    $arquivo = pasta_privada('formularios-limites') . '/' . $formulario . '-' . hash('sha256', $ip) . '.json';
+    $arquivo = pasta_storage('formularios-limites') . '/' . $formulario . '-' . hash('sha256', $ip) . '.json';
     $agora = time();
 
     $fp = @fopen($arquivo, 'c+');
