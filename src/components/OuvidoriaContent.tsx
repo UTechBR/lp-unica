@@ -7,7 +7,7 @@ export function OuvidoriaContent() {
     <section className="section-padding">
       <Container className="max-w-2xl">
         <AnimatedSection direction="up">
-          <div className="rounded-lg border border-surface-border bg-surface-muted p-6 text-sm text-secondary-400">
+          <div className="rounded-surface border border-surface-border bg-surface-muted p-6 text-sm text-secondary-400">
             Antes de acionar a Ouvidoria, procure primeiro o atendimento habitual. Caso a solução apresentada não
             tenha sido satisfatória, ou o prazo de resposta tenha sido ultrapassado, registre sua manifestação
             abaixo. Você também pode buscar o{' '}

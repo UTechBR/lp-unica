@@ -24,7 +24,7 @@ export function Hero() {
 
           <div
             id="lead-form"
-            className="scroll-mt-20 rounded-xl border border-surface-border bg-white p-6 shadow-card md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+            className="scroll-mt-20 rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
           >
             <div className="mb-6">
               <h2 className="font-heading text-2xl font-semibold text-secondary">Seja um parceiro Única</h2>

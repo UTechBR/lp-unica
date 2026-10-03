@@ -13,7 +13,7 @@ export function WhatsappButton() {
       transition={{ delay: 0.8, type: 'spring', stiffness: 200, damping: 15 }}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      className="fixed bottom-6 left-6 z-40 flex items-center gap-3 rounded-lg bg-white py-2.5 pl-2.5 pr-4 shadow-card"
+      className="fixed bottom-6 left-6 z-40 flex items-center gap-3 rounded-surface bg-white py-2.5 pl-2.5 pr-4 shadow-card"
     >
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
         <WhatsappIcon width={24} height={24} />

@@ -26,7 +26,7 @@ export function ParceirosBankGrid() {
               key={bank.name}
               variants={staggerItem}
               whileHover={{ y: -4 }}
-              className="flex h-24 flex-col items-center justify-center gap-2 rounded-md border border-surface-border bg-secondary p-4 text-center shadow-soft transition-shadow hover:shadow-card"
+              className="flex h-24 flex-col items-center justify-center gap-2 rounded-surface border border-surface-border bg-secondary p-4 text-center shadow-soft transition-shadow hover:shadow-card"
             >
               <img src={bank.logo} alt={bank.name} className="max-h-10 w-auto max-w-[110px] object-contain" />
               <span className="text-[11px] text-white/60">{bank.name}</span>

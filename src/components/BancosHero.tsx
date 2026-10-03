@@ -30,7 +30,7 @@ function LogoBanco({ banco, onSelect }: { banco: Banco; onSelect: (banco: Banco)
         onClick={() => onSelect(banco)}
         aria-haspopup="dialog"
         aria-label={`Ver canais de atendimento do ${banco.nome}`}
-        className="group flex h-full max-w-full items-center rounded-sm"
+        className="group flex h-full max-w-full items-center rounded-control"
       >
         {/* Os arquivos são silhuetas brancas: a <img> invisível só define o tamanho e a
             cor vem de um <span> mascarado pelo logo (cinza médio → grafite no hover). */}
@@ -130,7 +130,7 @@ export function BancosHero() {
           <div
             id={popId}
             hidden={!popAberto}
-            className="z-30 mt-4 w-full max-w-[560px] rounded-xl border border-surface-border bg-white p-5 lg:absolute lg:left-0 lg:top-full lg:mt-3 lg:shadow-card"
+            className="z-30 mt-4 w-full max-w-[560px] rounded-surface border border-surface-border bg-white p-5 lg:absolute lg:left-0 lg:top-full lg:mt-3 lg:shadow-card"
           >
             <ul className="grid grid-cols-3 items-center gap-x-5 gap-y-4 sm:grid-cols-4 sm:gap-x-6">
               {restantes.map((banco) => (

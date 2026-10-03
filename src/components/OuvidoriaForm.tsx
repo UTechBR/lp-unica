@@ -38,7 +38,7 @@ export function OuvidoriaForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center gap-3 rounded-lg bg-white p-8 text-center shadow-card"
+        className="flex flex-col items-center gap-3 rounded-surface bg-white p-8 text-center shadow-card"
       >
         <CheckCircle2 size={48} className="text-primary" />
         <h3 className="heading-md">Manifestação registrada!</h3>

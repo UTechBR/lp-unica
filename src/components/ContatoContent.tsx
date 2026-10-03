@@ -36,7 +36,7 @@ export function ContatoContent() {
             ))}
           </div>
 
-          <div className="mt-8 aspect-video overflow-hidden rounded-lg border border-surface-border">
+          <div className="mt-8 aspect-video overflow-hidden rounded-surface border border-surface-border">
             <iframe
               title="Localização Única Promotora"
               src="https://www.openstreetmap.org/export/embed.html?bbox=-43.9430%2C-19.9236%2C-43.9349%2C-19.9156&layer=mapnik&marker=-19.9196%2C-43.9389"

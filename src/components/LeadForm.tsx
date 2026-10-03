@@ -45,7 +45,7 @@ const stateOptions: { label: string; value: string }[] = [
 const fieldWrap = 'flex min-w-0 flex-col gap-1.5';
 const labelCls = 'text-sm font-medium text-secondary-700';
 const controlCls =
-  'h-12 w-full rounded-md border border-surface-borderMuted bg-white px-3.5 text-base text-secondary placeholder:text-secondary-300 focus-visible:border-secondary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-200';
+  'h-12 w-full rounded-control border border-surface-borderMuted bg-white px-3.5 text-base text-secondary placeholder:text-secondary-300 focus-visible:border-secondary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-200';
 const errorCls = 'min-h-4 text-xs leading-tight text-primary-600';
 
 export function LeadForm() {
@@ -74,7 +74,7 @@ export function LeadForm() {
     <>
       <Modal isOpen={isSuccess} onClose={() => setIsSuccess(false)}>
         <div className="flex flex-col items-center gap-4 pt-2 text-center">
-          <div className="rounded-md bg-secondary px-5 py-3">
+          <div className="rounded-control bg-secondary px-5 py-3">
             <img src={logoCompleta} alt="Única Promotora" className="h-8 w-auto md:h-9" />
           </div>
 
@@ -200,7 +200,7 @@ export function LeadForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="h-12 w-full rounded-button bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
+          className="h-12 w-full rounded-control bg-primary font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 disabled:opacity-60"
         >
           {isSubmitting ? 'Enviando...' : 'Quero ser parceiro'}
         </button>

@@ -38,7 +38,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-lg bg-white p-6 shadow-card md:p-8"
+            className="relative z-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-surface bg-white p-6 shadow-card md:p-8"
           >
             <button
               type="button"

@@ -29,7 +29,7 @@ export function ProdutosContent() {
             )}
           >
             <div>
-              <span className={cn('flex h-16 w-16 items-center justify-center rounded-lg', colorMap[product.color])}>
+              <span className={cn('flex h-16 w-16 items-center justify-center rounded-surface', colorMap[product.color])}>
                 <product.icon size={30} aria-hidden="true" />
               </span>
               <h2 className="heading-lg mt-6">{product.title}</h2>
@@ -44,12 +44,12 @@ export function ProdutosContent() {
                 ))}
               </ul>
 
-              <a href="/#seja-parceiro"className="mt-8 inline-block">
+              <a href="/#seja-parceiro" className="mt-8 inline-block">
                 <Button rightIcon={<ArrowRight size={18} aria-hidden="true" />}>Simular agora</Button>
               </a>
             </div>
 
-            <div className="relative flex aspect-video items-center justify-center rounded-2xl bg-surface-muted">
+            <div className="relative flex aspect-video items-center justify-center rounded-surface bg-surface-muted">
               <div className={cn('flex h-28 w-28 items-center justify-center rounded-full', colorMap[product.color])}>
                 <product.icon size={52} aria-hidden="true" />
               </div>

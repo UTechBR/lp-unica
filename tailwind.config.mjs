@@ -106,9 +106,12 @@ export default {
         xl: '1.5rem',
         '2xl': '2rem',
         pill: '9999px',
-        // Padrão para botões com texto (mesmo raio dos campos de formulário).
-        // Botões só de ícone usam rounded-full.
-        button: '0.75rem',
+        // Raios por papel. Use estes, não sm/md/lg/xl (redefinidos acima e fáceis de confundir).
+        // control: botões com texto, campos, itens de menu.
+        // surface: cards, containers, modais, popovers.
+        // Ícones, play, avatares e chips: rounded-full.
+        control: '0.5rem',
+        surface: '1rem',
       },
       boxShadow: {
         soft: '0 4px 24px -4px rgba(55, 52, 53, 0.08)',

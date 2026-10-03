@@ -107,7 +107,7 @@
   }
 
   .card-surface {
-    @apply bg-white rounded-lg border border-surface-border shadow-soft;
+    @apply bg-white rounded-surface border border-surface-border shadow-soft;
   }
 
   /* Anel de foco claro para áreas grafite (topbar, header, rodapé). */

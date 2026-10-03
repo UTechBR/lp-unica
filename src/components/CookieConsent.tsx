@@ -104,7 +104,7 @@ export function CookieConsent() {
             role="dialog"
             aria-modal="true"
             aria-label="Gerenciar Consentimento de Cookies"
-            className="fixed bottom-[90px] right-[105px] z-[110] w-[calc(100vw-2rem)] max-w-[380px] overflow-hidden rounded-lg bg-white text-secondary shadow-card max-sm:bottom-[90px] max-sm:right-4"
+            className="fixed bottom-[90px] right-[105px] z-[110] w-[calc(100vw-2rem)] max-w-[380px] overflow-hidden rounded-surface bg-white text-secondary shadow-card max-sm:bottom-[90px] max-sm:right-4"
           >
             <div className="flex items-center gap-3 px-4 pt-4">
               <img src={logo} alt="Única Promotora" width={28} height={28} className="h-7 w-7 shrink-0 rounded" />
@@ -183,14 +183,14 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={acceptAll}
-                className="flex-1 rounded-button bg-primary px-4 py-2 text-xs font-bold uppercase text-white transition-colors hover:bg-primary-600"
+                className="flex-1 rounded-control bg-primary px-4 py-2 text-xs font-bold uppercase text-white transition-colors hover:bg-primary-600"
               >
                 Aceitar
               </button>
               <button
                 type="button"
                 onClick={denyAll}
-                className="flex-1 rounded-button border border-surface-borderMuted px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                className="flex-1 rounded-control border border-surface-borderMuted px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
               >
                 Negar
               </button>
@@ -198,7 +198,7 @@ export function CookieConsent() {
                 <button
                   type="button"
                   onClick={savePreferences}
-                  className="flex-1 rounded-button border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                  className="flex-1 rounded-control border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
                 >
                   Salvar preferências
                 </button>
@@ -206,7 +206,7 @@ export function CookieConsent() {
                 <button
                   type="button"
                   onClick={() => setShowPreferences(true)}
-                  className="flex-1 rounded-button border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
+                  className="flex-1 rounded-control border border-secondary px-4 py-2 text-xs font-bold uppercase text-secondary transition-colors hover:bg-surface-subtle"
                 >
                   Ver preferências
                 </button>

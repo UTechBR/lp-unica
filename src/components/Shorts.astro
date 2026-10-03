@@ -47,7 +47,7 @@ const instagram = 'https://instagram.com/unicapromotora/';
             return (
             <li>
               <Tag
-                class:list={['group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-secondary', temVideo && 'shorts-card']}
+                class:list={['group relative block aspect-[9/16] w-full overflow-hidden rounded-surface bg-secondary', temVideo && 'shorts-card']}
                 {...atributos}
               >
                 <img
@@ -91,7 +91,7 @@ const instagram = 'https://instagram.com/unicapromotora/';
       {temAlgumVideo && (
       <dialog id="shorts-dialog" class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85" aria-label="Vídeo">
         <div class="flex flex-col items-center gap-4">
-          <div class="aspect-[9/16] h-[min(78vh,720px)] overflow-hidden rounded-lg bg-black shadow-2xl">
+          <div class="aspect-[9/16] h-[min(78vh,720px)] overflow-hidden rounded-surface bg-black shadow-2xl">
             <video class="h-full w-full object-cover" controls playsinline preload="none"></video>
           </div>
           <a

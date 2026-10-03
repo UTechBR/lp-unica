@@ -96,7 +96,7 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-[95%] max-h-[85vh] overflow-y-auto rounded-[20px] border border-white/10 bg-surface-dark p-6 shadow-2xl sm:w-[90%] md:p-8 lg:w-[800px]"
+            className="relative z-10 w-[95%] max-h-[85vh] overflow-y-auto rounded-surface border border-white/10 bg-surface-dark p-6 shadow-2xl sm:w-[90%] md:p-8 lg:w-[800px]"
           >
             <button
               type="button"
@@ -108,7 +108,7 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
             </button>
 
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-center sm:text-left">
-              <div className="flex h-24 w-auto max-w-[260px] shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-4 sm:h-28">
+              <div className="flex h-24 w-auto max-w-[260px] shrink-0 items-center justify-center rounded-surface border border-white/10 bg-white/5 px-6 py-4 sm:h-28">
                 <img src={banco.logo} alt="" className="h-full w-auto max-w-full object-contain" />
               </div>
               <h2 id="banco-modal-title" className="font-heading text-2xl font-bold text-white">
@@ -171,7 +171,7 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Acessar site do ${banco.nome} (abre em nova aba)`}
-                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-button bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-600 sm:w-auto"
+                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-control bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-600 sm:w-auto"
               >
                 Acessar Site
                 <ExternalLink size={16} aria-hidden="true" />

@@ -73,7 +73,7 @@ export function AnecPopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-[800px] overflow-hidden rounded-lg shadow-card"
+            className="relative z-10 w-full max-w-[800px] overflow-hidden rounded-surface shadow-card"
           >
             <button
               type="button"

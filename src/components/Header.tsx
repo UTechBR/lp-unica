@@ -49,7 +49,7 @@ export function Header({ currentPath }: HeaderProps) {
             <SystemsMenu />
             <a
               href={LEAD_FORM_HREF}
-              className="rounded-button bg-brand px-5 py-2.5 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
+              className="rounded-control bg-brand px-5 py-2.5 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
             >
               Quero ser parceiro
             </a>
@@ -59,7 +59,7 @@ export function Header({ currentPath }: HeaderProps) {
             type="button"
             onClick={open}
             aria-label="Abrir menu"
-            className="-mr-2.5 flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10 lg:hidden"
+            className="-mr-2.5 flex h-11 w-11 items-center justify-center rounded-control text-white transition-colors hover:bg-white/10 lg:hidden"
           >
             <Menu size={26} aria-hidden="true" />
           </button>

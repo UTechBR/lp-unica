@@ -28,7 +28,7 @@ export function SobreHero() {
         <AnimatedSection direction="right" delay={0.15}>
           <div className="grid grid-cols-2 gap-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="rounded-lg bg-white/5 p-6 text-center backdrop-blur">
+              <div key={stat.label} className="rounded-surface bg-white/5 p-6 text-center backdrop-blur">
                 <p className="font-heading text-4xl font-extrabold text-primary-300">{stat.value}</p>
                 <p className="mt-1 text-sm text-white/70">{stat.label}</p>
               </div>

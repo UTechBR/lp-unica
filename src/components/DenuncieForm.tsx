@@ -43,7 +43,7 @@ export function DenuncieForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center gap-3 rounded-lg bg-white p-8 text-center shadow-card"
+        className="flex flex-col items-center gap-3 rounded-surface bg-white p-8 text-center shadow-card"
       >
         <CheckCircle2 size={48} className="text-primary" />
         <h3 className="heading-md">Denúncia registrada com sigilo</h3>
@@ -59,7 +59,7 @@ export function DenuncieForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
-      <div className="flex items-start gap-3 rounded-md bg-primary/5 p-4 text-sm text-secondary-400">
+      <div className="flex items-start gap-3 rounded-surface bg-primary/5 p-4 text-sm text-secondary-400">
         <ShieldAlert size={20} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
         Se você testemunhou ou foi vítima de algum tipo de fraude, não deixe de denunciar. Faça uma descrição
         detalhada dos fatos e, se possível, envie documentos, fotos e outras evidências.
@@ -123,7 +123,7 @@ export function DenuncieForm() {
         </label>
         <label
           htmlFor="denuncie-arquivos"
-          className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-surface-borderMuted px-4 py-3 text-sm text-secondary-400 hover:border-primary hover:text-primary"
+          className="flex cursor-pointer items-center gap-2 rounded-control border border-dashed border-surface-borderMuted px-4 py-3 text-sm text-secondary-400 hover:border-primary hover:text-primary"
         >
           <Upload size={16} aria-hidden="true" />
           {fileName ?? 'Anexar documentos, fotos ou outras evidências'}

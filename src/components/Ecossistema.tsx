@@ -22,7 +22,7 @@ export function Ecossistema() {
           {/* sm: 2 colunas, com o card de fechamento na largura toda; lg: grade 3×2. */}
           <ul className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ecosystemTools.map(({ slug, stage, name, description, icon: Icon }) => (
-              <li key={slug} className="flex flex-col rounded-lg bg-white p-7 shadow-sm">
+              <li key={slug} className="flex flex-col rounded-surface bg-white p-7 shadow-sm">
                 <div className="mb-3.5 flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-[0.08em] text-brand">{stage}</span>
                   <span
@@ -37,13 +37,13 @@ export function Ecossistema() {
               </li>
             ))}
 
-            <li className="flex flex-col justify-center rounded-lg bg-surface-dark p-7 sm:col-span-2 lg:col-span-1">
+            <li className="flex flex-col justify-center rounded-surface bg-surface-dark p-7 sm:col-span-2 lg:col-span-1">
               <p className="font-heading text-[22px] font-semibold leading-snug text-white">
                 Tudo isso disponível para quem é parceiro Única.
               </p>
               <a
                 href={LEAD_FORM_HREF}
-                className="mt-5 inline-flex items-center gap-2 self-start rounded-button bg-white px-5 py-3 font-heading text-[15px] font-bold text-secondary transition-colors hover:bg-secondary-50 focus-visible:ring-white focus-visible:ring-offset-surface-dark"
+                className="mt-5 inline-flex items-center gap-2 self-start rounded-control bg-white px-5 py-3 font-heading text-[15px] font-bold text-secondary transition-colors hover:bg-secondary-50 focus-visible:ring-white focus-visible:ring-offset-surface-dark"
               >
                 Quero ser parceiro
                 <ArrowRight size={16} aria-hidden="true" />

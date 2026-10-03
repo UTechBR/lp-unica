@@ -58,7 +58,7 @@ export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
                         target="_blank"
                         rel="noreferrer"
                         onClick={onNavigate}
-                        className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-secondary hover:bg-surface-subtle"
+                        className="flex items-center justify-between rounded-control px-3 py-2 text-sm text-secondary hover:bg-surface-subtle"
                       >
                         {item.name}
                         <ArrowUpRight size={16} className="text-secondary-300" aria-hidden="true" />
@@ -82,7 +82,7 @@ export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
         <a
           href={LEAD_FORM_HREF}
           onClick={onNavigate}
-          className="inline-flex w-full items-center justify-center rounded-button bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
+          className="inline-flex w-full items-center justify-center rounded-control bg-primary px-6 py-3 font-heading text-base font-bold text-white shadow-button transition-colors duration-200 hover:bg-primary-600"
         >
           Quero ser parceiro
         </a>

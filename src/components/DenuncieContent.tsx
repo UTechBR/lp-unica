@@ -13,7 +13,7 @@ export function DenuncieContent() {
             {denuncieCategories.map((category) => (
               <li
                 key={category}
-                className="rounded-md border border-surface-border bg-white px-4 py-3 text-sm font-medium text-secondary shadow-soft"
+                className="rounded-control border border-surface-border bg-white px-4 py-3 text-sm font-medium text-secondary shadow-soft"
               >
                 {category}
               </li>

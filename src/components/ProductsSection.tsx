@@ -24,7 +24,7 @@ export function ProductsSection() {
               <article
                 key={category.slug}
                 className={cn(
-                  'flex flex-col rounded-lg bg-white p-7 shadow-sm',
+                  'flex flex-col rounded-surface bg-white p-7 shadow-sm',
                   category.featured && 'sm:col-span-2 lg:col-span-1 lg:row-span-2',
                 )}
               >

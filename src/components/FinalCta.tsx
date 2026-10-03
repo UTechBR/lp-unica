@@ -15,7 +15,7 @@ export function FinalCta() {
         </div>
         <a
           href="/#seja-parceiro"
-          className="inline-flex shrink-0 items-center gap-2 rounded-button bg-brand px-6 py-3 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
+          className="inline-flex shrink-0 items-center gap-2 rounded-control bg-brand px-6 py-3 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
         >
           Quero ser parceiro
           <ArrowRight size={18} aria-hidden="true" />
