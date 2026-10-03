@@ -8,7 +8,8 @@
     </IfModule>
 </Files>
 
-<Files "_csv_writer.php">
+# Scripts auxiliares (_csv_writer, _seguranca…): só incluídos pelos endpoints.
+<FilesMatch "^_.*\.php$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
@@ -16,7 +17,7 @@
         Order allow,deny
         Deny from all
     </IfModule>
-</Files>
+</FilesMatch>
 
 <Files ".user.ini">
     <IfModule mod_authz_core.c>
@@ -31,3 +32,5 @@
 # Anexos do canal de denúncias, quando não for possível gravá-los fora de public_html
 # (denuncie.php também cria um .htaccess próprio dentro da pasta).
 RedirectMatch 403 ^/api/denuncias-anexos/
+# Contadores de envio por IP (_seguranca.php), quando não ficam fora de public_html.
+RedirectMatch 403 ^/api/formularios-limites/

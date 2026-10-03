@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/_seguranca.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -17,15 +18,18 @@ if (!is_array($data)) {
     exit;
 }
 
+verificar_isca($data);
+limitar_envios('ouvidoria');
+
 // Tipos aceitos: espelham ouvidoriaTipos em src/utils/schemas.ts.
 const TIPOS = ['Reclamação', 'Solicitação', 'Sugestão', 'Elogio'];
 
-$name    = trim((string) ($data['name'] ?? ''));
-$email   = trim((string) ($data['email'] ?? ''));
-$phone   = trim((string) ($data['phone'] ?? ''));
-$tipo    = trim((string) ($data['tipo'] ?? ''));
-$banco   = trim((string) ($data['banco'] ?? '')); // opcional
-$message = trim((string) ($data['message'] ?? ''));
+$name    = campo($data, 'name', 100);
+$email   = campo($data, 'email', 254);
+$phone   = campo($data, 'phone', 20);
+$tipo    = campo($data, 'tipo', 30);
+$banco   = campo($data, 'banco', 120); // opcional
+$message = campo($data, 'message', 2000);
 
 if ($name === '' || $email === '' || $phone === '' || $tipo === '' || $message === '') {
     http_response_code(422);
@@ -43,12 +47,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(422);
     echo json_encode(['success' => false, 'error' => 'invalid_email']);
     exit;
-}
-
-// Evita injeção de fórmulas se o CSV for aberto no Excel/Sheets.
-function csv_safe(string $value): string
-{
-    return preg_match('/^[=+\-@]/', $value) === 1 ? "'" . $value : $value;
 }
 
 // Protocolo devolvido à pessoa e registrado na planilha.

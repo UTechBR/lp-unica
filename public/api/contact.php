@@ -18,11 +18,14 @@ if (!is_array($data)) {
     exit;
 }
 
-$name    = trim((string) ($data['name'] ?? ''));
-$email   = trim((string) ($data['email'] ?? ''));
-$phone   = trim((string) ($data['phone'] ?? ''));
-$subject = trim((string) ($data['subject'] ?? ''));
-$message = trim((string) ($data['message'] ?? ''));
+verificar_isca($data);
+limitar_envios('contato');
+
+$name    = campo($data, 'name', 100);
+$email   = campo($data, 'email', 254);
+$phone   = campo($data, 'phone', 20);
+$subject = campo($data, 'subject', 120);
+$message = campo($data, 'message', 1000);
 
 if ($name === '' || $email === '' || $phone === '' || $subject === '' || $message === '') {
     http_response_code(422);

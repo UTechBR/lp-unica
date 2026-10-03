@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from './Input';
 import { Select } from './Select';
 import { TextArea } from './TextArea';
-import { AvisoPrivacidade, BotaoEnviar, ErroEnvio, LinkPrivacidade, SucessoEnvio, mensagemDeErro } from './form/Envio';
+import { AvisoPrivacidade, BotaoEnviar, CampoIsca, ErroEnvio, LinkPrivacidade, SucessoEnvio, mensagemDeErro } from './form/Envio';
 import { formCls } from './form/estilos';
 import { MIN_TEXTO, ouvidoriaFormSchema, ouvidoriaTipos } from '../utils/schemas';
 import type { OuvidoriaFormData } from '../utils/schemas';
@@ -58,6 +58,7 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <CampoIsca {...register('website')} />
       <div className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Input id="ouvidoria-nome" label="Nome" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />

@@ -18,11 +18,14 @@ if (!is_array($data)) {
     exit;
 }
 
-$name  = trim((string) ($data['name'] ?? ''));
-$phone = trim((string) ($data['phone'] ?? ''));
-$email = trim((string) ($data['email'] ?? ''));
-$city  = trim((string) ($data['city'] ?? ''));
-$state = trim((string) ($data['state'] ?? ''));
+verificar_isca($data);
+limitar_envios('parceria');
+
+$name  = campo($data, 'name', 100);
+$phone = campo($data, 'phone', 20);
+$email = campo($data, 'email', 254);
+$city  = campo($data, 'city', 100);
+$state = campo($data, 'state', 2);
 
 if ($name === '' || $phone === '' || $email === '' || $city === '' || $state === '') {
     http_response_code(422);

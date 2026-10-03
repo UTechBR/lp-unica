@@ -5,6 +5,7 @@ declare(strict_types=1);
 // denuncias.csv e guarda os anexos fora do alcance público. Responde com um protocolo.
 
 header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/_seguranca.php';
 
 const MAX_ARQUIVOS = 5;
 const MAX_BYTES_ARQUIVO = 10 * 1024 * 1024; // 10 MB
@@ -15,13 +16,6 @@ const EXTENSOES_PERMITIDAS = [
     'mp3', 'm4a', 'mp4', 'mov',
 ];
 
-function responder(int $status, array $corpo): void
-{
-    http_response_code($status);
-    echo json_encode($corpo);
-    exit;
-}
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     responder(405, ['success' => false, 'error' => 'method_not_allowed']);
 }
@@ -31,12 +25,15 @@ if (empty($_POST) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
     responder(413, ['success' => false, 'error' => 'file_too_large']);
 }
 
+verificar_isca($_POST);
+limitar_envios('denuncia');
+
 $anonimo     = ($_POST['anonimo'] ?? '') === 'sim';
-$name        = $anonimo ? '' : trim((string) ($_POST['name'] ?? ''));
-$email       = $anonimo ? '' : trim((string) ($_POST['email'] ?? ''));
-$phone       = $anonimo ? '' : trim((string) ($_POST['phone'] ?? ''));
-$category    = trim((string) ($_POST['category'] ?? ''));
-$description = trim((string) ($_POST['description'] ?? ''));
+$name        = $anonimo ? '' : campo($_POST, 'name', 100);
+$email       = $anonimo ? '' : campo($_POST, 'email', 254);
+$phone       = $anonimo ? '' : campo($_POST, 'phone', 20);
+$category    = campo($_POST, 'category', 100);
+$description = campo($_POST, 'description', 3000);
 
 if ($category === '' || $description === '') {
     responder(422, ['success' => false, 'error' => 'missing_fields']);
@@ -139,12 +136,6 @@ if ($anexos !== []) {
 }
 
 // ---- Registro -----------------------------------------------------------------------
-
-// Evita injeção de fórmulas se o CSV for aberto no Excel/Sheets.
-function csv_safe(string $value): string
-{
-    return preg_match('/^[=+\-@]/', $value) === 1 ? "'" . $value : $value;
-}
 
 $row = [
     date('Y-m-d H:i:s'),

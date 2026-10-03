@@ -6,6 +6,7 @@ import { Input } from './Input';
 import { Select } from './Select';
 import { TextArea } from './TextArea';
 import {
+  CampoIsca,
   AvisoPrivacidade,
   BotaoEnviar,
   ErroEnvio,
@@ -67,6 +68,7 @@ export function DenuncieForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <CampoIsca {...register('website')} />
 
       <label className="mb-3 flex cursor-pointer items-center gap-2.5 text-[15px] text-secondary">
         <input type="checkbox" className="h-[18px] w-[18px] shrink-0 accent-secondary" {...register('anonimo')} />

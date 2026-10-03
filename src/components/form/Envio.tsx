@@ -21,6 +21,21 @@ export function LinkPrivacidade() {
 }
 
 /**
+ * Campo-isca anti-robô: fora da tela e fora da ordem de tabulação, então pessoas não o
+ * preenchem; robôs que preenchem tudo são descartados no servidor (_seguranca.php).
+ */
+export const CampoIsca = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>((props, ref) => (
+  <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+    <label>
+      Não preencha este campo
+      <input ref={ref} type="text" tabIndex={-1} autoComplete="off" {...props} />
+    </label>
+  </div>
+));
+
+CampoIsca.displayName = 'CampoIsca';
+
+/**
  * Para canais em que o tratamento não depende de consentimento (ouvidoria, denúncias):
  * informa o uso dos dados, sem checkbox.
  */
@@ -119,6 +134,8 @@ export function SucessoEnvio({ titulo, children, destaque, acao }: SucessoEnvioP
 const mensagensErro: Record<string, string> = {
   network: 'Não foi possível conectar. Verifique sua internet e tente de novo.',
   missing_consent: 'Marque a autorização para continuar.',
+  too_long: 'Algum campo passou do tamanho permitido. Encurte o texto e tente de novo.',
+  too_many_requests: 'Recebemos vários envios seguidos. Aguarde alguns minutos e tente de novo.',
   file_too_large: 'Os anexos passaram do tamanho permitido. Reduza ou remova algum arquivo e tente de novo.',
   too_many_files: 'Há anexos demais. Remova algum e tente de novo.',
   file_type_not_allowed: 'Um dos anexos tem um tipo de arquivo não aceito.',

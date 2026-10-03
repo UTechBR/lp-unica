@@ -9,6 +9,7 @@ import { submitLead } from '../services/leadService';
 import { Input } from './Input';
 import { Select } from './Select';
 import {
+  CampoIsca,
   BotaoEnviar,
   Consentimento,
   ErroEnvio,
@@ -56,6 +57,7 @@ export function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
+      <CampoIsca {...register('website')} />
       <Input id="lead-nome" label="Nome" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />
 
       <Controller

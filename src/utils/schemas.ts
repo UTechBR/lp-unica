@@ -2,6 +2,9 @@ import { z } from 'zod';
 import { brazilianStates } from '../types';
 import { unmaskDigits } from './masks';
 
+/** Campo-isca anti-robô (ver CampoIsca e _seguranca.php): fica vazio para pessoas. */
+const iscaField = z.string().optional();
+
 /** Mínimo de caracteres de toda área de texto dos formulários (contador no TextArea). */
 export const MIN_TEXTO = 50;
 
@@ -31,6 +34,7 @@ const phoneField = z
 const emailField = z.string().trim().email(msg.email);
 
 export const leadFormSchema = z.object({
+  website: iscaField,
   name: nameField,
   phone: phoneField,
   email: emailField,
@@ -53,6 +57,7 @@ export const contatoAssuntos = [
 export type ContatoAssunto = (typeof contatoAssuntos)[number]['valor'];
 
 export const contactFormSchema = z.object({
+  website: iscaField,
   name: nameField,
   email: emailField,
   phone: phoneField,
@@ -71,6 +76,7 @@ export type ContactFormData = z.infer<typeof contactFormSchema>;
 export const ouvidoriaTipos = ['Reclamação', 'Solicitação', 'Sugestão', 'Elogio'] as const;
 
 export const ouvidoriaFormSchema = z.object({
+  website: iscaField,
   name: nameField,
   email: emailField,
   phone: phoneField,
@@ -111,6 +117,7 @@ const descriptionField = z.string().trim().min(MIN_TEXTO, msg.minimo(MIN_TEXTO))
 // aparecem juntos, em vez de os de identificação surgirem só depois dos outros.
 export const denuncieFormSchema = z
   .object({
+    website: iscaField,
     anonimo: z.boolean(),
     name: z.string(),
     email: z.string(),

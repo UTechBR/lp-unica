@@ -1,11 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// Evita injeção de fórmulas se o CSV for aberto no Excel/Sheets.
-function csv_safe(string $value): string
-{
-    return preg_match('/^[=+\-@]/', $value) === 1 ? "'" . $value : $value;
-}
+require_once __DIR__ . '/_seguranca.php';
 
 // LeadForm (Hero) e ContatoForm (página Contato) capturam o mesmo tipo de
 // contato de cliente, então gravam na mesma planilha leads.csv — a coluna
