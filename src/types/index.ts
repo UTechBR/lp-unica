@@ -34,17 +34,13 @@ export interface ProductCategory {
   description?: string;
 }
 
-export interface SystemTool {
+export interface EcosystemTool {
   slug: string;
+  /** Etapa da operação do parceiro que a ferramenta cobre. */
+  stage: string;
   name: string;
   description: string;
-  href: string;
-}
-
-export interface SystemBrand {
-  slug: string;
-  name: string;
-  logo?: string;
+  icon: IconComponent;
 }
 
 export interface PartnerBank {

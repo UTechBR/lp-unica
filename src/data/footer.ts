@@ -8,7 +8,7 @@ export const footerColumns: FooterLinkColumn[] = [
       { label: 'Seja parceiro', href: LEAD_FORM_HREF },
       { label: 'Bancos parceiros', href: '/#bancos' },
       { label: 'Produtos', href: '/#produtos' },
-      { label: 'Sistemas', href: '/#sistemas' },
+      { label: 'Ecossistema', href: '/#ecossistema' },
       { label: 'Sobre nós', href: '/#sobre' },
       { label: 'Única shorts', href: '/#shorts' },
       { label: 'Trabalhe Conosco', href: TRABALHE_CONOSCO_URL, external: true },

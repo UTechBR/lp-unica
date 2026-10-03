@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { Hero } from '../components/Hero.tsx';
 import { MissionVisionValues } from '../components/MissionVisionValues.tsx';
 import { UnicaShorts } from '../components/UnicaShorts.tsx';
-import { NossoSistema } from '../components/NossoSistema.tsx';
+import { Ecossistema } from '../components/Ecossistema.tsx';
 import { ProductsSection } from '../components/ProductsSection.tsx';
 import { FinalCta } from '../components/FinalCta.tsx';
 ---
@@ -26,8 +26,8 @@ import { FinalCta } from '../components/FinalCta.tsx';
        no componente original. -->
   <ProductsSection />
 
-  <!-- Hidratada: cards com fade-in em cascata (Framer Motion). -->
-  <NossoSistema client:visible />
+  <!-- Sem client:*: cards estáticos, sem animação de entrada. -->
+  <Ecossistema />
 
   <!-- Sem client:*: zero JavaScript — mesmo componente estático do piloto da Sobre. -->
   <MissionVisionValues />
