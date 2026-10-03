@@ -1,9 +1,10 @@
 import type { APIRoute } from 'astro';
+import { produtosPublicado } from '../config/publicacao';
 
 // Sitemap gerado no build a partir das páginas reais de src/pages: página nova entra
 // sozinha, página removida sai sozinha. Ficam de fora a 404 e as listadas em FORA.
 const SITE = 'https://unicapromotora.com.br';
-const FORA = new Set(['/404']);
+const FORA = new Set(['/404', ...(produtosPublicado ? [] : ['/produtos'])]);
 
 const paginas = Object.keys(import.meta.glob('./**/*.astro'))
   .map((arquivo) => arquivo.replace(/^\.\//, '/').replace(/\.astro$/, '').replace(/\/index$/, '/'))

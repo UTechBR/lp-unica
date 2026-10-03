@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { file } from 'astro/loaders';
 import { nomesIcones } from './lib/icones';
 
@@ -39,6 +39,27 @@ const categoriasProduto = defineCollection({
     destaque: z.boolean().optional(),
     descricao: z.string().optional(),
     itens: z.array(z.string()).min(1),
+    /**
+     * Conteúdo da página /produtos (portfólio para o parceiro). Separado dos campos da Home
+     * para a página poder mudar sem alterar os cards já publicados.
+     * Regras de texto: descrever, nunca prometer (ver README desta pasta).
+     */
+    pagina: z
+      .object({
+        /** Título na página, se diferente do card da Home. */
+        titulo: z.string().optional(),
+        /** O que é: uma frase neutra e factual. */
+        oQueE: z.string(),
+        /** Quem o parceiro atende com esta linha. */
+        publico: z.string().optional(),
+        /** Modalidades em chips; se ausente, usa `itens`. */
+        modalidades: z.array(z.string()).optional(),
+        /** Bancos que operam a linha (ids de bancos.json; o build valida). */
+        bancos: z.array(reference('bancos')).default([]),
+        /** Ferramenta do Ecossistema que apoia a linha (id de ecossistema.json). */
+        ferramenta: reference('ecossistema').optional(),
+      })
+      .optional(),
   }),
 });
 

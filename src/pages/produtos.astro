@@ -1,0 +1,174 @@
+---
+import { getEntries, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { FinalCta } from '../components/FinalCta.tsx';
+import { produtosPublicado } from '../config/publicacao';
+import { icones } from '../lib/icones';
+import { listar } from '../lib/conteudo';
+
+// Portfólio para o parceiro: "o que você vende como parceiro Única, para quem e com qual
+// apoio". Conteúdo em src/content/categorias-produto.json (campo `pagina`); a Home usa os
+// campos do card, que não mudam com esta página. Enquanto produtosPublicado for false,
+// a página é rascunho para o comercial validar (ver src/config/publicacao.ts).
+const rascunho = !produtosPublicado;
+
+const totalBancos = (await listar('bancos')).length;
+const maisDe = Math.floor((totalBancos - 1) / 10) * 10;
+
+const linhas = await Promise.all(
+  (await listar('categorias-produto'))
+    .filter((categoria) => categoria.pagina)
+    .map(async (categoria) => {
+      const pagina = categoria.pagina!;
+      return {
+        id: categoria.id,
+        titulo: pagina.titulo ?? categoria.titulo,
+        Icon: icones[categoria.icone],
+        oQueE: pagina.oQueE,
+        publico: pagina.publico,
+        modalidades: pagina.modalidades ?? categoria.itens,
+        bancos: (await getEntries(pagina.bancos)).map((banco) => banco.data),
+        ferramenta: pagina.ferramenta ? (await getEntry(pagina.ferramenta))?.data : undefined,
+      };
+    }),
+);
+
+const rotuloCls = 'text-xs font-semibold uppercase tracking-[0.08em] text-secondary-400';
+const lacunaCls = 'inline-block rounded-control border border-dashed border-secondary-300 px-3 py-1.5 text-sm italic text-secondary-400';
+---
+
+<BaseLayout
+  title="Portfólio de produtos para parceiros"
+  description="Conheça as linhas que você oferece como parceiro da Única Promotora: consignado, crédito, cartões, seguros e contas, com o público atendido e o apoio de cada uma."
+  noindex={rascunho}
+>
+  {
+    rascunho && (
+      <div class="border-b border-surface-border bg-secondary-50">
+        <p class="container-app py-3 text-sm text-secondary">
+          <strong>Rascunho para validação do comercial.</strong> Esta página ainda não está publicada; os
+          trechos marcados "a definir" dependem de confirmação.
+        </p>
+      </div>
+    )
+  }
+
+  <PageHeader
+    eyebrow="Portfólio"
+    leve="Produtos para"
+    forte="operar"
+    subtitulo={`As linhas que você oferece como parceiro Única, com acesso a mais de ${maisDe} bancos e financeiras.`}
+  >
+    <ul class="mt-7 flex flex-wrap gap-2">
+      {
+        linhas.map((linha) => (
+          <li>
+            <a
+              href={`#${linha.id}`}
+              class="inline-block rounded-full border border-white/30 px-4 py-2 text-sm text-white transition-colors hover:border-white hover:bg-white hover:text-secondary"
+            >
+              {linha.titulo}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </PageHeader>
+
+  {
+    linhas.map((linha, i) => (
+      <section id={linha.id} class:list={['scroll-mt-20', i % 2 === 0 ? 'bg-white' : 'bg-surface-muted']}>
+        <div class="container-app grid gap-10 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+          <div>
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-secondary-100 text-secondary"
+              aria-hidden="true"
+            >
+              <linha.Icon size={22} />
+            </span>
+            <h2 class="mt-5 font-heading text-[clamp(1.75rem,1.4rem+1.5vw,2.25rem)] font-bold leading-tight text-secondary">
+              {linha.titulo}
+            </h2>
+            <p class="mt-3 max-w-[48ch] text-lg leading-relaxed text-secondary-400">{linha.oQueE}</p>
+          </div>
+
+          <dl class="grid gap-8">
+            {(linha.publico || rascunho) && (
+              <div>
+                <dt class={rotuloCls}>Quem você atende</dt>
+                <dd class="mt-2 text-[15px] leading-relaxed text-secondary">
+                  {linha.publico ?? <span class={lacunaCls}>A definir com o comercial</span>}
+                </dd>
+              </div>
+            )}
+
+            <div>
+              <dt class={rotuloCls}>Modalidades</dt>
+              <dd class="mt-3">
+                <ul class="flex flex-wrap gap-2">
+                  {linha.modalidades.map((modalidade) => (
+                    <li class="rounded-full bg-secondary-50 px-3.5 py-1.5 text-sm text-secondary">{modalidade}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+
+            {(linha.bancos.length > 0 || rascunho) && (
+              <div>
+                <dt class={rotuloCls}>Bancos que operam</dt>
+                <dd class="mt-3">
+                  {linha.bancos.length > 0 ? (
+                    <ul class="flex flex-wrap items-center gap-x-8 gap-y-4">
+                      {linha.bancos.map((banco) => (
+                        <li class="flex h-8 items-center">
+                          {/* Silhueta branca pintada por máscara, como na grade do hero. */}
+                          <span class="relative flex">
+                            <img
+                              src={banco.logo.src}
+                              alt={banco.nome}
+                              loading="lazy"
+                              class="w-auto max-w-[110px] object-contain opacity-0"
+                              style={`max-height:${Math.min(banco.logoAltura ?? 26, 30)}px`}
+                            />
+                            <span
+                              class="absolute inset-0 bg-secondary-400 [mask-position:left_center] [mask-repeat:no-repeat] [mask-size:contain]"
+                              style={`mask-image:url("${banco.logo.src}");-webkit-mask-image:url("${banco.logo.src}")`}
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span class={lacunaCls}>A definir com o comercial</span>
+                  )}
+                </dd>
+              </div>
+            )}
+
+            {(linha.ferramenta || rascunho) && (
+              <div>
+                <dt class={rotuloCls}>Como a Única apoia</dt>
+                <dd class="mt-2 text-[15px] leading-relaxed text-secondary">
+                  {linha.ferramenta ? (
+                    <>
+                      <strong class="font-semibold">{linha.ferramenta.nome}:</strong> {linha.ferramenta.descricao}{' '}
+                      <a href="/#ecossistema" class="font-semibold underline underline-offset-4 hover:text-primary">
+                        Ver o Ecossistema
+                      </a>
+                    </>
+                  ) : (
+                    <span class={lacunaCls}>A definir com o comercial</span>
+                  )}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </div>
+      </section>
+    ))
+  }
+
+  <FinalCta titulo="Quer oferecer esse" destaque="portfólio" />
+</BaseLayout>

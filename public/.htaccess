@@ -11,9 +11,11 @@ Redirect 301 /assets_docs/POLITICA-GESTAO-INCID.pdf /documentos/politica-de-gest
 RedirectMatch 301 ^/parceiros/?$ /bancos-parceiros
 RedirectMatch 301 ^/canais-de-atendimento/?$ /bancos-parceiros
 
-# /produtos (conteúdo antigo, voltado ao cliente final) saiu: leva à seção da Home.
+# /produtos (portfólio para parceiros) está em rascunho até o comercial validar: leva à
+# seção da Home. 302 (temporário) porque a página vai voltar; um 301 ficaria em cache nos
+# navegadores. Ao publicar (produtosPublicado = true), remova este bloco.
 # mod_rewrite com [NE] para o "#" não ser codificado como %23.
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^produtos/?$ /#produtos [R=301,NE,L]
+    RewriteRule ^produtos/?$ /#produtos [R=302,NE,L]
 </IfModule>

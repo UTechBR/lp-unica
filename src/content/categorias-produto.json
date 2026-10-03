@@ -13,7 +13,21 @@
       "Marinha",
       "Aeronáutica",
       "Exército"
-    ]
+    ],
+    "pagina": {
+      "oQueE": "Crédito com parcelas descontadas diretamente da folha de pagamento ou do benefício.",
+      "publico": "Aposentados e pensionistas do INSS, servidores públicos federais, estaduais e municipais, militares das Forças Armadas e trabalhadores com carteira assinada.",
+      "modalidades": [
+        "INSS",
+        "Público",
+        "Federal/Civil (SIAPE)",
+        "Marinha",
+        "Aeronáutica",
+        "Exército",
+        "Privado (CLT)"
+      ],
+      "ferramenta": "astor-multibank"
+    }
   },
   {
     "id": "credito",
@@ -23,7 +37,16 @@
       "Pessoal",
       "Empréstimo / FGTS",
       "Car Equity"
-    ]
+    ],
+    "pagina": {
+      "oQueE": "Empréstimos sem desconto em folha: crédito pessoal, antecipação do saque-aniversário do FGTS e crédito com garantia de veículo.",
+      "publico": "Trabalhadores com saldo de FGTS, proprietários de veículo e clientes que buscam crédito pessoal.",
+      "modalidades": [
+        "Crédito pessoal",
+        "Antecipação do saque-aniversário do FGTS",
+        "Car Equity (crédito com garantia de veículo)"
+      ]
+    }
   },
   {
     "id": "cartoes",
@@ -32,7 +55,15 @@
     "itens": [
       "Cartão Benefício Consignável",
       "Cartão Consignado com Saque Complementar"
-    ]
+    ],
+    "pagina": {
+      "oQueE": "Cartões vinculados à folha de pagamento ou ao benefício, com o valor mínimo da fatura descontado diretamente.",
+      "publico": "Aposentados e pensionistas do INSS e servidores públicos.",
+      "modalidades": [
+        "Cartão benefício consignado",
+        "Cartão consignado com saque complementar"
+      ]
+    }
   },
   {
     "id": "seguros",
@@ -40,7 +71,14 @@
     "icone": "ShieldCheck",
     "itens": [
       "Prestamista"
-    ]
+    ],
+    "pagina": {
+      "oQueE": "Seguro prestamista: proteção vinculada ao contrato de crédito, que quita o saldo devedor em caso de morte ou invalidez, conforme as condições da apólice.",
+      "publico": "Clientes que contratam crédito pelos seus canais.",
+      "modalidades": [
+        "Prestamista"
+      ]
+    }
   },
   {
     "id": "outros-produtos",
@@ -49,6 +87,15 @@
     "itens": [
       "BB Mais",
       "Santander (Abertura de Conta)"
-    ]
+    ],
+    "pagina": {
+      "titulo": "Contas e serviços",
+      "oQueE": "Abertura de conta e produtos de relacionamento oferecidos pelos bancos parceiros.",
+      "publico": "Clientes que buscam conta ou serviços bancários.",
+      "modalidades": [
+        "Abertura de conta (Santander)",
+        "BB Mais"
+      ]
+    }
   }
 ]

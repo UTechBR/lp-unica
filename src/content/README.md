@@ -26,13 +26,22 @@ Tudo o que o site exibe e que alguém pode querer trocar (bancos, produtos, víd
 | Coleção | Arquivo | Onde aparece |
 |---|---|---|
 | `bancos` | `bancos.json` | Grade do hero e modal de canais (Home), `/bancos-parceiros` |
-| `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home) |
+| `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home); o campo `pagina` alimenta `/produtos` |
 | `ecossistema` | `ecossistema.json` | Seção Ecossistema (Home) |
 | `valores` | `valores.json` | Seção Sobre (Home e `/sobre`), com o `resumo`; a `descricao` guarda o texto oficial |
 | `shorts` | `shorts.json` | Seção Única shorts (Home) |
 
 - **Ordem:** a ordem do arquivo é a ordem de exibição. Na grade do hero os bancos são embaralhados a cada visita, mas em todos os outros lugares vale a ordem do arquivo.
 - **Validação:** o build (`npm run build`) falha com uma mensagem clara se um item tiver campo obrigatório faltando, `id` fora do padrão, ícone que não existe ou imagem com caminho errado. Assim nada quebrado chega ao ar.
+
+## Regras de texto
+
+Valem para todo texto do site, e principalmente para produtos e crédito:
+
+- **Descrever, nunca prometer.** Fora: "melhor taxa", "taxas reduzidas", "aprovação facilitada", "liberação rápida", "sem consulta ao SPC/Serasa", "100% digital", a não ser que seja verificável e verdadeiro para todos os bancos.
+- **Falar com o parceiro.** O "você" do texto é o correspondente ("você atende", "você oferece"), não quem toma o crédito.
+- **Fatos de mercado só se forem estáveis.** "Desconto em folha" define o produto; percentuais (margem consignável, taxas) mudam por regra e ficam de fora.
+- **Números só confirmados e, quando possível, calculados** (ex.: "mais de 20 bancos" vem da quantidade em `bancos.json`).
 
 ## Nomes de arquivo e `id`
 
