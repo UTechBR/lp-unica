@@ -10,9 +10,11 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
+  /** Desliga o popup promocional da ANEC (ex.: canal de denúncias). */
+  hidePromo?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, hidePromo = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 const fullTitle = `Única Promotora | ${title}`;
 const siteUrl = "https://unicapromotora.com.br";
@@ -87,10 +89,12 @@ const anecImagem = await getImage({ src: anecCertificacao, width: 800, format: "
            página, então o navegador cuida disso nativamente (inclusive rolagem de
            âncora com scroll-margin, sem hook nenhum). -->
       <Header currentPath={currentPath} client:load />
+      {!hidePromo && (
       <AnecPopup
         client:idle
         imagem={{ src: anecImagem.src, width: Number(anecImagem.attributes.width), height: Number(anecImagem.attributes.height) }}
       />
+      )}
       <main id="main-content" class="flex-1">
         <slot />
       </main>

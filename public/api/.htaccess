@@ -17,3 +17,17 @@
         Deny from all
     </IfModule>
 </Files>
+
+<Files ".user.ini">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+# Anexos do canal de denúncias, quando não for possível gravá-los fora de public_html
+# (denuncie.php também cria um .htaccess próprio dentro da pasta).
+RedirectMatch 403 ^/api/denuncias-anexos/

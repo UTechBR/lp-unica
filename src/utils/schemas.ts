@@ -61,12 +61,58 @@ export const denuncieCategories = [
   'Outros',
 ] as const;
 
-export const denuncieFormSchema = z.object({
-  name: nameField,
-  email: emailField,
-  phone: phoneField,
-  category: z.enum(denuncieCategories, { message: 'Selecione o tipo de fraude' }),
-  description: z.string().trim().min(20, 'Descreva a denúncia com pelo menos 20 caracteres').max(3000),
-});
+// Limites dos anexos: espelham public/api/denuncie.php (manter os dois iguais).
+export const denunciaAnexos = {
+  maxArquivos: 5,
+  maxBytesArquivo: 10 * 1024 * 1024,
+  maxBytesTotal: 25 * 1024 * 1024,
+  extensoes: ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'doc', 'docx', 'xls', 'xlsx', 'txt', 'mp3', 'm4a', 'mp4', 'mov'],
+} as const;
+
+const categoryField = z.enum(denuncieCategories, { message: 'Selecione a categoria' });
+const descriptionField = z.string().trim().min(20, 'Descreva a denúncia com pelo menos 20 caracteres').max(3000);
+
+// Identificação só é exigida quando a denúncia não é anônima. Todas as regras ficam no
+// superRefine, que o zod só executa se o objeto-base for válido: assim todos os erros
+// aparecem juntos, em vez de os de identificação surgirem só depois dos outros.
+export const denuncieFormSchema = z
+  .object({
+    anonimo: z.boolean(),
+    name: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    category: z.string().optional(),
+    description: z.string(),
+    files: z.array(z.instanceof(File)),
+  })
+  .superRefine((data, ctx) => {
+    const campos = [
+      ['category', categoryField],
+      ['description', descriptionField],
+      ...(data.anonimo
+        ? []
+        : ([
+            ['name', nameField],
+            ['email', emailField],
+            ['phone', phoneField],
+          ] as const)),
+    ] as const;
+    for (const [path, field] of campos) {
+      const result = field.safeParse(data[path]);
+      if (!result.success) ctx.addIssue({ code: 'custom', path: [path], message: result.error.issues[0].message });
+    }
+
+    const { files } = data;
+    const { maxArquivos, maxBytesArquivo, maxBytesTotal, extensoes } = denunciaAnexos;
+    const mb = (bytes: number) => `${bytes / 1024 / 1024} MB`;
+    let message = '';
+    if (files.length > maxArquivos) message = `Envie no máximo ${maxArquivos} arquivos`;
+    else if (files.some((f) => !(extensoes as readonly string[]).includes(f.name.split('.').pop()?.toLowerCase() ?? '')))
+      message = 'Tipo de arquivo não aceito. Use PDF, imagem, documento, áudio ou vídeo';
+    else if (files.some((f) => f.size > maxBytesArquivo)) message = `Cada arquivo pode ter até ${mb(maxBytesArquivo)}`;
+    else if (files.reduce((total, f) => total + f.size, 0) > maxBytesTotal)
+      message = `Os arquivos juntos podem ter até ${mb(maxBytesTotal)}`;
+    if (message) ctx.addIssue({ code: 'custom', path: ['files'], message });
+  });
 
 export type DenuncieFormData = z.infer<typeof denuncieFormSchema>;

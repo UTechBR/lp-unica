@@ -1,13 +1,60 @@
 ---
+import { EyeOff, Lock, ShieldCheck } from 'lucide-react';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { DenuncieHero } from '../components/DenuncieHero.tsx';
-import { DenuncieContent } from '../components/DenuncieContent.tsx';
+import { DenuncieForm } from '../components/DenuncieForm.tsx';
+
+// TODO(compliance): validar os textos das garantias (só prometer o que o processo cumpre).
+const garantias = [
+  { titulo: 'Anonimato opcional', texto: 'Você decide se quer se identificar.', Icon: EyeOff },
+  { titulo: 'Sigilo', texto: 'As informações são tratadas apenas pela área responsável.', Icon: Lock },
+  { titulo: 'Sem retaliação', texto: 'Quem denuncia de boa-fé está protegido.', Icon: ShieldCheck },
+];
 ---
 
 <BaseLayout
   title="Canal de Denúncias"
-  description="Canal de denúncias sigiloso da Única Promotora para reportar condutas antiéticas, fraudes ou desvios de conduta."
+  description="Canal de denúncias sigiloso da Única Promotora para reportar fraudes, corrupção, assédio ou desvios de conduta, com opção de anonimato."
+  hidePromo
 >
-  <DenuncieHero />
-  <DenuncieContent client:visible />
+  <section class="bg-white">
+    <div class="container-app grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_460px] lg:items-start">
+      <div class="lg:pt-6">
+        <h1 class="font-heading text-[clamp(2.5rem,1.8rem+3vw,3.75rem)] leading-[1.08] text-secondary">
+          <span class="font-light">Canal de</span> <strong class="font-bold">denúncias</strong>
+        </h1>
+        <p class="mt-5 max-w-[52ch] text-lg leading-relaxed text-secondary-400">
+          Relate situações de fraude, corrupção, assédio, discriminação ou qualquer conduta contrária ao nosso Código de
+          Conduta.
+        </p>
+
+        <ul class="mt-10 grid gap-6">
+          {
+            garantias.map(({ titulo, texto, Icon }) => (
+              <li class="flex gap-3.5">
+                <span
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary-100 text-secondary"
+                  aria-hidden="true"
+                >
+                  <Icon size={20} />
+                </span>
+                <div>
+                  <p class="font-heading text-base font-semibold text-secondary">{titulo}</p>
+                  <p class="mt-0.5 text-[15px] leading-relaxed text-secondary-400">{texto}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-7">
+        <h2 class="font-heading text-[22px] font-semibold text-secondary">Faça sua denúncia</h2>
+        <p class="mt-1 text-sm text-secondary-400">Descreva os fatos com o máximo de detalhes possível.</p>
+        <div class="mt-6">
+          <!-- client:load: é o conteúdo principal da página, já visível ao abrir. -->
+          <DenuncieForm client:load />
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -31,6 +31,34 @@ export function submitOuvidoria(data: OuvidoriaFormData): Promise<{ success: boo
   return postToPhp('ouvidoria.php', data);
 }
 
-export function submitDenuncia(data: DenuncieFormData): Promise<{ success: boolean }> {
-  return postToPhp('denuncie.php', data);
+export type DenunciaResultado = { success: true; protocolo: string } | { success: false; error: string };
+
+// Denúncia vai como multipart/form-data por causa dos anexos. Em modo anônimo, os dados
+// de identificação não saem do navegador.
+export async function submitDenuncia(data: DenuncieFormData): Promise<DenunciaResultado> {
+  const body = new FormData();
+  if (data.anonimo) {
+    body.append('anonimo', 'sim');
+  } else {
+    body.append('name', data.name);
+    body.append('email', data.email);
+    body.append('phone', data.phone);
+  }
+  body.append('category', data.category ?? '');
+  body.append('description', data.description);
+  for (const file of data.files) body.append('files[]', file);
+
+  let response: Response;
+  try {
+    response = await fetch('/api/denuncie.php', { method: 'POST', body });
+  } catch {
+    return { success: false, error: 'network' };
+  }
+  try {
+    const result = await response.json();
+    if (result?.success && typeof result.protocolo === 'string') return { success: true, protocolo: result.protocolo };
+    return { success: false, error: String(result?.error ?? 'unknown') };
+  } catch {
+    return { success: false, error: 'unknown' }; // resposta não-JSON (ex.: erro do servidor)
+  }
 }
