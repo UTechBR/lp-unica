@@ -8,7 +8,8 @@ export const productCategories: ProductCategory[] = [
     title: 'Consignado',
     icon: Landmark,
     featured: true,
-    // TODO: descrição curta a definir com o comercial.
+    description:
+      'Crédito com parcelas descontadas direto da folha ou do benefício, para aposentados, pensionistas, servidores, militares e trabalhadores do setor privado.',
     items: ['INSS', 'Público', 'Privado', 'Federal/Civil (SIAPE)', 'Marinha', 'Aeronáutica', 'Exército'],
   },
   {
@@ -33,6 +34,6 @@ export const productCategories: ProductCategory[] = [
     slug: 'outros-produtos',
     title: 'Outros Produtos',
     icon: LayoutGrid,
-    items: ['Mais BB', 'Santander (Abertura de Conta)'],
+    items: ['BB Mais', 'Santander (Abertura de Conta)'],
   },
 ];
