@@ -10,3 +10,10 @@ Redirect 301 /assets_docs/POLITICA-GESTAO-INCID.pdf /documentos/politica-de-gest
 # /parceiros e /canais-de-atendimento foram unificadas em /bancos-parceiros.
 RedirectMatch 301 ^/parceiros/?$ /bancos-parceiros
 RedirectMatch 301 ^/canais-de-atendimento/?$ /bancos-parceiros
+
+# /produtos (conteúdo antigo, voltado ao cliente final) saiu: leva à seção da Home.
+# mod_rewrite com [NE] para o "#" não ser codificado como %23.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^produtos/?$ /#produtos [R=301,NE,L]
+</IfModule>

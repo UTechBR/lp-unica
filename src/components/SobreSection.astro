@@ -5,8 +5,17 @@ import { homePositioning } from '../config/empresa';
 import { icones } from '../lib/icones';
 import fotoBruno from '../assets/pessoas/bruno-iacomini.png';
 
-// Sobre da Home, condensado. Uma imagem só para os dois layouts: no mobile é um
+// Seção Sobre (Home e /sobre). Uma imagem só para os dois layouts: no mobile é um
 // bloco 4:3 acima do texto; a partir de lg vira fundo da seção.
+// Em /sobre ela abre a página: `cabecalho` faz do título o h1 e mostra o eyebrow
+// (um PageHeader grafite colado a esta seção grafite viraria um bloco só).
+interface Props {
+  cabecalho?: { eyebrow: string };
+}
+
+const { cabecalho } = Astro.props;
+const Titulo = cabecalho ? 'h1' : 'h2';
+const Subtitulo = cabecalho ? 'h2' : 'h3';
 const valores = await getCollection('valores');
 ---
 
@@ -38,15 +47,20 @@ const valores = await getCollection('valores');
 
   <div class="container-app relative pb-16 pt-8 md:pb-24 lg:py-24">
     <div class="max-w-xl lg:max-w-[55%]">
-      <h2 class="font-heading text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.05] tracking-tight text-white">
+      {
+        cabecalho && (
+          <p class="mb-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-white/60">{cabecalho.eyebrow}</p>
+        )
+      }
+      <Titulo class="font-heading text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.05] tracking-tight text-white">
         <span class="block font-bold">União,</span>
         <span class="block font-light">transformação</span>
         <span class="block font-light">e inovação.</span>
-      </h2>
+      </Titulo>
 
       <p class="mt-8 max-w-[560px] text-lg leading-relaxed md:text-xl">{homePositioning}</p>
 
-      <h3 class="mt-10 text-sm font-semibold uppercase tracking-[0.08em] text-white/70">Valores</h3>
+      <Subtitulo class="mt-10 text-sm font-semibold uppercase tracking-[0.08em] text-white/70">Valores</Subtitulo>
       <ul class="mt-5 grid gap-x-10 gap-y-6 sm:grid-cols-2">
         {
           valores.map(({ data: valor }) => {

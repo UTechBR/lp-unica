@@ -16,8 +16,8 @@ const [bancos, categorias, ferramentas] = await Promise.all([
 ---
 
 <BaseLayout
-  title="A solução mais eficaz para você"
-  description="Utilizamos nossa experiência e conhecimento diariamente para oferecer a solução mais eficaz para você."
+  title="Seja parceiro da Única Promotora · Correspondente bancário em BH"
+  description="Seja parceiro da Única Promotora: opere consignado, crédito, cartões e seguros com dezenas de bancos e financeiras parceiros, com ferramentas e suporte."
 >
   <!-- Ordem segue a jornada de quem avalia a parceria: primeiro o valor (bancos no
        hero, produtos, sistemas), depois a confiança (sobre, shorts) e o fechamento. -->
@@ -36,7 +36,7 @@ const [bancos, categorias, ferramentas] = await Promise.all([
   <!-- Sem client:*: cards estáticos, sem animação de entrada. -->
   <Ecossistema ferramentas={ferramentas} />
 
-  <!-- Sem client:*: zero JavaScript. Versão condensada; /sobre usa MissionVisionValues. -->
+  <!-- Sem client:*: zero JavaScript. Mesma seção usada em /sobre. -->
   <SobreSection />
 
   <!-- Sem React: <dialog> nativo + script pequeno. Cards sem vídeo abrem o Instagram. -->

@@ -42,19 +42,6 @@ const categoriasProduto = defineCollection({
   }),
 });
 
-const produtos = defineCollection({
-  loader: file('src/content/produtos.json'),
-  schema: z.object({
-    id,
-    titulo: z.string(),
-    resumo: z.string(),
-    descricao: z.string(),
-    icone,
-    cor: z.enum(['primary', 'accent', 'secondary']),
-    destaques: z.array(z.string()),
-  }),
-});
-
 const ecossistema = defineCollection({
   loader: file('src/content/ecossistema.json'),
   schema: z.object({
@@ -74,7 +61,7 @@ const valores = defineCollection({
     nome: z.string(),
     /** Versão curta, usada na Home. */
     resumo: z.string(),
-    /** Texto oficial completo, usado na página /sobre. */
+    /** Texto oficial completo (referência; o site exibe o resumo). */
     descricao: z.string(),
     icone,
   }),
@@ -94,7 +81,6 @@ const shorts = defineCollection({
 export const collections = {
   bancos,
   'categorias-produto': categoriasProduto,
-  produtos,
   ecossistema,
   valores,
   shorts,

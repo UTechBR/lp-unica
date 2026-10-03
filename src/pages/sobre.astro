@@ -1,23 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SobreHero } from '../components/SobreHero.tsx';
-import MissionVisionValues from '../components/MissionVisionValues.astro';
-import { CtaSection } from '../components/CtaSection.tsx';
+import SobreSection from '../components/SobreSection.astro';
+import { FinalCta } from '../components/FinalCta.tsx';
+
+// Montada com os mesmos componentes da Home: atualizar a seção Sobre atualiza os dois.
+// A própria seção abre a página (h1 + eyebrow), em vez de um PageHeader: dois blocos
+// grafite seguidos se leriam como um só. Conteúdo exclusivo (linha do tempo, liderança,
+// números comprovados) entra entre a seção e o CTA, quando existir.
 ---
 
 <BaseLayout
-  title="Sobre Nós"
-  description="Conheça a história, missão e valores da Única Promotora, correspondente bancário especializado em crédito e soluções financeiras."
+  title="Sobre a Única Promotora"
+  description="Conheça a Única Promotora, correspondente bancário em Belo Horizonte: quem somos, como trabalhamos e os valores que guiam o trabalho com nossos correspondentes."
 >
-  <!-- Hidratada: tem fade-in de entrada (Framer Motion). client:visible porque não
-       precisa estar interativa antes de entrar na tela. -->
-  <SobreHero client:visible />
-
-  <!-- Sem client:*: zero JavaScript enviado ao navegador pra esta seção. É puro
-       HTML/CSS — o componente React de origem não tem nenhuma interatividade,
-       então o Astro renderiza ele em build time e não hidrata nada. -->
-  <MissionVisionValues />
-
-  <!-- Hidratada: mesma razão do hero, fade-in ao entrar na viewport. -->
-  <CtaSection client:visible />
+  <SobreSection cabecalho={{ eyebrow: 'Nossa história' }} />
+  <FinalCta />
 </BaseLayout>

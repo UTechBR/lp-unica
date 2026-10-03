@@ -1,7 +1,6 @@
 import {
   Award,
   Banknote,
-  Building2,
   Calculator,
   CreditCard,
   Database,
@@ -11,11 +10,9 @@ import {
   LayoutGrid,
   Megaphone,
   MessageCircle,
-  PiggyBank,
   ShieldCheck,
   Target,
   Users,
-  Wallet,
 } from 'lucide-react';
 import type { IconComponent } from '../types';
 
@@ -27,7 +24,6 @@ import type { IconComponent } from '../types';
 export const icones = {
   Award,
   Banknote,
-  Building2,
   Calculator,
   CreditCard,
   Database,
@@ -37,11 +33,9 @@ export const icones = {
   LayoutGrid,
   Megaphone,
   MessageCircle,
-  PiggyBank,
   ShieldCheck,
   Target,
   Users,
-  Wallet,
 } satisfies Record<string, IconComponent>;
 
 export type NomeIcone = keyof typeof icones;

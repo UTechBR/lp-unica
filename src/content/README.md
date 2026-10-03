@@ -27,9 +27,8 @@ Tudo o que o site exibe e que alguém pode querer trocar (bancos, produtos, víd
 |---|---|---|
 | `bancos` | `bancos.json` | Grade do hero e modal de canais (Home), `/bancos-parceiros` |
 | `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home) |
-| `produtos` | `produtos.json` | Página `/produtos` |
 | `ecossistema` | `ecossistema.json` | Seção Ecossistema (Home) |
-| `valores` | `valores.json` | Sobre (Home usa `resumo`; `/sobre` usa `descricao`) |
+| `valores` | `valores.json` | Seção Sobre (Home e `/sobre`), com o `resumo`; a `descricao` guarda o texto oficial |
 | `shorts` | `shorts.json` | Seção Única shorts (Home) |
 
 - **Ordem:** a ordem do arquivo é a ordem de exibição. Na grade do hero os bancos são embaralhados a cada visita, mas em todos os outros lugares vale a ordem do arquivo.

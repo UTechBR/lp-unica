@@ -5,6 +5,8 @@ import { AnecPopup } from "../components/AnecPopup.tsx";
 import { CookieConsent } from "../components/CookieConsent.tsx";
 import { getImage } from "astro:assets";
 import anecCertificacao from "../assets/campanhas/anec-certificacao.jpg";
+import { companyInfo } from "../config/empresa";
+import { socialLinks } from "../config/navegacao";
 import "../styles/global.css";
 
 interface Props {
@@ -18,8 +20,33 @@ interface Props {
 
 const { title, description, hidePromo = false, noindex = false } = Astro.props;
 const currentPath = Astro.url.pathname;
-const fullTitle = `Única Promotora | ${title}`;
+
+// "Página · Única Promotora"; títulos que já citam a empresa ficam como estão.
+const fullTitle = title.includes("Única Promotora") ? title : `${title} · Única Promotora`;
 const siteUrl = "https://unicapromotora.com.br";
+
+// Dados da empresa para buscadores (painel com endereço, telefone e redes), a partir de
+// companyInfo e das redes sociais: muda num lugar só.
+const dadosEstruturados = {
+  "@context": "https://schema.org",
+  "@type": "FinancialService",
+  name: companyInfo.legalName,
+  url: `${siteUrl}/`,
+  logo: `${siteUrl}/favicon.png`,
+  image: `${siteUrl}/og-image.jpg`,
+  telephone: companyInfo.phoneRaw,
+  email: companyInfo.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "R. Rio de Janeiro, 600, salas 401 a 408 - Centro",
+    addressLocality: "Belo Horizonte",
+    addressRegion: "MG",
+    postalCode: "30160-041",
+    addressCountry: "BR",
+  },
+  sameAs: socialLinks.map((rede) => rede.href),
+};
+
 const canonicalUrl = `${siteUrl}${currentPath}`;
 // Crawlers de Open Graph/Twitter não resolvem caminhos relativos.
 const ogImageUrl = `${siteUrl}/og-image.jpg`;
@@ -64,26 +91,7 @@ const anecImagem = await getImage({ src: anecCertificacao, width: 800, format: "
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FinancialService",
-        "name": "Única Promotora",
-        "url": "https://unicapromotora.com.br/",
-        "logo": "https://unicapromotora.com.br/favicon.png",
-        "image": "https://unicapromotora.com.br/og-image.jpg",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "R. Rio de Janeiro, 600, Sala 401 a 408 - Centro",
-          "addressLocality": "Belo Horizonte",
-          "addressRegion": "MG",
-          "postalCode": "30160-041",
-          "addressCountry": "BR"
-        },
-        "telephone": "+55-31-2116-5020",
-        "email": "contato@unicapromotora.com.br"
-      }
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
   </head>
   <body>
     <div class="flex min-h-screen flex-col">
