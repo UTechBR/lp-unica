@@ -1,7 +1,11 @@
 // Dados fixos da empresa e textos institucionais únicos. Listas (valores, bancos,
 // produtos…) ficam em src/content/.
 
-// Missão e visão oficiais: referência, não exibidas no site hoje.
+/** Frase de apresentação factual: abre a página /sobre e a descrição dela. */
+export const apresentacao =
+  'Correspondente bancário com sede em Belo Horizonte, conectando parceiros a bancos e financeiras de todo o país.';
+
+// Missão e visão oficiais: exibidas na página /sobre (variante completa da seção Sobre).
 
 export const mission =
   'Oferecer uma prestação de serviço personalizada e transformadora que impulsione o crescimento de nossos parceiros e colaboradores. Buscamos, através da transparência, gerar um impacto positivo, construindo relações sólidas e duradouras junto ao mercado.';
@@ -9,16 +13,15 @@ export const mission =
 export const vision =
   'Ser reconhecida como referência no mercado, através da nossa excelência na prestação de serviços, agilidade no atendimento, com foco na satisfação e no sucesso de nossos parceiros e colaboradores.';
 
-// Posicionamento exibido na seção Sobre (Home e /sobre).
+// Posicionamento exibido na seção Sobre da Home (variante resumida).
 // Derivada dos textos oficiais: validar com quem responde pela marca.
 export const homePositioning =
   'Prestamos um serviço personalizado que impulsiona o crescimento dos nossos parceiros, com transparência e relações sólidas e duradouras com o mercado.';
 
 /**
- * Números da empresa ("A Única em números", na página /sobre). Só aparecem os marcados
- * `confirmado: true`, e a faixa só é exibida com pelo menos dois. O total de bancos não
- * entra aqui: é calculado da lista em src/content/bancos.json.
- * Números confirmados pela empresa em 03/10/2026.
+ * Números da empresa, exibidos no CTA final da página /sobre (via lib/numeros.ts). Só
+ * aparecem os marcados `confirmado: true`; o total de bancos não entra aqui, é calculado
+ * da lista em src/content/bancos.json. Números confirmados pela empresa em 03/10/2026.
  */
 export const numerosEmpresa: { valor: string; rotulo: string; confirmado: boolean }[] = [
   { valor: '27', rotulo: 'estados atendidos', confirmado: true },

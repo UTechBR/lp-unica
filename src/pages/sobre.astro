@@ -1,28 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
 import SobreSection from '../components/SobreSection.astro';
-import NumerosSection from '../components/NumerosSection.astro';
 import { FinalCta } from '../components/FinalCta.tsx';
+import { apresentacao } from '../config/empresa';
+import { numerosDaEmpresa } from '../lib/numeros';
 
-// Montada com os mesmos componentes da Home: atualizar a seção Sobre atualiza os dois.
-// Conteúdo exclusivo (linha do tempo, liderança, números comprovados) entra entre a
-// seção e o CTA, quando existir.
-// TODO(marca): validar o subtítulo (sem afirmações de crescimento ou números não comprovados).
+// A seção Sobre, na variante completa, abre a página (h1, apresentação, Missão, Visão e
+// valores integrais); o CTA final traz os números da empresa. A Home usa a variante resumida.
+const numeros = await numerosDaEmpresa();
 ---
 
-<BaseLayout
-  title="Sobre a Única Promotora"
-  description="Conheça a Única Promotora, correspondente bancário em Belo Horizonte: quem somos, como trabalhamos e os valores que guiam o trabalho com nossos correspondentes."
->
-  <PageHeader
-    eyebrow="Nossa história"
-    leve="Conexões que"
-    forte="transformam vidas"
-    subtitulo="Correspondente bancário com sede em Belo Horizonte, conectando parceiros a bancos e financeiras de todo o país."
-  />
-  <SobreSection />
-  <!-- Só aparece com dois ou mais números confirmados (ver numerosEmpresa em config/empresa.ts). -->
-  <NumerosSection />
-  <FinalCta />
+<BaseLayout title="Sobre a Única Promotora" description={`Conheça a Única Promotora. ${apresentacao}`}>
+  <SobreSection completa />
+  <FinalCta numeros={numeros} />
 </BaseLayout>
