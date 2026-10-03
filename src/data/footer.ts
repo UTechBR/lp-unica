@@ -1,30 +1,57 @@
-import type { FooterLinkColumn, SacContact } from '../types';
-import { DADOS_TITULARIDADE_URL, LEAD_FORM_HREF, POLICY_URLS, TRABALHE_CONOSCO_URL } from './navigation';
+import type { FooterLinkColumn, NavItem, SacContact } from '../types';
+import { companyInfo } from './company';
+import {
+  DADOS_TITULARIDADE_URL,
+  LEAD_FORM_HREF,
+  PARTNER_SYSTEM_URL,
+  POLICY_URLS,
+  TRABALHE_CONOSCO_URL,
+} from './navigation';
 
+// Colunas de navegação do rodapé (a primeira coluna é a marca).
 export const footerColumns: FooterLinkColumn[] = [
+  {
+    title: 'Para parceiros',
+    links: [
+      { label: 'Seja parceiro', href: LEAD_FORM_HREF },
+      { label: 'Produtos', href: '/#produtos' },
+      { label: 'Ecossistema', href: '/#ecossistema' },
+      { label: 'Acessar sistemas', href: PARTNER_SYSTEM_URL, external: true },
+    ],
+  },
   {
     title: 'Institucional',
     links: [
-      { label: 'Seja parceiro', href: LEAD_FORM_HREF },
-      { label: 'Bancos parceiros', href: '/#bancos' },
-      { label: 'Produtos', href: '/#produtos' },
-      { label: 'Ecossistema', href: '/#ecossistema' },
       { label: 'Sobre nós', href: '/#sobre' },
       { label: 'Única shorts', href: '/#shorts' },
-      { label: 'Trabalhe Conosco', href: TRABALHE_CONOSCO_URL, external: true },
+      { label: 'Trabalhe conosco', href: TRABALHE_CONOSCO_URL, external: true },
+      { label: 'Canais de atendimento dos bancos', href: '/canais-de-atendimento' },
     ],
   },
   {
-    title: 'Links Úteis',
+    title: 'Atendimento',
     links: [
-      { label: 'Compliance', href: POLICY_URLS.compliance, external: true },
-      { label: 'Dados de Titularidade', href: DADOS_TITULARIDADE_URL, external: true },
-      { label: 'Políticas de Privacidade', href: POLICY_URLS.privacidade, external: true },
-      { label: 'Políticas de Cookies', href: POLICY_URLS.cookies, external: true },
-      { label: 'Políticas de Gestão de Incidentes', href: POLICY_URLS.incidentes, external: true },
-      { label: 'Denuncie', href: '/denuncie' },
+      {
+        label: 'R. Rio de Janeiro, 600, salas 401 a 408 · Centro, Belo Horizonte/MG · 30160-041',
+        href: companyInfo.mapsUrl,
+        external: true,
+      },
+      { label: companyInfo.email, href: `mailto:${companyInfo.email}` },
+      { label: companyInfo.phone, href: `tel:${companyInfo.phoneRaw}` },
+      { label: companyInfo.dpo, detail: 'Encarregada de dados (DPO)', href: `mailto:${companyInfo.privacyEmail}` },
+      { label: companyInfo.rhEmail, detail: 'Currículos', href: `mailto:${companyInfo.rhEmail}` },
     ],
   },
+];
+
+// Barra legal, abaixo das colunas.
+// TODO(compliance): validar o destino de "Direitos do titular".
+export const legalLinks: NavItem[] = [
+  { label: 'Compliance (PDF)', href: POLICY_URLS.compliance, external: true },
+  { label: 'Política de Privacidade (PDF)', href: POLICY_URLS.privacidade, external: true },
+  { label: 'Política de Cookies (PDF)', href: POLICY_URLS.cookies, external: true },
+  { label: 'Gestão de Incidentes (PDF)', href: POLICY_URLS.incidentes, external: true },
+  { label: 'Direitos do titular', href: DADOS_TITULARIDADE_URL, external: true },
 ];
 
 export const sacContacts: SacContact[] = [

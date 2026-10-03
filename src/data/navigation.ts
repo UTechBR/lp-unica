@@ -1,10 +1,10 @@
 import type { NavItem, SocialLink, SystemAccessLink } from '../types';
 import {
   FacebookIcon,
-  GoogleIcon,
   InstagramIcon,
   LinkedinIcon,
 } from '../components/SocialIcons';
+import { MapPin } from 'lucide-react';
 
 export const TRABALHE_CONOSCO_URL = 'https://forms.gle/nk5JjHSgHQUt8e8CA';
 export const DADOS_TITULARIDADE_URL = 'https://share.google/LoVjPdisKzClKI77t';
@@ -40,6 +40,7 @@ export const systemAccessLinks: SystemAccessLink[] = [
 export const socialLinks: SocialLink[] = [
   { label: 'Facebook', href: 'https://facebook.com/unicapromotora/', icon: FacebookIcon },
   { label: 'Instagram', href: 'https://instagram.com/unicapromotora/', icon: InstagramIcon },
-  { label: 'Google', href: 'https://g.page/unicapromotora/', icon: GoogleIcon },
+  // Perfil no Google Meu Negócio: o pino comunica localização e avaliações melhor que um "G" solto.
+  { label: 'Google Meu Negócio', href: 'https://g.page/unicapromotora/', icon: MapPin },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/unicapromotora/', icon: LinkedinIcon },
 ];

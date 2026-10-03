@@ -6,6 +6,8 @@ export interface NavItem {
   label: string;
   href: string;
   external?: boolean;
+  /** Rótulo curto acima do link (ex.: "Currículos"). */
+  detail?: string;
 }
 
 export interface SocialLink {

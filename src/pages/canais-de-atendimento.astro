@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { bancos } from '../data/bancos';
+
+// Mesmos dados do modal dos logos no hero (data/bancos.ts), em lista pesquisável
+// pelo navegador (Ctrl+F) e acessível sem JavaScript.
+const lista = [...bancos].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+const canaisDe = (banco: (typeof bancos)[number]) => [
+  ...(banco.canais ?? []),
+  ...(banco.sac ? [{ label: 'SAC', valor: banco.sac }] : []),
+  ...(banco.ouvidoria ? [{ label: 'Ouvidoria', valor: banco.ouvidoria }] : []),
+];
+---
+
+<BaseLayout
+  title="Canais de atendimento dos bancos"
+  description="SAC, ouvidoria e horários de atendimento dos bancos e financeiras parceiros da Única Promotora."
+>
+  <section class="bg-secondary py-16 md:py-20">
+    <div class="container-app text-center">
+      <h1 class="heading-xl mx-auto max-w-3xl text-balance text-white">Canais de atendimento dos bancos</h1>
+      <p class="body-lg mx-auto mt-4 max-w-2xl text-white/75">
+        Contatos de SAC e ouvidoria das instituições parceiras. Para dúvidas sobre o seu contrato, fale diretamente com
+        o banco responsável.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-app">
+      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          lista.map((banco) => {
+            const canais = canaisDe(banco);
+            return (
+              <li id={banco.id} class="flex scroll-mt-20 flex-col rounded-surface border border-surface-border bg-white p-6">
+                <h2 class="font-heading text-xl font-semibold text-secondary">{banco.nome}</h2>
+
+                {canais.length > 0 ? (
+                  <dl class="mt-4 space-y-3 text-sm">
+                    {canais.map((canal) => (
+                      <div>
+                        <dt class="text-xs uppercase tracking-[0.06em] text-secondary-400">{canal.label}</dt>
+                        <dd class="font-medium text-secondary">{canal.valor}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <p class="mt-4 text-sm text-secondary-400">
+                    Canais em atualização. Consulte o site oficial do banco.
+                  </p>
+                )}
+
+                {banco.horario && <p class="mt-4 text-sm leading-relaxed text-secondary-400">{banco.horario}</p>}
+
+                {banco.site && (
+                  <a
+                    href={banco.site}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-auto inline-block pt-5 text-sm font-semibold text-secondary underline underline-offset-4 hover:text-primary"
+                  >
+                    Site oficial<span class="sr-only"> do {banco.nome} (abre em nova aba)</span>
+                  </a>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

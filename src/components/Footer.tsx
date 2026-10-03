@@ -1,112 +1,116 @@
-import { Info } from 'lucide-react';
+import { ArrowUpRight, ShieldAlert } from 'lucide-react';
 import { Container } from './Container';
-import { footerColumns } from '../data/footer';
-import { companyInfo } from '../data/company';
+import { footerColumns, legalLinks } from '../data/footer';
 import { socialLinks } from '../data/navigation';
+import type { NavItem } from '../types';
+import { cn } from '../utils/cn';
 
 const logoBranca = '/images/logo-unica-branca.png';
+const ano = new Date().getFullYear();
+
+const linkCls =
+  'group text-white/70 decoration-white/40 underline-offset-4 transition-colors duration-150 ' +
+  'hover:text-white hover:underline focus-visible:text-white focus-visible:underline';
+
+function FooterLink({ link, className }: { link: NavItem; className?: string }) {
+  return (
+    <a
+      href={link.href}
+      className={cn(linkCls, className)}
+      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {link.label}
+      {link.external && (
+        <>
+          <ArrowUpRight
+            size={12}
+            className="ml-1 inline-block align-[-1px] text-white/40 group-hover:text-white/80"
+            aria-hidden="true"
+          />
+          <span className="sr-only"> (abre em nova aba)</span>
+        </>
+      )}
+    </a>
+  );
+}
 
 export function Footer() {
   return (
     <footer id="contato" className="focus-on-dark scroll-mt-20 bg-surface-dark text-white">
-      {/* Mobile: as duas colunas de links lado a lado; marca e contato ocupam a linha toda. */}
-      <Container className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-2 md:gap-12 md:py-16 lg:grid-cols-4">
-        <div className="col-span-2 md:col-span-1">
-          <img src={logoBranca} alt="Única Promotora" className="h-24 w-auto" width={880} height={890} />
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
-            Utilizamos nossa experiência e conhecimento diariamente para oferecer a solução mais eficaz{' '}
-            <strong className="font-bold text-white">para você.</strong>
+      {/* Mobile: "Para parceiros" e "Institucional" lado a lado; marca e Atendimento na linha toda. */}
+      <Container className="grid grid-cols-2 gap-x-6 gap-y-12 py-16 md:gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr]">
+        <div className="col-span-2 lg:col-span-1">
+          <a href="/" aria-label="Única Promotora — início" className="inline-block rounded-control">
+            <img src={logoBranca} alt="Única Promotora" width={880} height={890} className="h-16 w-auto" />
+          </a>
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/70">
+            Serviço personalizado que impulsiona o crescimento dos nossos parceiros.
           </p>
-          <div className="mt-6 flex items-center gap-3">
+          <ul className="mt-6 flex items-center gap-3">
             {socialLinks.map(({ label, href, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-secondary-700 text-white transition-transform hover:scale-110 hover:border-white"
-              >
-                <Icon width={15} height={15} />
-              </a>
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white transition-colors duration-150 hover:border-white hover:bg-white hover:text-secondary focus-visible:border-white focus-visible:bg-white focus-visible:text-secondary"
+                >
+                  <Icon width={16} height={16} aria-hidden="true" />
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {footerColumns.map((column) => (
-          <div key={column.title}>
-            <h2 className="font-brand text-lg font-bold text-[var(--accent-on-dark)]">{column.title}</h2>
-            <ul className="mt-4 flex flex-col gap-3">
+        {footerColumns.map((column, index) => (
+          <nav
+            key={column.title}
+            aria-label={column.title}
+            className={cn(index === footerColumns.length - 1 && 'col-span-2 md:col-span-1')}
+          >
+            <h2 className="font-heading text-base font-semibold text-white">{column.title}</h2>
+            <ul className="mt-5 space-y-3 text-sm">
               {column.links.map((link) => (
                 <li key={link.label}>
-                  {link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-sm text-white/80 hover:text-[var(--accent-on-dark)]"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <a href={link.href} className="flex items-center gap-1.5 text-sm text-white/80 hover:text-[var(--accent-on-dark)]">
-                      {link.label === 'Denuncie' && <Info size={14} className="text-[var(--accent-on-dark)]" aria-hidden="true" />}
-                      {link.label}
-                    </a>
+                  {link.detail && (
+                    <span className="block text-xs uppercase tracking-[0.06em] text-white/50">{link.detail}</span>
                   )}
+                  <FooterLink link={link} />
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         ))}
-
-        <div className="col-span-2 md:col-span-1">
-          <h2 className="font-brand text-lg font-bold text-[var(--accent-on-dark)]">Contato</h2>
-          <ul className="mt-4 flex flex-col gap-3 text-sm text-white/80">
-            <li>
-              <a href={companyInfo.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-[var(--accent-on-dark)]">
-                R. Rio de Janeiro, 600
-                <br />
-                Sala 401 a 408 - Centro
-                <br />
-                Belo Horizonte - MG, 30160-041
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${companyInfo.email}`} className="hover:text-[var(--accent-on-dark)]">
-                {companyInfo.email}
-              </a>
-            </li>
-            <li>
-              <a href={`tel:${companyInfo.phoneRaw}`} className="hover:text-[var(--accent-on-dark)]">
-                {companyInfo.phone}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${companyInfo.privacyEmail}`} className="hover:text-[var(--accent-on-dark)]">
-                DPO {companyInfo.dpo}
-              </a>
-            </li>
-            <li>
-              Envie seu currículo para:
-              <br />
-              <a href={`mailto:${companyInfo.rhEmail}`} className="hover:text-[var(--accent-on-dark)]">
-                {companyInfo.rhEmail}
-              </a>
-            </li>
-          </ul>
-        </div>
       </Container>
 
       <div className="border-t border-white/10">
-        {/* Folga para o botão flutuante do chat (canto inferior direito): embaixo no
-            mobile, à direita no desktop. */}
-        <Container className="flex flex-col items-center gap-3 pb-24 pt-6 text-center text-xs text-white/50 md:flex-row md:justify-between md:pb-6 md:pr-28">
-          <p>{companyInfo.copyright}</p>
-          {/* Aberto pelo CookieConsent via data-cookie-preferences (o rodapé não é hidratado). */}
-          <button type="button" data-cookie-preferences className="underline underline-offset-4 hover:text-white">
-            Preferências de cookies
-          </button>
+        {/* Folga para o botão flutuante do chat: embaixo no mobile, à direita no desktop. */}
+        <Container className="space-y-4 py-8 pb-24 text-xs text-white/60 lg:pb-8 lg:pr-28">
+          {/* TODO(compliance): razão social, CNPJ e identificação como correspondente bancário
+              e instituições contratantes. Não publicar com placeholders. */}
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {legalLinks.map((link) => (
+              <li key={link.label}>
+                <FooterLink link={link} />
+              </li>
+            ))}
+            <li>
+              <a href="/denuncie" className={cn(linkCls, 'inline-flex items-center gap-1.5')}>
+                <ShieldAlert size={14} aria-hidden="true" />
+                Denuncie
+              </a>
+            </li>
+            <li>
+              {/* Aberto pelo CookieConsent via data-cookie-preferences (o rodapé não é hidratado). */}
+              <button type="button" data-cookie-preferences className={linkCls}>
+                Preferências de cookies
+              </button>
+            </li>
+          </ul>
+          <p>
+            © {ano} Única Promotora · Desenvolvido por Única Tech
+          </p>
         </Container>
       </div>
     </footer>
