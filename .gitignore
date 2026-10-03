@@ -13,9 +13,13 @@ dist-ssr
 .astro
 *.local
 
-public/api/leads.csv
-public/api/ouvidoria.csv
-public/api/denuncie.csv
+# Dados dos formulários (pessoais, reais). /storage é a pasta privada dos scripts PHP
+# (um nível acima de public/); as demais são fallbacks/legado dentro de public/api.
+/storage/
+public/api/*.csv
+public/api/storage/
+public/api/denuncias-anexos/
+public/api/formularios-limites/
 
 # Editor directories and files
 .vscode/*
