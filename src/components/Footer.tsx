@@ -99,8 +99,9 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-white/10">
-        {/* pb extra no mobile: o botão flutuante do chat não cobre o fim do rodapé */}
-        <Container className="flex flex-col items-center gap-3 pb-24 pt-6 text-center text-xs text-white/50 md:flex-row md:justify-between md:pb-6">
+        {/* Folga para o botão flutuante do chat (canto inferior direito): embaixo no
+            mobile, à direita no desktop. */}
+        <Container className="flex flex-col items-center gap-3 pb-24 pt-6 text-center text-xs text-white/50 md:flex-row md:justify-between md:pb-6 md:pr-28">
           <p>{companyInfo.copyright}</p>
           {/* Aberto pelo CookieConsent via data-cookie-preferences (o rodapé não é hidratado). */}
           <button type="button" data-cookie-preferences className="underline underline-offset-4 hover:text-white">

@@ -5,7 +5,7 @@ import { join } from 'node:path';
 // Vídeos servidos do próprio site (public/videos/), como os PDFs em public/assets_docs,
 // para não depender do WordPress antigo. Para cada vídeo, coloque <arquivo>.mp4
 // (H.264, necessário no iPhone) e, se possível, <arquivo>.webm (mais leve).
-// Cards sem nenhum dos dois arquivos não aparecem; sem nenhum vídeo, a seção some.
+// Enquanto um vídeo não estiver na pasta, o card abre o Instagram da Única.
 const fontes = [
   { capa: '/images/CAPA-VIDEO.-01.jpg.jpeg', arquivo: 'depoimento-1', titulo: 'Depoimento 1' },
   { capa: '/images/CAPA-VIDEO.-02.jpg.jpeg', arquivo: 'depoimento-3', titulo: 'Depoimento 2' },
@@ -21,14 +21,12 @@ const videos = fontes
     const mp4 = `/videos/${v.arquivo}.mp4`;
     const webm = `/videos/${v.arquivo}.webm`;
     return { ...v, mp4: existe(mp4) ? mp4 : '', webm: existe(webm) ? webm : '' };
-  })
-  .filter((v) => v.mp4 || v.webm);
+  });
+const temAlgumVideo = videos.some((v) => v.mp4 || v.webm);
 
 const instagram = 'https://instagram.com/unicapromotora/';
 ---
 
-{videos.length > 0 && (
-  <>
     <span id="blog" class="block scroll-mt-20" aria-hidden="true"></span>
     <section id="shorts" class="scroll-mt-20 bg-white py-16 md:py-24">
       <div class="container-app">
@@ -40,15 +38,17 @@ const instagram = 'https://instagram.com/unicapromotora/';
         </header>
 
         <ul class="mt-12 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
-          {videos.map((v) => (
+          {videos.map((v) => {
+            const temVideo = Boolean(v.mp4 || v.webm);
+            const Tag = temVideo ? 'button' : 'a';
+            const atributos = temVideo
+              ? { type: 'button', 'data-mp4': v.mp4, 'data-webm': v.webm, 'data-poster': v.capa, 'aria-label': `Assistir: ${v.titulo}` }
+              : { href: instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${v.titulo}: ver no Instagram (abre em nova aba)` };
+            return (
             <li>
-              <button
-                type="button"
-                class="shorts-card group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-secondary"
-                data-mp4={v.mp4}
-                data-webm={v.webm}
-                data-poster={v.capa}
-                aria-label={`Assistir: ${v.titulo}`}
+              <Tag
+                class:list={['group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-secondary', temVideo && 'shorts-card']}
+                {...atributos}
               >
                 <img
                   src={v.capa}
@@ -67,9 +67,10 @@ const instagram = 'https://instagram.com/unicapromotora/';
                     <svg viewBox="0 0 24 24" class="ml-0.5 h-6 w-6" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
                   </span>
                 </span>
-              </button>
+              </Tag>
             </li>
-          ))}
+            );
+          })}
         </ul>
 
         <div class="mt-8 flex justify-center">
@@ -87,6 +88,7 @@ const instagram = 'https://instagram.com/unicapromotora/';
 
       <!-- <dialog> nativo: fica na camada superior (acima do chat), fecha com Esc,
            prende o foco e o devolve ao fechar. -->
+      {temAlgumVideo && (
       <dialog id="shorts-dialog" class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85" aria-label="Vídeo">
         <div class="flex flex-col items-center gap-4">
           <div class="aspect-[9/16] h-[min(78vh,720px)] overflow-hidden rounded-lg bg-black shadow-2xl">
@@ -110,9 +112,8 @@ const instagram = 'https://instagram.com/unicapromotora/';
           ×
         </button>
       </dialog>
+      )}
     </section>
-  </>
-)}
 
 <style>
   /* Trava a rolagem do fundo enquanto o vídeo está aberto. */
