@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Hero } from '../components/Hero.tsx';
-import { BancosSection } from '../components/BancosSection.tsx';
 import { MissionVisionValues } from '../components/MissionVisionValues.tsx';
 import { UnicaShorts } from '../components/UnicaShorts.tsx';
 import { NossoSistema } from '../components/NossoSistema.tsx';
@@ -13,16 +12,15 @@ import { FinalCta } from '../components/FinalCta.tsx';
   title="A solução mais eficaz para você"
   description="Utilizamos nossa experiência e conhecimento diariamente para oferecer a solução mais eficaz para você."
 >
-  <!-- Ordem segue a jornada de quem avalia a parceria: primeiro o valor (bancos,
-       produtos, sistemas), depois a confiança (sobre, shorts) e o fechamento. -->
+  <!-- Ordem segue a jornada de quem avalia a parceria: primeiro o valor (bancos no
+       hero, produtos, sistemas), depois a confiança (sobre, shorts) e o fechamento. -->
 
   <!-- Hidratada logo (client:load): é o formulário de lead, o objetivo comercial
        principal do site — precisa estar interativo assim que a página carrega,
        sem esperar entrar na viewport (já está visível de cara). -->
   <Hero client:load />
-
-  <!-- Hidratada: carrossel (Swiper) + modal de bancos com focus trap. -->
-  <BancosSection client:visible />
+  <!-- Sem JS a grade de bancos não é embaralhada; mostra na ordem do arquivo. -->
+  <noscript><style>.bancos-hero-grid { opacity: 1 !important; }</style></noscript>
 
   <!-- Sem client:*: grid de cards 100% estático, sem nenhuma interação/animação
        no componente original. -->

@@ -10,7 +10,7 @@ const activeItemCls = 'after:scale-x-100';
 
 // ids em ordem de topo a baixo na Home — usados pelo scroll-spy para saber em
 // qual seção o usuário está de fato, em vez de confiar na hash.
-const SPY_IDS = ['bancos', 'produtos', 'sistemas', 'sobre', 'shorts'];
+const SPY_IDS = ['produtos', 'sistemas', 'sobre', 'shorts'];
 // Um pouco abaixo do header compactado (~60px).
 const SPY_OFFSET = 100;
 

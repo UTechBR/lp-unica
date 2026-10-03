@@ -22,7 +22,6 @@ export const LEAD_FORM_HREF = '/#seja-parceiro';
 
 // Segue a ordem das seções da Home. Shorts, Trabalhe Conosco e Contato ficam no rodapé.
 export const mainNav: NavItem[] = [
-  { label: 'Bancos', href: '/#bancos' },
   { label: 'Produtos', href: '/#produtos' },
   { label: 'Sistemas', href: '/#sistemas' },
   { label: 'Sobre', href: '/#sobre' },
