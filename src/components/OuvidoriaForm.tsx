@@ -78,6 +78,7 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
           render={({ field }) => (
             <Input
               ref={field.ref}
+              name={field.name}
               id="ouvidoria-telefone"
               label="Telefone"
               type="tel"
@@ -98,6 +99,7 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
         render={({ field }) => (
           <Select
             ref={field.ref}
+            name={field.name}
             id="ouvidoria-tipo"
             label="Tipo de manifestação"
             placeholder="Selecione"
@@ -115,6 +117,7 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
         render={({ field }) => (
           <Select
             ref={field.ref}
+            name={field.name}
             id="ouvidoria-banco"
             label="Banco relacionado"
             optional

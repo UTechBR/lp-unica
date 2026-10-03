@@ -14,7 +14,7 @@ import {
   SucessoEnvio,
   mensagemDeErro,
 } from './form/Envio';
-import { ajudaCls, campoWrapCls, erroCls, formCls, opcionalCls, rotuloCls } from './form/estilos';
+import { ajudaCls, campoWrapCls, checkboxCls, erroCls, formCls, opcionalCls, rotuloCls } from './form/estilos';
 import { MIN_TEXTO, denunciaAnexos, denuncieCategories, denuncieFormSchema } from '../utils/schemas';
 import type { DenuncieFormData } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
@@ -71,7 +71,7 @@ export function DenuncieForm() {
       <CampoIsca {...register('website')} />
 
       <label className="mb-3 flex cursor-pointer items-center gap-2.5 text-[15px] text-secondary">
-        <input type="checkbox" className="h-[18px] w-[18px] shrink-0 accent-secondary" {...register('anonimo')} />
+        <input type="checkbox" className={checkboxCls} {...register('anonimo')} />
         Quero denunciar sem me identificar
       </label>
 
@@ -102,6 +102,7 @@ export function DenuncieForm() {
             render={({ field }) => (
               <Input
                 ref={field.ref}
+                name={field.name}
                 id="denuncie-telefone"
                 label="Telefone"
                 type="tel"
@@ -123,6 +124,7 @@ export function DenuncieForm() {
         render={({ field }) => (
           <Select
             ref={field.ref}
+            name={field.name}
             id="denuncie-categoria"
             label="Categoria"
             placeholder="Selecione"
@@ -157,6 +159,7 @@ export function DenuncieForm() {
         </label>
         <input
           id="denuncie-arquivos"
+          name="files"
           type="file"
           multiple
           accept={accept}

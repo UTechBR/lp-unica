@@ -47,6 +47,8 @@ export function Header({ currentPath }: HeaderProps) {
 
           <div className="hidden items-center gap-2 lg:flex">
             <SystemsMenu />
+            {/* Exceção única do sistema: vermelho sobre fundo grafite. Em todo o resto o
+                vermelho fica em fundo claro; aqui é o CTA principal, presente em todas as páginas. */}
             <a
               href={LEAD_FORM_HREF}
               className="rounded-control bg-brand px-5 py-2.5 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"

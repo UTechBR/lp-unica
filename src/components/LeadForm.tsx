@@ -66,6 +66,7 @@ export function LeadForm() {
         render={({ field }) => (
           <Input
             ref={field.ref}
+            name={field.name}
             id="lead-whatsapp"
             label="WhatsApp"
             type="tel"
@@ -89,6 +90,7 @@ export function LeadForm() {
           render={({ field }) => (
             <Select
               ref={field.ref}
+              name={field.name}
               id="lead-estado"
               label="UF"
               placeholder="UF"

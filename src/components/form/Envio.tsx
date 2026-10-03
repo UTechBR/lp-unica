@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import { CheckCircle2 } from 'lucide-react';
-import { erroCls } from './estilos';
+import { checkboxCls, erroCls } from './estilos';
 import { documentos } from '../../config/documentos';
 
 // Peças comuns a todo formulário: consentimento ou aviso de privacidade, botão de envio,
@@ -59,7 +59,7 @@ export const Consentimento = forwardRef<HTMLInputElement, ConsentimentoProps>(
             ref={ref}
             id={id}
             type="checkbox"
-            className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+            className={checkboxCls}
             aria-invalid={error ? true : undefined}
             aria-describedby={errorId}
             {...rest}

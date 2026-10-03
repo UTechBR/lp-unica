@@ -22,7 +22,15 @@
 
 export const campoWrapCls = 'flex min-w-0 flex-col gap-1.5 text-left';
 export const rotuloCls = 'text-sm font-medium text-secondary-700';
-export const opcionalCls = 'font-normal text-secondary-300';
+// Textos auxiliares (opcional, contador, ajuda) em secondary-400 ou mais escuro: o 300
+// fica em 2,5:1 sobre branco. O 300 só serve para placeholder e ícones decorativos.
+export const opcionalCls = 'font-normal text-secondary-400';
+
+/** Caixa de seleção: raio de 4px, borda como a dos campos, marcada em grafite. */
+export const checkboxCls =
+  'h-[18px] w-[18px] shrink-0 cursor-pointer appearance-none rounded-[4px] border border-surface-borderMuted bg-white ' +
+  'bg-center bg-no-repeat transition-colors checked:border-secondary checked:bg-secondary checked:bg-check ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-200 aria-[invalid=true]:border-primary-400';
 
 export const controleCls =
   'w-full rounded-control border border-surface-borderMuted bg-white px-3.5 text-base text-secondary ' +

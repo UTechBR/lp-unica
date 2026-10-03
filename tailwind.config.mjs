@@ -125,6 +125,9 @@ export default {
         'dark-gradient': 'linear-gradient(180deg, #D5040C 0%, #000000 100%)',
         'hero-radial':
           'radial-gradient(circle at 80% 20%, rgba(37,117,252,0.15), transparent 45%), radial-gradient(circle at 10% 90%, rgba(213,4,12,0.12), transparent 40%)',
+        // Marca de "✓" branca das caixas de seleção (checkboxCls em form/estilos.ts).
+        check:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E\")",
       },
       animation: {
         marquee: 'marquee 30s linear infinite',

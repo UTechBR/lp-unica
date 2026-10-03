@@ -62,7 +62,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           </span>
           <span
             id={contadorId}
-            className={cn('shrink-0 text-xs tabular-nums', atingiuMinimo ? 'text-secondary-400' : 'text-secondary-300')}
+            className={cn('shrink-0 text-xs tabular-nums', atingiuMinimo ? 'text-secondary-700' : 'text-secondary-400')}
           >
             <span aria-hidden="true">{contador}</span>
             <span className="sr-only">{contadorDescricao}</span>

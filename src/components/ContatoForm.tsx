@@ -78,6 +78,7 @@ export function ContatoForm() {
         render={({ field }) => (
           <Select
             ref={field.ref}
+            name={field.name}
             id="contato-assunto"
             label="Assunto"
             placeholder="Selecione"
@@ -125,6 +126,7 @@ export function ContatoForm() {
               render={({ field }) => (
                 <Input
                   ref={field.ref}
+                  name={field.name}
                   id="contato-telefone"
                   label="Telefone"
                   type="tel"
