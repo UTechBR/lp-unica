@@ -29,8 +29,9 @@ export interface ProductCategory {
   title: string;
   icon: IconComponent;
   items: string[];
-  className?: string;
-  badgePosition?: 'top' | 'bottom';
+  /** Produto principal: coluna em altura dupla, itens em chips e descrição opcional. */
+  featured?: boolean;
+  description?: string;
 }
 
 export interface SystemTool {

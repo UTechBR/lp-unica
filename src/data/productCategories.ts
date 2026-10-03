@@ -1,19 +1,27 @@
-import { Award, BarChart3, DollarSign, Monitor, ShieldCheck } from 'lucide-react';
+import { Banknote, CreditCard, Landmark, LayoutGrid, ShieldCheck } from 'lucide-react';
 import type { ProductCategory } from '../types';
 
+// Ordem = ordem na grade: Consignado em destaque à esquerda, os demais em 2×2.
 export const productCategories: ProductCategory[] = [
   {
     slug: 'consignado',
     title: 'Consignado',
-    icon: Award,
-    className: 'lg:row-span-2',
+    icon: Landmark,
+    featured: true,
+    // TODO: descrição curta a definir com o comercial.
     items: ['INSS', 'Público', 'Privado', 'Federal/Civil (SIAPE)', 'Marinha', 'Aeronáutica', 'Exército'],
   },
   {
     slug: 'credito',
     title: 'Crédito',
-    icon: DollarSign,
+    icon: Banknote,
     items: ['Pessoal', 'Empréstimo / FGTS', 'Car Equity'],
+  },
+  {
+    slug: 'cartoes',
+    title: 'Cartões',
+    icon: CreditCard,
+    items: ['Cartão Benefício Consignável', 'Cartão Consignado com Saque Complementar'],
   },
   {
     slug: 'seguros',
@@ -24,16 +32,7 @@ export const productCategories: ProductCategory[] = [
   {
     slug: 'outros-produtos',
     title: 'Outros Produtos',
-    icon: BarChart3,
-    className: 'lg:row-span-2',
+    icon: LayoutGrid,
     items: ['Mais BB', 'Santander (Abertura de Conta)'],
-  },
-  {
-    slug: 'cartoes',
-    title: 'Cartões',
-    icon: Monitor,
-    className: 'lg:col-span-2',
-    badgePosition: 'bottom',
-    items: ['Cartão Benefício Consignável', 'Cartão Consignado com Saque Complementar'],
   },
 ];
