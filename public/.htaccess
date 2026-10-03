@@ -6,3 +6,7 @@ Redirect 301 /assets_docs/compliance.pdf /documentos/compliance.pdf
 Redirect 301 /assets_docs/POLITICA-DE-PRIVACIDADE-DE-DADOS.pdf /documentos/politica-de-privacidade.pdf
 Redirect 301 /assets_docs/POLITICA-DE-COOKIES.pdf /documentos/politica-de-cookies.pdf
 Redirect 301 /assets_docs/POLITICA-GESTAO-INCID.pdf /documentos/politica-de-gestao-de-incidentes.pdf
+
+# /parceiros e /canais-de-atendimento foram unificadas em /bancos-parceiros.
+RedirectMatch 301 ^/parceiros/?$ /bancos-parceiros
+RedirectMatch 301 ^/canais-de-atendimento/?$ /bancos-parceiros

@@ -1,4 +1,4 @@
-import { mainNav } from '../config/navegacao';
+import { mainNav, mesmoCaminho } from '../config/navegacao';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { cn } from '../utils/cn';
 
@@ -30,7 +30,7 @@ export function Navbar({ currentPath }: NavbarProps) {
   const isItemActive = (href: string) => {
     const [, hash] = href.split('#');
     if (hash) return onHome && spyId === hash;
-    return currentPath === href;
+    return mesmoCaminho(currentPath, href);
   };
 
   return (

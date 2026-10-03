@@ -15,6 +15,8 @@ export const homePositioning =
 export const companyInfo = {
   legalName: 'Única Promotora',
   address: 'R. Rio de Janeiro, 600 – Sala 401 a 408 - Centro, Belo Horizonte - MG, 30160-041',
+  /** Endereço para exibição em duas linhas (rodapé, contato). */
+  addressLines: ['R. Rio de Janeiro, 600, salas 401 a 408', 'Centro, Belo Horizonte/MG · 30160-041'],
   email: 'contato@unicapromotora.com.br',
   rhEmail: 'rh@unicapromotora.com.br',
   privacyEmail: 'privacidade@unicapromotora.com.br',

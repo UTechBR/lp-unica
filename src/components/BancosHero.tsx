@@ -134,6 +134,12 @@ export function BancosHero({ bancos }: { bancos: Banco[] }) {
                 <LogoBanco key={banco.id} banco={banco} onSelect={setSelecionado} />
               ))}
             </ul>
+            <a
+              href="/bancos-parceiros"
+              className="mt-4 inline-block text-sm text-secondary underline underline-offset-4 hover:text-primary"
+            >
+              Ver todos os bancos parceiros →
+            </a>
           </div>
         </>
       )}

@@ -13,8 +13,13 @@ export const CONTACT_EMAIL = 'contato@unicapromotora.com.br';
 
 export const LEAD_FORM_HREF = '/#seja-parceiro';
 
-// Segue a ordem das seções da Home. Shorts, Trabalhe Conosco e Contato ficam no rodapé.
+/** Compara caminhos ignorando a barra final (o build gera /pagina/). */
+export const mesmoCaminho = (a: string, b: string) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
+
+// Bancos leva à página /bancos-parceiros; os demais seguem a ordem das seções da Home.
+// Shorts, Trabalhe Conosco e Contato ficam no rodapé.
 export const mainNav: NavItem[] = [
+  { label: 'Bancos', href: '/bancos-parceiros' },
   { label: 'Produtos', href: '/#produtos' },
   { label: 'Ecossistema', href: '/#ecossistema' },
   { label: 'Sobre', href: '/#sobre' },

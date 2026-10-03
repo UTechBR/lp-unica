@@ -1,17 +1,94 @@
 ---
+import { Handshake, Headphones, Landmark, LogIn, Mail, MapPin, Phone, ShieldAlert } from 'lucide-react';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { ContatoHero } from '../components/ContatoHero.tsx';
-import { ContatoContent } from '../components/ContatoContent.tsx';
+import PageHeader from '../components/PageHeader.astro';
+import { ContatoForm } from '../components/ContatoForm.tsx';
+import { companyInfo } from '../config/empresa';
+import { LEAD_FORM_HREF, PARTNER_SYSTEM_URL } from '../config/navegacao';
+
+// Atalhos: levam direto ao canal certo quem não precisa do formulário.
+const atalhos = [
+  { href: LEAD_FORM_HREF, Icon: Handshake, titulo: 'Quero ser parceiro', texto: 'Cadastre-se e nosso time fala com você.' },
+  { href: '/bancos-parceiros', Icon: Landmark, titulo: 'Sou cliente', texto: 'Veja os canais de atendimento do seu banco.' },
+  { href: PARTNER_SYSTEM_URL, Icon: LogIn, titulo: 'Já sou parceiro', texto: 'Acesse os sistemas da Única.', externo: true },
+  { href: '/ouvidoria', Icon: Headphones, titulo: 'Ouvidoria', texto: 'Reclamação não resolvida nos canais de atendimento.' },
+  { href: '/denuncie', Icon: ShieldAlert, titulo: 'Canal de denúncias', texto: 'Fraude, corrupção ou desvio de conduta, com sigilo.' },
+];
+
+const iconeCls = 'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary-100 text-secondary';
 ---
 
 <BaseLayout
-  title="Contato"
-  description="Fale com a Única Promotora. Estamos prontos para ajudar você a encontrar a melhor solução financeira."
+  title="Fale conosco"
+  description="Fale com a Única Promotora: cadastro de parceiros, suporte, canais dos bancos, ouvidoria e denúncias."
 >
-  <!-- Sem client:*: só texto, sem nenhuma animação no componente original. -->
-  <ContatoHero />
+  <PageHeader
+    eyebrow="Fale conosco"
+    leve="Fale com a"
+    forte="Única"
+    subtitulo="Escolha o assunto para chegar mais rápido a quem pode ajudar."
+  />
 
-  <!-- Hidratada: fade-in dos dois blocos (AnimatedSection) + formulário real
-       (React Hook Form + Zod), que precisa estar interativo pra validar e enviar. -->
-  <ContatoContent client:visible />
+  <section class="bg-white">
+    <div class="container-app grid gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_460px] lg:items-start">
+      <div>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {
+            atalhos.map(({ href, Icon, titulo, texto, externo }) => (
+              <li>
+                <a
+                  href={href}
+                  {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  class="group flex h-full gap-3.5 rounded-surface border border-surface-border p-4 transition-colors hover:border-secondary-300"
+                >
+                  <span class={iconeCls} aria-hidden="true">
+                    <Icon size={20} />
+                  </span>
+                  <span>
+                    <span class="block font-heading font-semibold text-secondary group-hover:underline group-hover:underline-offset-4">
+                      {titulo}
+                    </span>
+                    <span class="block text-[15px] leading-snug text-secondary-400">{texto}</span>
+                    {externo && <span class="sr-only"> (abre em nova aba)</span>}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <ul class="mt-10 grid gap-5 text-[15px] text-secondary">
+          <li class="flex items-center gap-3.5">
+            <span class={iconeCls} aria-hidden="true"><Phone size={20} /></span>
+            <a href={`tel:${companyInfo.phoneRaw}`} class="hover:underline hover:underline-offset-4">{companyInfo.phone}</a>
+          </li>
+          <li class="flex items-center gap-3.5">
+            <span class={iconeCls} aria-hidden="true"><Mail size={20} /></span>
+            <a href={`mailto:${companyInfo.email}`} class="hover:underline hover:underline-offset-4">{companyInfo.email}</a>
+          </li>
+          <li class="flex gap-3.5">
+            <span class={iconeCls} aria-hidden="true"><MapPin size={20} /></span>
+            <span>
+              {companyInfo.addressLines.map((linha) => <>{linha}<br /></>)}
+              <a
+                href={companyInfo.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-secondary-400 underline underline-offset-4 hover:text-secondary"
+              >
+                Ver no mapa<span class="sr-only"> (abre em nova aba)</span>
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded-surface border border-surface-border bg-white p-6 shadow-card md:p-7">
+        <h2 class="font-heading text-[22px] font-semibold text-secondary">Envie uma mensagem</h2>
+        <div class="mt-6">
+          <ContatoForm client:load />
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

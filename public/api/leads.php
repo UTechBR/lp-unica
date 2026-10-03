@@ -36,7 +36,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-if (!append_lead('hero', $name, $phone, $email, $city, $state, '', '')) {
+// O formulário só envia com o consentimento marcado; o servidor confere de novo.
+if (($data['consent'] ?? false) !== true) {
+    http_response_code(422);
+    echo json_encode(['success' => false, 'error' => 'missing_consent']);
+    exit;
+}
+
+if (!append_lead('hero', $name, $phone, $email, $city, $state, '', '', true)) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'storage_error']);
     exit;

@@ -26,12 +26,27 @@ export const leadFormSchema = z.object({
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;
 
+// Assuntos da página /contato. "parceria" não usa o formulário: a página desvia para o
+// cadastro de parceiros. O valor também pode vir na URL (/contato?assunto=cliente).
+export const contatoAssuntos = [
+  { valor: 'parceria', rotulo: 'Quero ser parceiro' },
+  { valor: 'suporte', rotulo: 'Já sou parceiro (suporte)' },
+  { valor: 'cliente', rotulo: 'Sou cliente' },
+  { valor: 'outros', rotulo: 'Outros assuntos' },
+] as const;
+
+export type ContatoAssunto = (typeof contatoAssuntos)[number]['valor'];
+
 export const contactFormSchema = z.object({
   name: nameField,
   email: emailField,
   phone: phoneField,
-  subject: z.string().trim().min(3, 'Informe o assunto'),
+  subject: z.enum(
+    contatoAssuntos.map((a) => a.valor) as [ContatoAssunto, ...ContatoAssunto[]],
+    { message: 'Selecione o assunto' },
+  ),
   message: z.string().trim().min(10, 'Sua mensagem precisa ter pelo menos 10 caracteres').max(1000),
+  consent: z.literal(true, { message: 'Autorize o uso dos dados para continuar' }),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;

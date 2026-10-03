@@ -13,13 +13,21 @@ export function FinalCta() {
           </h2>
           <p className="mt-2 text-secondary-400">Cadastre-se e nosso time fala com você pelo WhatsApp.</p>
         </div>
-        <a
-          href="/#seja-parceiro"
-          className="inline-flex shrink-0 items-center gap-2 rounded-control bg-brand px-6 py-3 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
-        >
-          Quero ser parceiro
-          <ArrowRight size={18} aria-hidden="true" />
-        </a>
+        <div className="flex shrink-0 flex-col items-center gap-3 md:items-end">
+          <a
+            href="/#seja-parceiro"
+            className="inline-flex items-center gap-2 rounded-control bg-brand px-6 py-3 font-heading text-base font-semibold text-white transition-colors hover:bg-primary-600"
+          >
+            Quero ser parceiro
+            <ArrowRight size={18} aria-hidden="true" />
+          </a>
+          <p className="text-sm text-secondary-400">
+            Outro assunto?{' '}
+            <a href="/contato" className="font-semibold text-secondary underline underline-offset-4 hover:text-primary">
+              Fale conosco
+            </a>
+          </p>
+        </div>
       </Container>
     </section>
   );

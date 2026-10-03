@@ -9,6 +9,7 @@ export const footerColumns: FooterLinkColumn[] = [
     title: 'Para parceiros',
     links: [
       { label: 'Seja parceiro', href: LEAD_FORM_HREF },
+      { label: 'Bancos parceiros', href: '/bancos-parceiros' },
       { label: 'Produtos', href: '/#produtos' },
       { label: 'Ecossistema', href: '/#ecossistema' },
       { label: 'Acessar sistemas', href: PARTNER_SYSTEM_URL, external: true },
@@ -20,15 +21,16 @@ export const footerColumns: FooterLinkColumn[] = [
       { label: 'Sobre nós', href: '/#sobre' },
       { label: 'Única shorts', href: '/#shorts' },
       { label: 'Trabalhe conosco', href: TRABALHE_CONOSCO_URL, external: true },
-      { label: 'Canais de atendimento dos bancos', href: '/canais-de-atendimento' },
+      { label: 'Canais de atendimento dos bancos', href: '/bancos-parceiros' },
     ],
   },
   {
     title: 'Atendimento',
     links: [
+      { label: 'Fale conosco', href: '/contato' },
       {
         // \n vira quebra de linha no rodapé (a seta de link externo fica só no fim).
-        label: 'R. Rio de Janeiro, 600, salas 401 a 408\nCentro, Belo Horizonte/MG · 30160-041',
+        label: companyInfo.addressLines.join('\n'),
         href: companyInfo.mapsUrl,
         external: true,
       },

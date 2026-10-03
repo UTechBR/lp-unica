@@ -25,7 +25,7 @@ Tudo o que o site exibe e que alguém pode querer trocar (bancos, produtos, víd
 
 | Coleção | Arquivo | Onde aparece |
 |---|---|---|
-| `bancos` | `bancos.json` | Grade do hero e modal de canais (Home), `/parceiros`, `/canais-de-atendimento` |
+| `bancos` | `bancos.json` | Grade do hero e modal de canais (Home), `/bancos-parceiros` |
 | `categorias-produto` | `categorias-produto.json` | Seção Produtos (Home) |
 | `produtos` | `produtos.json` | Página `/produtos` |
 | `ecossistema` | `ecossistema.json` | Seção Ecossistema (Home) |

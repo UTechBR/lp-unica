@@ -1,3 +1,4 @@
+import { contatoAssuntos } from '../utils/schemas';
 import type { LeadFormData, ContactFormData, OuvidoriaFormData, DenuncieFormData } from '../utils/schemas';
 
 // Cada formulário é persistido por um script PHP hospedado junto com o site
@@ -23,8 +24,10 @@ export function submitLead(data: LeadFormData): Promise<{ success: boolean }> {
   return postToPhp('leads.php', data);
 }
 
+// Na planilha, o assunto vai pelo rótulo legível ("Sou cliente"), não pelo código.
 export function submitContact(data: ContactFormData): Promise<{ success: boolean }> {
-  return postToPhp('contact.php', data);
+  const rotulo = contatoAssuntos.find((a) => a.valor === data.subject)?.rotulo ?? data.subject;
+  return postToPhp('contact.php', { ...data, subject: rotulo });
 }
 
 export function submitOuvidoria(data: OuvidoriaFormData): Promise<{ success: boolean }> {

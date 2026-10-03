@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowUpRight, ChevronDown, ChevronRight } from 'lucide-react';
-import { mainNav, socialLinks, systemAccessLinks, LEAD_FORM_HREF } from '../config/navegacao';
+import { mainNav, mesmoCaminho, socialLinks, systemAccessLinks, LEAD_FORM_HREF } from '../config/navegacao';
 import { cn } from '../utils/cn';
 
 interface MobileMenuProps {
@@ -11,7 +11,7 @@ interface MobileMenuProps {
 export function MobileMenu({ onNavigate, currentPath }: MobileMenuProps) {
   const [systemsOpen, setSystemsOpen] = useState(false);
   // Âncoras da Home não têm estado ativo aqui: o drawer só fica aberto no topo da navegação.
-  const isActive = (href: string) => !href.includes('#') && href === currentPath;
+  const isActive = (href: string) => !href.includes('#') && mesmoCaminho(href, currentPath);
 
   return (
     <div className="flex h-full flex-col">

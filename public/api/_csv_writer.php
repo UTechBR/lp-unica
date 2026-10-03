@@ -18,7 +18,8 @@ function append_lead(
     string $city,
     string $state,
     string $subject,
-    string $message
+    string $message,
+    bool $consent
 ): bool {
     $row = [
         date('Y-m-d H:i:s'),
@@ -31,6 +32,9 @@ function append_lead(
         csv_safe($subject),
         csv_safe($message),
         $_SERVER['REMOTE_ADDR'] ?? '',
+        // Registro do consentimento LGPD dado no formulário (coluna adicionada depois:
+        // em leads.csv criados antes, o cabeçalho não tem o nome desta coluna).
+        $consent ? 'sim' : 'nao',
     ];
 
     $file = __DIR__ . '/leads.csv';
@@ -44,7 +48,7 @@ function append_lead(
     $ok = true;
     if (flock($fp, LOCK_EX)) {
         if ($isNew) {
-            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip']);
+            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip', 'consentimento']);
         }
         fputcsv($fp, $row);
         flock($fp, LOCK_UN);

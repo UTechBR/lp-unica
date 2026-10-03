@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { listar } from '../lib/conteudo';
+
+// Une as antigas /parceiros e /canais-de-atendimento (redirecionadas no .htaccess).
+// Mesma fonte da grade do hero: src/content/bancos.json.
+const bancos = (await listar('bancos')).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+const maisDe = Math.floor((bancos.length - 1) / 10) * 10;
+
+const semAcento = (texto: string) =>
+  texto
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+---
+
+<BaseLayout
+  title="Bancos parceiros"
+  description="Bancos e financeiras com que a Única Promotora opera, com os canais oficiais de SAC e ouvidoria de cada um."
+>
+  <PageHeader
+    eyebrow="Instituições parceiras"
+    leve="Bancos"
+    forte="parceiros"
+    subtitulo={`Mais de ${maisDe} instituições com que a Única opera, e os canais oficiais de atendimento de cada uma. Para dúvidas sobre um contrato, fale diretamente com o banco responsável.`}
+  >
+    <label for="busca-bancos" class="sr-only">Buscar banco ou financeira</label>
+    <input
+      id="busca-bancos"
+      type="search"
+      placeholder="Buscar banco ou financeira"
+      autocomplete="off"
+      class="mt-7 h-12 w-full max-w-[420px] rounded-control bg-white px-3.5 text-base text-secondary placeholder:text-secondary-300"
+    />
+  </PageHeader>
+
+  <section class="bg-surface-muted">
+    <div class="container-app py-12 md:pb-24">
+      <ul id="lista-bancos" class="grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          bancos.map((banco) => {
+            const canais = [
+              ...(banco.canais ?? []),
+              ...(banco.ouvidoria ? [{ rotulo: 'Ouvidoria', valor: banco.ouvidoria }] : []),
+            ];
+            return (
+              <li
+                id={banco.id}
+                data-busca={semAcento(banco.nome)}
+                class="flex scroll-mt-24 flex-col rounded-surface border border-surface-border bg-white p-5"
+              >
+                {/* Logos são silhuetas brancas: cor por máscara, como na grade do hero. */}
+                <div class="flex h-11 items-center">
+                  <span class="relative flex max-w-[130px]">
+                    <img
+                      src={banco.logo.src}
+                      alt=""
+                      loading="lazy"
+                      class="w-auto max-w-full object-contain opacity-0"
+                      style={`max-height:${banco.logoAltura ?? 30}px`}
+                    />
+                    <span
+                      class="absolute inset-0 bg-secondary-400 [mask-position:left_center] [mask-repeat:no-repeat] [mask-size:contain]"
+                      style={`mask-image:url("${banco.logo.src}");-webkit-mask-image:url("${banco.logo.src}")`}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
+                <h2 class="mt-3.5 font-heading text-[17px] font-semibold text-secondary">{banco.nome}</h2>
+
+                {canais.length > 0 ? (
+                  <details class="group mt-2.5">
+                    <summary class="flex cursor-pointer list-none items-center gap-1.5 text-sm text-secondary-400 underline underline-offset-4 hover:text-secondary [&::-webkit-details-marker]:hidden">
+                      Canais de atendimento
+                      <span aria-hidden="true" class="transition-transform group-open:rotate-180">
+                        ▾
+                      </span>
+                    </summary>
+                    <dl class="mt-3 grid gap-2.5">
+                      {canais.map((canal) => (
+                        <div>
+                          <dt class="text-[11px] uppercase tracking-[0.06em] text-secondary-400">{canal.rotulo}</dt>
+                          <dd class="break-words text-sm text-secondary">{canal.valor}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    {banco.horario && <p class="mt-3 text-xs leading-relaxed text-secondary-400">{banco.horario}</p>}
+                  </details>
+                ) : (
+                  <p class="mt-2.5 text-sm text-secondary-400">Canais em atualização.</p>
+                )}
+
+                {banco.site && (
+                  <a
+                    href={banco.site}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-3 text-sm font-semibold text-secondary underline underline-offset-4 hover:text-primary"
+                  >
+                    Site oficial<span class="sr-only"> do {banco.nome} (abre em nova aba)</span>
+                  </a>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+      <p id="sem-resultado" class="text-secondary-400" hidden>Nenhuma instituição encontrada.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const busca = document.getElementById('busca-bancos') as HTMLInputElement;
+  const itens = document.querySelectorAll<HTMLLIElement>('#lista-bancos > li');
+  const vazio = document.getElementById('sem-resultado')!;
+  const semAcento = (texto: string) =>
+    texto
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '');
+
+  busca.addEventListener('input', () => {
+    const termo = semAcento(busca.value.trim());
+    let visiveis = 0;
+    itens.forEach((li) => {
+      const mostra = li.dataset.busca!.includes(termo);
+      li.hidden = !mostra;
+      if (mostra) visiveis++;
+    });
+    vazio.hidden = visiveis > 0;
+  });
+</script>
