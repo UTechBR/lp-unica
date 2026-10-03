@@ -16,10 +16,10 @@ export const LEAD_FORM_HREF = '/#seja-parceiro';
 /** Compara caminhos ignorando a barra final (o build gera /pagina/). */
 export const mesmoCaminho = (a: string, b: string) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
 
-// Bancos leva à página /bancos-parceiros; os demais seguem a ordem das seções da Home.
-// Shorts, Trabalhe Conosco e Contato ficam no rodapé.
+// Regra: na landing, o menu só leva a seções da própria página (âncoras, na ordem da
+// Home). Páginas de consulta, como /bancos-parceiros, entram pelo conteúdo (popover dos
+// bancos no hero) e pelo rodapé, para não tirar a pessoa de perto do formulário.
 export const mainNav: NavItem[] = [
-  { label: 'Bancos', href: '/bancos-parceiros' },
   { label: 'Produtos', href: '/#produtos' },
   { label: 'Ecossistema', href: '/#ecossistema' },
   { label: 'Sobre', href: '/#sobre' },
