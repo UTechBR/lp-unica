@@ -19,7 +19,7 @@ export const homePositioning =
   'Prestamos um serviço personalizado que impulsiona o crescimento dos nossos parceiros, com transparência e relações sólidas e duradouras com o mercado.';
 
 /**
- * Números da empresa, exibidos no CTA final da página /sobre (via lib/numeros.ts). Só
+ * Números da empresa, exibidos em "A Única em números" na /sobre (via lib/numeros.ts). Só
  * aparecem os marcados `confirmado: true`; o total de bancos não entra aqui, é calculado
  * da lista em src/content/bancos.json. Números confirmados pela empresa em 03/10/2026.
  */

@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SobreSection from '../components/SobreSection.astro';
+import NumerosSection from '../components/NumerosSection.astro';
 import { FinalCta } from '../components/FinalCta.tsx';
 import { apresentacao } from '../config/empresa';
-import { numerosDaEmpresa } from '../lib/numeros';
 
 // A seção Sobre, na variante completa, abre a página (h1, apresentação, Missão, Visão e
-// valores integrais); o CTA final traz os números da empresa. A Home usa a variante resumida.
-const numeros = await numerosDaEmpresa();
+// valores integrais), seguida de "A Única em números" (branco) e do CTA final (cinza claro).
+// A Home usa a variante resumida.
 ---
 
 <BaseLayout title="Sobre a Única Promotora" description={`Conheça a Única Promotora. ${apresentacao}`}>
   <SobreSection completa />
-  <FinalCta numeros={numeros} />
+  <NumerosSection />
+  <FinalCta />
 </BaseLayout>

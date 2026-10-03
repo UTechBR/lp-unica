@@ -1,0 +1,33 @@
+---
+import { numerosDaEmpresa } from '../lib/numeros';
+
+// "A Única em números": números grafite em cards claros (o destaque vem do tamanho, não
+// da cor; vermelho só no filete do título). Fica em fundo branco, separando a seção
+// Sobre (grafite) do CTA final (cinza claro). Some se houver menos de dois números.
+const numeros = await numerosDaEmpresa();
+---
+
+{
+  numeros.length >= 2 && (
+    <section class="bg-white">
+      <div class="container-app py-16 md:py-20">
+        <div class="flex items-center gap-3">
+          <span class="h-0.5 w-7 shrink-0 bg-brand" aria-hidden="true" />
+          <h2 class="font-heading text-lg font-normal text-secondary">
+            A Única em <strong class="font-bold">números</strong>
+          </h2>
+        </div>
+        <dl class="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {numeros.map(({ valor, rotulo }) => (
+            <div class="flex flex-col-reverse rounded-surface border border-surface-border p-6">
+              <dt class="mt-2 text-[15px] text-secondary-400">{rotulo}</dt>
+              <dd class="font-heading text-[clamp(2.25rem,1.8rem+2vw,3rem)] font-bold leading-none text-secondary">
+                {valor}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )
+}
