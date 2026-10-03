@@ -50,7 +50,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Protocolo devolvido à pessoa e registrado na planilha.
-$protocolo = 'OUV-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
+$protocolo = gerar_protocolo('OUV');
 
 $row = [
     date('Y-m-d H:i:s'),

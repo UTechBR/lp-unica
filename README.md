@@ -47,10 +47,13 @@ Os scripts em `public/api/` gravam tudo numa única pasta privada, `storage/`, r
 
 | Formulário | Endpoint | Arquivo em `storage/` |
 |---|---|---|
-| Seja parceiro (Hero) e Fale conosco | `leads.php` / `contact.php` | `leads.csv` (coluna `origem` distingue a origem) |
-| Ouvidoria | `ouvidoria.php` | `ouvidoria-manifestacoes.csv` (com protocolo `OUV-…`) |
-| Canal de denúncias | `denuncie.php` | `denuncias.csv` (com protocolo `DEN-…`) e anexos em `denuncias-anexos/<protocolo>/` |
+| Seja parceiro (Hero) e Fale conosco | `leads.php` / `contact.php` | `leads.csv` (coluna `origem` distingue a origem; protocolo `LEA-…` / `CON-…`) |
+| Ouvidoria | `ouvidoria.php` | `ouvidoria-manifestacoes.csv` (protocolo `OUV-…`) |
+| Canal de denúncias | `denuncie.php` | `denuncias.csv` (protocolo `DEN-…`) e anexos em `denuncias-anexos/<protocolo>/` |
 | Limite de envios (todos) | `_seguranca.php` | `formularios-limites/` (contadores por hash de IP) |
+| Protocolos (todos) | `_seguranca.php` | `protocolos/<PREFIXO>.ultimo` (último número emitido) |
+
+Todo registro gravado recebe um protocolo `PREFIXO-AAAAMMDDHHMMSS` (ex.: `OUV-20261003143205`), gerado por `gerar_protocolo()`: data e hora até o segundo, sem contador. Se dois envios do mesmo tipo caem no mesmo segundo, o segundo espera o próximo segundo. Ouvidoria e Denúncia mostram o protocolo na tela de sucesso; nos leads ele fica só na planilha (última coluna, `protocolo`).
 
 Proteções comuns (`_seguranca.php`): limite de tamanho por campo, campo-isca anti-robô, 5 envios por IP a cada 10 min por formulário, neutralização de fórmulas no CSV e datas no horário de Brasília. Os `_*.php` e qualquer `*.csv` em `public/api/` são bloqueados por `.htaccess`.
 

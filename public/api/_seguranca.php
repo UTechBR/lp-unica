@@ -77,6 +77,31 @@ function pasta_storage(string $sub = ''): string
 }
 
 /**
+ * Protocolo de cada registro gravado: PREFIXO-AAAAMMDDHHMMSS (ex.: OUV-20261003143205).
+ * Sem contador: a data e hora até o segundo já identificam o envio. Para dois envios do
+ * mesmo tipo no mesmo segundo não saírem com o mesmo número, guarda-se só o último
+ * protocolo emitido por prefixo e, se repetir, espera-se o segundo seguinte.
+ */
+function gerar_protocolo(string $prefixo): string
+{
+    $fp = @fopen(pasta_storage('protocolos') . '/' . $prefixo . '.ultimo', 'c+');
+    if ($fp === false) {
+        return $prefixo . '-' . date('YmdHis');
+    }
+    flock($fp, LOCK_EX);
+    $ultimo = trim((string) stream_get_contents($fp));
+    while (($protocolo = $prefixo . '-' . date('YmdHis')) === $ultimo) {
+        usleep(100000);
+    }
+    ftruncate($fp, 0);
+    rewind($fp);
+    fwrite($fp, $protocolo);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+    return $protocolo;
+}
+
+/**
  * Limite de envios por IP e por formulário: no máximo $max envios a cada $janela segundos.
  * Contadores em storage/formularios-limites/. O IP é guardado só como hash, e os
  * registros antigos são descartados a cada envio.

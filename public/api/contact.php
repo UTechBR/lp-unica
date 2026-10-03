@@ -46,7 +46,7 @@ if (($data['consent'] ?? false) !== true) {
     exit;
 }
 
-if (!append_lead('contato', $name, $phone, $email, '', '', $subject, $message, true)) {
+if (!append_lead(gerar_protocolo('CON'), 'contato', $name, $phone, $email, '', '', $subject, $message, true)) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'storage_error']);
     exit;

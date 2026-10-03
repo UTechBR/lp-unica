@@ -46,7 +46,7 @@ if (($data['consent'] ?? false) !== true) {
     exit;
 }
 
-if (!append_lead('hero', $name, $phone, $email, $city, $state, '', '', true)) {
+if (!append_lead(gerar_protocolo('LEA'), 'hero', $name, $phone, $email, $city, $state, '', '', true)) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'storage_error']);
     exit;

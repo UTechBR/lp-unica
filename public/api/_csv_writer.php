@@ -5,8 +5,10 @@ require_once __DIR__ . '/_seguranca.php';
 
 // LeadForm (Hero) e ContatoForm (página Contato) capturam o mesmo tipo de
 // contato de cliente, então gravam na mesma planilha storage/leads.csv — a coluna
-// "origem" distingue de onde veio cada linha.
+// "origem" distingue de onde veio cada linha. Cada lead recebe um protocolo interno
+// (LEA-… no Hero, CON-… no Contato), gravado só na planilha.
 function append_lead(
+    string $protocol,
     string $origin,
     string $name,
     string $phone,
@@ -31,6 +33,8 @@ function append_lead(
         // Registro do consentimento LGPD dado no formulário (coluna adicionada depois:
         // em leads.csv criados antes, o cabeçalho não tem o nome desta coluna).
         $consent ? 'sim' : 'nao',
+        // Também acrescentada depois, no fim, pelo mesmo motivo.
+        $protocol,
     ];
 
     $file = pasta_storage() . '/leads.csv';
@@ -44,7 +48,7 @@ function append_lead(
     $ok = true;
     if (flock($fp, LOCK_EX)) {
         if ($isNew) {
-            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip', 'consentimento'], ',', '"', '');
+            fputcsv($fp, ['data_hora', 'origem', 'nome', 'telefone', 'email', 'cidade', 'estado', 'assunto', 'mensagem', 'ip', 'consentimento', 'protocolo'], ',', '"', '');
         }
         fputcsv($fp, $row, ',', '"', '');
         flock($fp, LOCK_UN);

@@ -97,7 +97,7 @@ if ($total > MAX_BYTES_TOTAL) {
     responder(413, ['success' => false, 'error' => 'file_too_large']);
 }
 
-$protocolo = 'DEN-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
+$protocolo = gerar_protocolo('DEN');
 $salvos = [];
 
 if ($anexos !== []) {
