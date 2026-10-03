@@ -11,11 +11,36 @@ require_once __DIR__ . '/_seguranca.php';
 const MAX_ARQUIVOS = 5;
 const MAX_BYTES_ARQUIVO = 10 * 1024 * 1024; // 10 MB
 const MAX_BYTES_TOTAL = 25 * 1024 * 1024;   // 25 MB
-const EXTENSOES_PERMITIDAS = [
-    'pdf', 'jpg', 'jpeg', 'png', 'webp', 'heic',
-    'doc', 'docx', 'xls', 'xlsx', 'txt',
-    'mp3', 'm4a', 'mp4', 'mov',
+// Extensão permitida => tipos reais aceitos (lidos do conteúdo com finfo, não do nome):
+// um executável renomeado para .pdf é recusado. Documentos do Office modernos são ZIP e
+// os antigos são CDF; algumas versões do libmagic os identificam só assim.
+const TIPOS_PERMITIDOS = [
+    'pdf'  => ['application/pdf'],
+    'jpg'  => ['image/jpeg'],
+    'jpeg' => ['image/jpeg'],
+    'png'  => ['image/png'],
+    'webp' => ['image/webp'],
+    'heic' => ['image/heic', 'image/heif', 'image/heic-sequence', 'image/heif-sequence'],
+    'doc'  => ['application/msword', 'application/CDFV2', 'application/x-ole-storage'],
+    'docx' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip'],
+    'xls'  => ['application/vnd.ms-excel', 'application/CDFV2', 'application/x-ole-storage'],
+    'xlsx' => ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip'],
+    'txt'  => ['text/plain'],
+    'mp3'  => ['audio/mpeg', 'audio/mp3'],
+    'm4a'  => ['audio/mp4', 'audio/x-m4a', 'video/mp4'],
+    'mp4'  => ['video/mp4', 'audio/mp4'],
+    'mov'  => ['video/quicktime', 'video/mp4'],
 ];
+
+/** Tipo real do arquivo pelo conteúdo; null se a extensão fileinfo não estiver ativa. */
+function tipo_real(string $caminho): ?string
+{
+    if (!class_exists('finfo')) {
+        return null;
+    }
+    $tipo = (new finfo(FILEINFO_MIME_TYPE))->file($caminho);
+    return is_string($tipo) ? $tipo : null;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     responder(405, ['success' => false, 'error' => 'method_not_allowed']);
@@ -88,7 +113,11 @@ foreach ($anexos as $anexo) {
         responder(400, ['success' => false, 'error' => 'upload_error']);
     }
     $ext = strtolower(pathinfo($anexo['nome'], PATHINFO_EXTENSION));
-    if (!in_array($ext, EXTENSOES_PERMITIDAS, true)) {
+    if (!isset(TIPOS_PERMITIDOS[$ext])) {
+        responder(415, ['success' => false, 'error' => 'file_type_not_allowed']);
+    }
+    $tipo = tipo_real($anexo['tmp']);
+    if ($tipo !== null && !in_array($tipo, TIPOS_PERMITIDOS[$ext], true)) {
         responder(415, ['success' => false, 'error' => 'file_type_not_allowed']);
     }
     $total += $anexo['bytes'];

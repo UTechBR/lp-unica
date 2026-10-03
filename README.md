@@ -50,12 +50,12 @@ Os scripts em `public/api/` gravam tudo numa única pasta privada, `storage/`, r
 | Seja parceiro (Hero) e Fale conosco | `leads.php` / `contact.php` | `leads.csv` (coluna `origem` distingue a origem; protocolo `LEA-…` / `CON-…`) |
 | Ouvidoria | `ouvidoria.php` | `ouvidoria-manifestacoes.csv` (protocolo `OUV-…`) |
 | Canal de denúncias | `denuncie.php` | `denuncias.csv` (protocolo `DEN-…`) e anexos em `denuncias-anexos/<protocolo>/` |
-| Limite de envios (todos) | `_seguranca.php` | `formularios-limites/` (contadores por hash de IP) |
+| Limite de envios (todos) | `_seguranca.php` | `formularios-limites/` (contadores por HMAC do IP, só da janela atual) e `.segredo` (chave do HMAC, gerada no primeiro envio) |
 | Protocolos (todos) | `_seguranca.php` | `protocolos/<PREFIXO>.ultimo` (último número emitido) |
 
 Todo registro gravado recebe um protocolo `PREFIXO-AAAAMMDDHHMMSS` (ex.: `OUV-20261003143205`), gerado por `gerar_protocolo()`: data e hora até o segundo, sem contador. Se dois envios do mesmo tipo caem no mesmo segundo, o segundo espera o próximo segundo. Ouvidoria e Denúncia mostram o protocolo na tela de sucesso; nos leads ele fica só na planilha (última coluna, `protocolo`).
 
-Proteções comuns (`_seguranca.php`): limite de tamanho por campo, campo-isca anti-robô, 5 envios por IP a cada 10 min por formulário, neutralização de fórmulas no CSV e datas no horário de Brasília. Os `_*.php` e qualquer `*.csv` em `public/api/` são bloqueados por `.htaccess`.
+Proteções comuns (`_seguranca.php`): limite de tamanho por campo, campo-isca anti-robô, 5 envios por IP a cada 10 min por formulário, neutralização de fórmulas no CSV e datas no horário de Brasília. Nos anexos da denúncia, o tipo é conferido pelo conteúdo (`finfo`), não só pela extensão: um executável renomeado para `.pdf` é recusado. Sem a extensão `fileinfo` do PHP (comum no PHP do winget em dev), vale só a checagem por extensão. Os `_*.php` e qualquer `*.csv` em `public/api/` são bloqueados por `.htaccess`.
 
 ### Migração em produção
 
@@ -64,7 +64,7 @@ As versões anteriores gravavam dentro de `public_html/api/` (e os anexos em `~/
 - `public_html/api/leads.csv`, `ouvidoria-manifestacoes.csv` e `denuncias.csv` → `~/storage/`
 - `~/denuncias-anexos/` → `~/storage/denuncias-anexos/`
 
-As planilhas mais antigas, com outras colunas (`ouvidoria.csv`, `denuncie.csv`), podem ir para `~/storage/` como arquivo histórico. Depois, confira que `https://unicapromotora.com.br/api/leads.csv` responde 403.
+As planilhas mais antigas, com outras colunas (`ouvidoria.csv`, `denuncie.csv`), podem ir para `~/storage/` como arquivo histórico. Depois, confira que `https://unicapromotora.com.br/api/leads.csv` responde 403, que a extensão `fileinfo` está ativa (MultiPHP INI Editor / `phpinfo()`) e que `upload_max_filesize` ≥ 10M e `post_max_size` ≥ 30M valem de fato: envie uma denúncia com um anexo perto de 10 MB. Confirme também que o backup da HostGator inclui `~/storage/`, que fica fora do `public_html`.
 
 ## Estrutura de pastas
 

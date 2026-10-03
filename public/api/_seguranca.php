@@ -102,15 +102,40 @@ function gerar_protocolo(string $prefixo): string
 }
 
 /**
+ * Segredo do servidor para os hashes de IP: gerado no primeiro uso e guardado em
+ * storage/.segredo (fora do repositório). Sem ele, um SHA-256 simples do IP seria
+ * revertido por força bruta (são só ~4 bilhões de IPv4).
+ */
+function segredo_servidor(): string
+{
+    $arquivo = pasta_storage() . '/.segredo';
+    $segredo = is_file($arquivo) ? trim((string) file_get_contents($arquivo)) : '';
+    if (strlen($segredo) < 64) {
+        $segredo = bin2hex(random_bytes(32));
+        if (@file_put_contents($arquivo, $segredo, LOCK_EX) !== false) {
+            @chmod($arquivo, 0600);
+        }
+    }
+    return $segredo;
+}
+
+/**
  * Limite de envios por IP e por formulário: no máximo $max envios a cada $janela segundos.
- * Contadores em storage/formularios-limites/. O IP é guardado só como hash, e os
- * registros antigos são descartados a cada envio.
+ * Contadores em storage/formularios-limites/. O IP é guardado só como HMAC com o segredo
+ * do servidor; só a janela atual é mantida, e contadores sem envio recente são apagados.
  */
 function limitar_envios(string $formulario, int $max = 5, int $janela = 600): void
 {
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconhecido';
-    $arquivo = pasta_storage('formularios-limites') . '/' . $formulario . '-' . hash('sha256', $ip) . '.json';
+    $pasta = pasta_storage('formularios-limites');
+    $arquivo = $pasta . '/' . $formulario . '-' . hash_hmac('sha256', $ip, segredo_servidor()) . '.json';
     $agora = time();
+
+    foreach (glob($pasta . '/*.json') ?: [] as $antigo) {
+        if ($antigo !== $arquivo && @filemtime($antigo) < $agora - $janela) {
+            @unlink($antigo);
+        }
+    }
 
     $fp = @fopen($arquivo, 'c+');
     if ($fp === false) {
