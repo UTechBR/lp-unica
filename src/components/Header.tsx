@@ -6,10 +6,10 @@ import { Container } from './Container';
 import { Drawer } from './Drawer';
 import { useScrollPosition } from '../hooks/useScrollPosition';
 import { useDisclosure } from '../hooks/useDisclosure';
-import { LEAD_FORM_HREF } from '../data/navigation';
+import { LEAD_FORM_HREF } from '../config/navegacao';
 import { cn } from '../utils/cn';
 
-const logoBranca = '/images/logo-unica-branca.png';
+import logoBranca from '../assets/marca/logo-branca.png';
 
 interface HeaderProps {
   currentPath: string;
@@ -35,10 +35,10 @@ export function Header({ currentPath }: HeaderProps) {
         >
           <a href="/" className="inline-flex shrink-0 items-center" aria-label="Única Promotora — início">
             <img
-              src={logoBranca}
+              src={logoBranca.src}
               alt="Única Promotora"
-              width={879}
-              height={892}
+              width={logoBranca.width}
+              height={logoBranca.height}
               className={cn('w-auto object-contain transition-all duration-300', scrolled ? 'h-11' : 'h-14')}
             />
           </a>

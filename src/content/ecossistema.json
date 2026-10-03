@@ -1,0 +1,37 @@
+[
+  {
+    "id": "astor-tech",
+    "etapa": "Base",
+    "nome": "Astor Tech",
+    "descricao": "Consulta, higienização e enriquecimento das suas bases.",
+    "icone": "Database"
+  },
+  {
+    "id": "ultra-facil",
+    "etapa": "Campanhas",
+    "nome": "Ultra Fácil",
+    "descricao": "Disparos de mensagens e criação de campanhas.",
+    "icone": "Megaphone"
+  },
+  {
+    "id": "astor-chat",
+    "etapa": "Atendimento",
+    "nome": "Astor Chat",
+    "descricao": "Atendimento e relacionamento com o cliente via WhatsApp.",
+    "icone": "MessageCircle"
+  },
+  {
+    "id": "astor-multibank",
+    "etapa": "Simulação",
+    "nome": "Astor Multibank",
+    "descricao": "Consulta multibanco para o Consignado CLT.",
+    "icone": "Calculator"
+  },
+  {
+    "id": "unica-mais",
+    "etapa": "Vantagens",
+    "nome": "Única Mais",
+    "descricao": "Solicite bases e troque pontos por prêmios.",
+    "icone": "Gift"
+  }
+]

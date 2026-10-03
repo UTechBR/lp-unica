@@ -1,0 +1,30 @@
+[
+  {
+    "id": "integridade",
+    "nome": "Integridade",
+    "resumo": "Ética e transparência em cada operação.",
+    "descricao": "Comprometemo-nos com a honestidade, transparência e ética em todas as nossas operações e relacionamentos.",
+    "icone": "Award"
+  },
+  {
+    "id": "agilidade",
+    "nome": "Agilidade",
+    "resumo": "Prontos para as mudanças do mercado.",
+    "descricao": "Estamos prontos para nos ajustar rapidamente às mudanças do ambiente, da tecnologia e do mercado.",
+    "icone": "Target"
+  },
+  {
+    "id": "incentivo",
+    "nome": "Incentivo",
+    "resumo": "Foco no crescimento de quem está com a gente.",
+    "descricao": "Buscamos a excelência em tudo o que fazemos, sempre com foco em impulsionar o crescimento e o desenvolvimento de nossos parceiros e colaboradores.",
+    "icone": "HandHeart"
+  },
+  {
+    "id": "trabalho-em-equipe",
+    "nome": "Trabalho em equipe",
+    "resumo": "Colaboração e respeito em tudo o que fazemos.",
+    "descricao": "Valorizamos a colaboração, o respeito mútuo e a diversidade de opiniões, reconhecendo que o trabalho em equipe é essencial para alcançarmos nossos objetivos comuns.",
+    "icone": "Users"
+  }
+]

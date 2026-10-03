@@ -1,4 +1,4 @@
-import { mainNav } from '../data/navigation';
+import { mainNav } from '../config/navegacao';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { cn } from '../utils/cn';
 

@@ -3,6 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { ParceirosHero } from '../components/ParceirosHero.tsx';
 import { ParceirosBankGrid } from '../components/ParceirosBankGrid.tsx';
 import { ParceirosCta } from '../components/ParceirosCta.tsx';
+import { listar } from '../lib/conteudo';
+
+const bancos = await listar('bancos');
 ---
 
 <BaseLayout
@@ -14,7 +17,7 @@ import { ParceirosCta } from '../components/ParceirosCta.tsx';
 
   <!-- Hidratada: título com fade-in (SectionHeading) + grid de 25 bancos com
        stagger animation ao entrar na viewport. -->
-  <ParceirosBankGrid client:visible />
+  <ParceirosBankGrid client:visible bancos={bancos} />
 
   <!-- Hidratada: o Button usado aqui é sempre um motion.button (hover/tap scale),
        então precisa do runtime do framer-motion pra esse micro-detalhe funcionar. -->

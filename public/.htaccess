@@ -1,1 +1,8 @@
 ErrorDocument 404 /404.html
+
+# Documentos legais movidos de /assets_docs/ para /documentos/ (nomes padronizados).
+# Mantidos para links já distribuídos (e-mails, contratos, buscadores).
+Redirect 301 /assets_docs/compliance.pdf /documentos/compliance.pdf
+Redirect 301 /assets_docs/POLITICA-DE-PRIVACIDADE-DE-DADOS.pdf /documentos/politica-de-privacidade.pdf
+Redirect 301 /assets_docs/POLITICA-DE-COOKIES.pdf /documentos/politica-de-cookies.pdf
+Redirect 301 /assets_docs/POLITICA-GESTAO-INCID.pdf /documentos/politica-de-gestao-de-incidentes.pdf

@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { ProdutosHero } from '../components/ProdutosHero.tsx';
 import { ProdutosContent } from '../components/ProdutosContent.tsx';
+import { listar } from '../lib/conteudo';
+
+const produtos = await listar('produtos');
 ---
 
 <BaseLayout
@@ -11,5 +14,5 @@ import { ProdutosContent } from '../components/ProdutosContent.tsx';
   <ProdutosHero />
   <!-- Hidratada: cada bloco de produto tem fade-in próprio ao entrar na viewport
        (7 gatilhos independentes, não um stagger único). -->
-  <ProdutosContent client:visible />
+  <ProdutosContent client:visible produtos={produtos} />
 </BaseLayout>

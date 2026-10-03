@@ -11,13 +11,6 @@ export const DADOS_TITULARIDADE_URL = 'https://share.google/LoVjPdisKzClKI77t';
 export const PARTNER_SYSTEM_URL = 'https://sistema.unicapromotora.com.br/';
 export const CONTACT_EMAIL = 'contato@unicapromotora.com.br';
 
-export const POLICY_URLS = {
-  compliance: '/assets_docs/compliance.pdf',
-  privacidade: '/assets_docs/POLITICA-DE-PRIVACIDADE-DE-DADOS.pdf',
-  cookies: '/assets_docs/POLITICA-DE-COOKIES.pdf',
-  incidentes: '/assets_docs/POLITICA-GESTAO-INCID.pdf',
-} as const;
-
 export const LEAD_FORM_HREF = '/#seja-parceiro';
 
 // Segue a ordem das seções da Home. Shorts, Trabalhe Conosco e Contato ficam no rodapé.

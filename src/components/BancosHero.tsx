@@ -1,17 +1,12 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { BancoModal } from './BancoModal';
-import { bancos } from '../data/bancos';
-import type { Banco } from '../types/banco';
+import type { Banco } from '../types/conteudo';
 import { cn } from '../utils/cn';
 
 const VISIVEIS = 12;
 
-// Ajuste óptico (altura máx. em px) para logos que pesam de mais ou de menos na grade.
-const ALTURA_POR_LOGO: Record<string, number> = {
-  '/images/banks/itau-1.png': 36,
-  '/images/banks/CBA-1.png': 36,
-  '/images/banks/alfa.png': 26,
-};
+// Altura máx. padrão dos logos na grade; o ajuste óptico por banco é logoAltura (bancos.json).
+const ALTURA_PADRAO = 30;
 
 function embaralhar<T>(lista: T[]): T[] {
   const copia = [...lista];
@@ -36,16 +31,16 @@ function LogoBanco({ banco, onSelect }: { banco: Banco; onSelect: (banco: Banco)
             cor vem de um <span> mascarado pelo logo (cinza médio → grafite no hover). */}
         <span className="relative flex max-w-full">
           <img
-            src={banco.logo}
+            src={banco.logo.src}
             alt=""
             loading="lazy"
             decoding="async"
             className="w-auto max-w-[min(100%,110px)] object-contain opacity-0"
-            style={{ maxHeight: ALTURA_POR_LOGO[banco.logo] ?? 30 }}
+            style={{ maxHeight: banco.logoAltura ?? ALTURA_PADRAO }}
           />
           <span
             className="absolute inset-0 bg-secondary-300 transition-colors duration-300 [mask-position:center] [mask-repeat:no-repeat] [mask-size:contain] group-hover:bg-secondary group-focus-visible:bg-secondary"
-            style={{ maskImage: `url("${banco.logo}")`, WebkitMaskImage: `url("${banco.logo}")` }}
+            style={{ maskImage: `url("${banco.logo.src}")`, WebkitMaskImage: `url("${banco.logo.src}")` }}
           />
         </span>
       </button>
@@ -55,7 +50,7 @@ function LogoBanco({ banco, onSelect }: { banco: Banco; onSelect: (banco: Banco)
 
 // Grade de bancos do hero. A ordem é embaralhada a cada visita para nenhum banco
 // ficar sempre em destaque; até lá a grade fica transparente, para não "pular".
-export function BancosHero() {
+export function BancosHero({ bancos }: { bancos: Banco[] }) {
   const [ordem, setOrdem] = useState(bancos);
   const [pronto, setPronto] = useState(false);
   const [popAberto, setPopAberto] = useState(false);
@@ -69,7 +64,7 @@ export function BancosHero() {
   useEffect(() => {
     setOrdem(embaralhar(bancos));
     setPronto(true);
-  }, []);
+  }, [bancos]);
 
   useEffect(() => {
     if (!popAberto) return;
@@ -90,6 +85,8 @@ export function BancosHero() {
     };
   }, [popAberto, selecionado]);
 
+  // Dezena abaixo do total, para "mais de N" seguir verdadeiro quando a lista mudar (22 → 20).
+  const maisDe = Math.floor((bancos.length - 1) / 10) * 10;
   const visiveis = ordem.slice(0, VISIVEIS);
   const restantes = ordem.slice(VISIVEIS);
 
@@ -98,7 +95,7 @@ export function BancosHero() {
       <div className="mb-6 flex items-center gap-3">
         <span className="h-0.5 w-7 shrink-0 bg-brand" aria-hidden="true" />
         <p className="text-lg leading-snug text-secondary">
-          Opere com <strong className="font-bold">mais de 20 bancos</strong> e financeiras
+          Opere com <strong className="font-bold">mais de {maisDe} bancos</strong> e financeiras
         </p>
       </div>
 

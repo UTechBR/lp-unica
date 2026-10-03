@@ -1,0 +1,54 @@
+[
+  {
+    "id": "consignado",
+    "titulo": "Consignado",
+    "icone": "Landmark",
+    "destaque": true,
+    "descricao": "Crédito com parcelas descontadas direto da folha ou do benefício, para aposentados, pensionistas, servidores, militares e trabalhadores do setor privado.",
+    "itens": [
+      "INSS",
+      "Público",
+      "Privado",
+      "Federal/Civil (SIAPE)",
+      "Marinha",
+      "Aeronáutica",
+      "Exército"
+    ]
+  },
+  {
+    "id": "credito",
+    "titulo": "Crédito",
+    "icone": "Banknote",
+    "itens": [
+      "Pessoal",
+      "Empréstimo / FGTS",
+      "Car Equity"
+    ]
+  },
+  {
+    "id": "cartoes",
+    "titulo": "Cartões",
+    "icone": "CreditCard",
+    "itens": [
+      "Cartão Benefício Consignável",
+      "Cartão Consignado com Saque Complementar"
+    ]
+  },
+  {
+    "id": "seguros",
+    "titulo": "Seguros",
+    "icone": "ShieldCheck",
+    "itens": [
+      "Prestamista"
+    ]
+  },
+  {
+    "id": "outros-produtos",
+    "titulo": "Outros Produtos",
+    "icone": "LayoutGrid",
+    "itens": [
+      "BB Mais",
+      "Santander (Abertura de Conta)"
+    ]
+  }
+]

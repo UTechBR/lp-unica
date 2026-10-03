@@ -1,0 +1,377 @@
+[
+  {
+    "id": "bb-mais",
+    "nome": "BB Mais - Banco do Brasil",
+    "logo": "../assets/bancos/bb-mais.png",
+    "descricao": "Consignado e crédito para servidores públicos, aposentados e pensionistas do INSS.",
+    "site": "https://www.bb.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 729 0722"
+      },
+      {
+        "rotulo": "SAC Deficientes Auditivos e de Fala",
+        "valor": "0800 729 0088"
+      }
+    ],
+    "horario": "Informações, reclamações, cancelamento de cartão, outros produtos e ouvidoria: 24h, todos os dias."
+  },
+  {
+    "id": "itau-consignado",
+    "nome": "Itaú Consignado",
+    "logo": "../assets/bancos/itau-consignado.png",
+    "logoAltura": 36,
+    "descricao": "Crédito consignado para aposentados, pensionistas e servidores públicos.",
+    "site": "https://www.itau.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 724 2101"
+      }
+    ],
+    "horario": "Atendimento de segunda a sexta, das 8h às 20h."
+  },
+  {
+    "id": "banco-bmg",
+    "nome": "Banco BMG",
+    "logo": "../assets/bancos/banco-bmg.png",
+    "descricao": "Um dos maiores parceiros em consignado do INSS e cartão benefício do Brasil.",
+    "site": "https://www.bmg.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 889 0200"
+      },
+      {
+        "rotulo": "SAC Deficientes Auditivos e de Fala",
+        "valor": "0800 979 7333"
+      },
+      {
+        "rotulo": "BMG Cartão (telefone fixo)",
+        "valor": "0800 770 1790"
+      },
+      {
+        "rotulo": "BMG Cartão (celular)",
+        "valor": "4002-7007"
+      }
+    ],
+    "horario": "Atendimento disponível 24h, todos os dias da semana."
+  },
+  {
+    "id": "banco-daycoval",
+    "nome": "Banco Daycoval",
+    "logo": "../assets/bancos/banco-daycoval.png",
+    "descricao": "Crédito consignado e financiamento com condições diferenciadas para parceiros.",
+    "site": "https://www.daycoval.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 775 0500"
+      },
+      {
+        "rotulo": "SAC Cartão",
+        "valor": "0800 880 6158"
+      },
+      {
+        "rotulo": "SAC Deficiente Auditivo ou de Fala",
+        "valor": "0800 775 2005"
+      },
+      {
+        "rotulo": "Central de Atendimento",
+        "valor": "0300 111 0500"
+      },
+      {
+        "rotulo": "WhatsApp",
+        "valor": "(11) 99111-6583"
+      }
+    ],
+    "ouvidoria": "0800 777 0900",
+    "horario": "SAC e Central de Atendimento: dias úteis, 8h às 19h. SAC Cartão: 24h, todos os dias. Ouvidoria: dias úteis, 9h às 18h."
+  },
+  {
+    "id": "banco-pan",
+    "nome": "Banco Pan",
+    "logo": "../assets/bancos/banco-pan.png",
+    "descricao": "Consignado INSS, cartão benefício e crédito pessoal digital.",
+    "site": "https://www.bancopan.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 775 8686"
+      },
+      {
+        "rotulo": "SAC Deficientes Auditivos e de Fala",
+        "valor": "0800 776 2200"
+      },
+      {
+        "rotulo": "SAC Cancelamentos",
+        "valor": "0800 776 8000"
+      },
+      {
+        "rotulo": "Cartão (capital)",
+        "valor": "4003-0101"
+      },
+      {
+        "rotulo": "Cartão (demais localidades)",
+        "valor": "0800 888 0101"
+      }
+    ],
+    "horario": "Atendimento disponível 24h, todos os dias da semana."
+  },
+  {
+    "id": "santander",
+    "nome": "Santander",
+    "logo": "../assets/bancos/santander.png",
+    "descricao": "Soluções de crédito consignado e produtos financeiros para servidores e aposentados.",
+    "site": "https://www.santander.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC (capitais e regiões metropolitanas)",
+        "valor": "4004 3535"
+      },
+      {
+        "rotulo": "SAC (demais localidades)",
+        "valor": "0800 702 3535"
+      },
+      {
+        "rotulo": "SAC Pessoas com Deficiência Auditiva e de Fala",
+        "valor": "0800 723 5007"
+      }
+    ],
+    "horario": "Seg a Sex, 6h às 22h. Sábado, 8h às 19h. Domingo, 9h às 16h."
+  },
+  {
+    "id": "banco-banrisul",
+    "nome": "Banco Banrisul",
+    "logo": "../assets/bancos/banco-banrisul.png",
+    "descricao": "Banco público gaúcho com linhas de consignado para servidores e beneficiários do INSS.",
+    "site": "https://www.banrisul.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "3003 0511"
+      },
+      {
+        "rotulo": "SAC (demais localidades)",
+        "valor": "0800 646 1515"
+      }
+    ],
+    "horario": "Atendimento disponível 24h, todos os dias da semana."
+  },
+  {
+    "id": "banco-alfa",
+    "nome": "Banco Alfa",
+    "logo": "../assets/bancos/banco-alfa.png",
+    "logoAltura": 26,
+    "descricao": "Crédito consignado e financeiro com atendimento especializado a correspondentes.",
+    "site": "https://www.alfanet.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC (capitais e grandes centros)",
+        "valor": "3003 9039"
+      },
+      {
+        "rotulo": "SAC (demais localidades)",
+        "valor": "0800 722 9039"
+      }
+    ]
+  },
+  {
+    "id": "facta-financeira",
+    "nome": "Facta Financeira",
+    "logo": "../assets/bancos/facta-financeira.png",
+    "descricao": "Consignado INSS, FGTS e refinanciamento com processo 100% digital.",
+    "site": "https://www.facta.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 942 0462"
+      },
+      {
+        "rotulo": "E-mail SAC",
+        "valor": "sac@factafinanceira.com.br"
+      },
+      {
+        "rotulo": "Assistência Telemedicina",
+        "valor": "(53) 3027-5323"
+      }
+    ],
+    "horario": "Atendimento das 9h às 16h."
+  },
+  {
+    "id": "c6-consig",
+    "nome": "C6 Consig",
+    "logo": "../assets/bancos/c6-consig.png",
+    "descricao": "Consignado digital do C6 Bank, com portabilidade e refinanciamento facilitados.",
+    "site": "https://www.c6bank.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC (capitais e regiões metropolitanas)",
+        "valor": "3003 6206"
+      },
+      {
+        "rotulo": "SAC (demais localidades)",
+        "valor": "0800 770 6206"
+      }
+    ],
+    "horario": "Atendimento disponível 24h, todos os dias da semana."
+  },
+  {
+    "id": "inbursa",
+    "nome": "Inbursa",
+    "logo": "../assets/bancos/inbursa.png",
+    "descricao": "Crédito consignado com condições especiais para aposentados e pensionistas.",
+    "site": "https://www.bancoinbursa.com.br"
+  },
+  {
+    "id": "brb",
+    "nome": "BRB",
+    "logo": "../assets/bancos/brb.png",
+    "descricao": "Banco de Brasília com linhas de consignado para servidores públicos e beneficiários do INSS.",
+    "site": "https://www.brb.com.br"
+  },
+  {
+    "id": "caixa-aqui",
+    "nome": "CBA - Caixa Aqui",
+    "logo": "../assets/bancos/caixa-aqui.png",
+    "logoAltura": 36,
+    "descricao": "Correspondente autorizado para consignado e produtos da rede conveniada.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 104 0104"
+      }
+    ]
+  },
+  {
+    "id": "crefisa",
+    "nome": "Crefisa",
+    "logo": "../assets/bancos/crefisa.png",
+    "descricao": "Crédito pessoal e consignado com atendimento ágil em todo o Brasil.",
+    "site": "https://www.crefisa.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 727 4884"
+      }
+    ]
+  },
+  {
+    "id": "digio",
+    "nome": "Digio",
+    "logo": "../assets/bancos/digio.png",
+    "descricao": "Banco digital com linha de crédito consignado 100% online.",
+    "site": "https://www.digio.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 704 5533"
+      }
+    ]
+  },
+  {
+    "id": "nbc-bank",
+    "nome": "NBC Bank",
+    "logo": "../assets/bancos/nbc-bank.png",
+    "descricao": "Parceiro para linhas de consignado e crédito pessoal."
+  },
+  {
+    "id": "senff",
+    "nome": "Senff",
+    "logo": "../assets/bancos/senff.png",
+    "descricao": "Financeira parceira para consignado e crédito pessoal.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 595 0595"
+      }
+    ]
+  },
+  {
+    "id": "parana-banco",
+    "nome": "Paraná Banco",
+    "logo": "../assets/bancos/parana-banco.png",
+    "descricao": "Consignado para servidores públicos e beneficiários do INSS.",
+    "site": "https://www.paranabanco.com.br",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 645 609"
+      }
+    ]
+  },
+  {
+    "id": "cdc",
+    "nome": "CDC",
+    "logo": "../assets/bancos/cdc.png",
+    "descricao": "Linha de crédito direto ao consumidor via correspondente autorizado.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "(31) 2573-0055"
+      },
+      {
+        "rotulo": "SAC (0800)",
+        "valor": "0800 590 0127"
+      },
+      {
+        "rotulo": "WhatsApp",
+        "valor": "(31) 3157-038"
+      }
+    ]
+  },
+  {
+    "id": "agora-consig",
+    "nome": "Agora Consig",
+    "logo": "../assets/bancos/agora-consig.svg",
+    "descricao": "Consignado para servidores públicos com atendimento via correspondente.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "(11) 4210-2496 / 4619-0717 / 4673-0711"
+      },
+      {
+        "rotulo": "Central",
+        "valor": "4000 2181"
+      },
+      {
+        "rotulo": "E-mail SAC",
+        "valor": "sac@capitalconsig.com.br"
+      }
+    ]
+  },
+  {
+    "id": "banco-p",
+    "nome": "Banco P",
+    "logo": "../assets/bancos/banco-p.png",
+    "descricao": "Parceiro para produtos de crédito consignado.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 930 1000"
+      },
+      {
+        "rotulo": "Central",
+        "valor": "(11) 3299-2000"
+      }
+    ]
+  },
+  {
+    "id": "quero-mais",
+    "nome": "Quero+",
+    "logo": "../assets/bancos/quero-mais.png",
+    "descricao": "Plataforma parceira para consulta e contratação de crédito consignado.",
+    "canais": [
+      {
+        "rotulo": "SAC",
+        "valor": "0800 775 0500"
+      },
+      {
+        "rotulo": "SAC Cartões",
+        "valor": "0800 880 6158"
+      }
+    ],
+    "horario": "SAC: Seg a Sex, 8h às 19h, Sáb 8h às 14h. SAC Cartões: 24h."
+  }
+]

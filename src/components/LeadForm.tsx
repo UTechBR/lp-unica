@@ -10,7 +10,7 @@ import { cn } from '../utils/cn';
 import { Modal } from './Modal';
 import { Button } from './Button';
 
-const logoCompleta = '/images/Logo-unica-completa.svg';
+import logoCompleta from '../assets/marca/logo-completa.svg';
 
 const stateOptions: { label: string; value: string }[] = [
   ['Acre', 'AC'],
@@ -75,7 +75,7 @@ export function LeadForm() {
       <Modal isOpen={isSuccess} onClose={() => setIsSuccess(false)}>
         <div className="flex flex-col items-center gap-4 pt-2 text-center">
           <div className="rounded-control bg-secondary px-5 py-3">
-            <img src={logoCompleta} alt="Única Promotora" className="h-8 w-auto md:h-9" />
+            <img src={logoCompleta.src} alt="Única Promotora" className="h-8 w-auto md:h-9" />
           </div>
 
           <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50">

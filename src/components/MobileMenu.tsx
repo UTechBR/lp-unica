@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowUpRight, ChevronDown, ChevronRight } from 'lucide-react';
-import { mainNav, socialLinks, systemAccessLinks, LEAD_FORM_HREF } from '../data/navigation';
+import { mainNav, socialLinks, systemAccessLinks, LEAD_FORM_HREF } from '../config/navegacao';
 import { cn } from '../utils/cn';
 
 interface MobileMenuProps {

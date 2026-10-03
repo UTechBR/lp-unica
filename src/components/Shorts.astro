@@ -1,27 +1,24 @@
 ---
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { Image, getImage } from 'astro:assets';
+import { listar } from '../lib/conteudo';
 
-// Vídeos servidos do próprio site (public/videos/), como os PDFs em public/assets_docs,
-// para não depender do WordPress antigo. Para cada vídeo, coloque <arquivo>.mp4
-// (H.264, necessário no iPhone) e, se possível, <arquivo>.webm (mais leve).
-// Enquanto um vídeo não estiver na pasta, o card abre o Instagram da Única.
-const fontes = [
-  { capa: '/images/CAPA-VIDEO.-01.jpg.jpeg', arquivo: 'depoimento-1', titulo: 'Depoimento 1' },
-  { capa: '/images/CAPA-VIDEO.-02.jpg.jpeg', arquivo: 'depoimento-3', titulo: 'Depoimento 2' },
-  { capa: '/images/CAPA-VIDEO.-03.jpg.jpeg', arquivo: '5-anos-unica-dia-1', titulo: '5 anos da Única' },
-  { capa: '/images/CAPA-VIDEO.-04.jpg.jpeg', arquivo: 'instagram-1', titulo: 'Vídeo do Instagram' },
-];
-
+// Itens em src/content/shorts.json; capas em src/assets/shorts/.
+// Vídeos ficam em public/videos/<id>.mp4 (H.264, necessário no iPhone) e, se possível,
+// <id>.webm (mais leve). Enquanto o vídeo não estiver na pasta, o card abre o Instagram.
 const publicDir = join(process.cwd(), 'public');
 const existe = (caminho: string) => existsSync(join(publicDir, caminho));
 
-const videos = fontes
-  .map((v) => {
-    const mp4 = `/videos/${v.arquivo}.mp4`;
-    const webm = `/videos/${v.arquivo}.webm`;
-    return { ...v, mp4: existe(mp4) ? mp4 : '', webm: existe(webm) ? webm : '' };
-  });
+const videos = await Promise.all(
+  (await listar('shorts')).map(async (v) => {
+    const mp4 = `/videos/${v.id}.mp4`;
+    const webm = `/videos/${v.id}.webm`;
+    // Pôster do player: a capa otimizada, na resolução do modal.
+    const poster = await getImage({ src: v.capa, width: 720, format: 'webp' });
+    return { ...v, mp4: existe(mp4) ? mp4 : '', webm: existe(webm) ? webm : '', poster: poster.src };
+  }),
+);
 const temAlgumVideo = videos.some((v) => v.mp4 || v.webm);
 
 const instagram = 'https://instagram.com/unicapromotora/';
@@ -42,7 +39,7 @@ const instagram = 'https://instagram.com/unicapromotora/';
             const temVideo = Boolean(v.mp4 || v.webm);
             const Tag = temVideo ? 'button' : 'a';
             const atributos = temVideo
-              ? { type: 'button', 'data-mp4': v.mp4, 'data-webm': v.webm, 'data-poster': v.capa, 'aria-label': `Assistir: ${v.titulo}` }
+              ? { type: 'button', 'data-mp4': v.mp4, 'data-webm': v.webm, 'data-poster': v.poster, 'aria-label': `Assistir: ${v.titulo}` }
               : { href: instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${v.titulo}: ver no Instagram (abre em nova aba)` };
             return (
             <li>
@@ -50,11 +47,11 @@ const instagram = 'https://instagram.com/unicapromotora/';
                 class:list={['group relative block aspect-[9/16] w-full overflow-hidden rounded-surface bg-secondary', temVideo && 'shorts-card']}
                 {...atributos}
               >
-                <img
+                <Image
                   src={v.capa}
                   alt=""
-                  loading="lazy"
-                  decoding="async"
+                  widths={[240, 360, 540]}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
                   class="h-full w-full object-cover brightness-[.85] grayscale transition duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0 group-focus-visible:brightness-100 group-focus-visible:grayscale-0"
                 />
                 <!-- Duotone vermelho suave (ver regra no guia): só em seção clara; hover/foco revelam a foto. -->

@@ -1,15 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { bancos } from '../data/bancos';
+import { listar } from '../lib/conteudo';
 
-// Mesmos dados do modal dos logos no hero (data/bancos.ts), em lista pesquisável
+// Mesmos dados do modal dos logos no hero (src/content/bancos.json), em lista pesquisável
 // pelo navegador (Ctrl+F) e acessível sem JavaScript.
+const bancos = await listar('bancos');
 const lista = [...bancos].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
 const canaisDe = (banco: (typeof bancos)[number]) => [
   ...(banco.canais ?? []),
-  ...(banco.sac ? [{ label: 'SAC', valor: banco.sac }] : []),
-  ...(banco.ouvidoria ? [{ label: 'Ouvidoria', valor: banco.ouvidoria }] : []),
+  ...(banco.ouvidoria ? [{ rotulo: 'Ouvidoria', valor: banco.ouvidoria }] : []),
 ];
 ---
 
@@ -41,7 +41,7 @@ const canaisDe = (banco: (typeof bancos)[number]) => [
                   <dl class="mt-4 space-y-3 text-sm">
                     {canais.map((canal) => (
                       <div>
-                        <dt class="text-xs uppercase tracking-[0.06em] text-secondary-400">{canal.label}</dt>
+                        <dt class="text-xs uppercase tracking-[0.06em] text-secondary-400">{canal.rotulo}</dt>
                         <dd class="font-medium text-secondary">{canal.valor}</dd>
                       </div>
                     ))}

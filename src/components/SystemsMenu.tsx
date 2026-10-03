@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
-import { systemAccessLinks } from '../data/navigation';
+import { systemAccessLinks } from '../config/navegacao';
 import { cn } from '../utils/cn';
 
 // Dropdown "Acessar sistemas" (para quem já é parceiro). Abre por clique, não por

@@ -1,12 +1,13 @@
 import { ArrowRight } from 'lucide-react';
 import { Container } from './Container';
 import { LegacyAnchor } from './LegacyAnchor';
-import { ecosystemTools } from '../data/ecossistema';
-import { LEAD_FORM_HREF } from '../data/navigation';
+import { icones } from '../lib/icones';
+import type { FerramentaEcossistema } from '../types/conteudo';
+import { LEAD_FORM_HREF } from '../config/navegacao';
 
 // Estática (sem client:*): sem animação de entrada, que nesta seção atrapalhava a
 // leitura no mobile.
-export function Ecossistema() {
+export function Ecossistema({ ferramentas }: { ferramentas: FerramentaEcossistema[] }) {
   return (
     <>
       <LegacyAnchor id="sistemas" />
@@ -21,10 +22,12 @@ export function Ecossistema() {
 
           {/* sm: 2 colunas, com o card de fechamento na largura toda; lg: grade 3×2. */}
           <ul className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {ecosystemTools.map(({ slug, stage, name, description, icon: Icon }) => (
-              <li key={slug} className="flex flex-col rounded-surface bg-white p-7 shadow-sm">
+            {ferramentas.map(({ id, etapa, nome, descricao, icone }) => {
+              const Icon = icones[icone];
+              return (
+              <li key={id} className="flex flex-col rounded-surface bg-white p-7 shadow-sm">
                 <div className="mb-3.5 flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-[0.08em] text-brand">{stage}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.08em] text-brand">{etapa}</span>
                   <span
                     className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary-100 text-secondary"
                     aria-hidden="true"
@@ -32,10 +35,11 @@ export function Ecossistema() {
                     <Icon size={20} />
                   </span>
                 </div>
-                <h3 className="font-heading text-xl font-semibold text-secondary">{name}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-secondary-400">{description}</p>
+                <h3 className="font-heading text-xl font-semibold text-secondary">{nome}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-secondary-400">{descricao}</p>
               </li>
-            ))}
+              );
+            })}
 
             <li className="flex flex-col justify-center rounded-surface bg-surface-dark p-7 sm:col-span-2 lg:col-span-1">
               <p className="font-heading text-[22px] font-semibold leading-snug text-white">

@@ -4,13 +4,16 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
 
-const anecImage = '/images/card-1118-1.jpg';
-
 const ANEC_LINK = 'https://anecbrasil.com.br/certificaco';
 
 const SESSION_KEY = 'anec-popup-shown';
 
-export function AnecPopup() {
+interface AnecPopupProps {
+  /** Imagem já otimizada no build (getImage em BaseLayout). */
+  imagem: { src: string; width: number; height: number };
+}
+
+export function AnecPopup({ imagem }: AnecPopupProps) {
   const [isOpen, setIsOpen] = useState(false);
   useLockBodyScroll(isOpen);
 
@@ -85,10 +88,10 @@ export function AnecPopup() {
             </button>
             <a href={ANEC_LINK} target="_blank" rel="noreferrer" onClick={() => setIsOpen(false)}>
               <img
-                src={anecImage}
+                src={imagem.src}
                 alt="Adquira sua Certificação ANEC com desconto exclusivo da Única Promotora — cupom UNICA20"
-                width={800}
-                height={450}
+                width={imagem.width}
+                height={imagem.height}
                 className="block h-auto w-full"
               />
             </a>

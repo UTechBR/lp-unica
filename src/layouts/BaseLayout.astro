@@ -3,6 +3,8 @@ import { Header } from "../components/Header.tsx";
 import { Footer } from "../components/Footer.tsx";
 import { AnecPopup } from "../components/AnecPopup.tsx";
 import { CookieConsent } from "../components/CookieConsent.tsx";
+import { getImage } from "astro:assets";
+import anecCertificacao from "../assets/campanhas/anec-certificacao.jpg";
 import "../styles/global.css";
 
 interface Props {
@@ -17,6 +19,8 @@ const siteUrl = "https://unicapromotora.com.br";
 const canonicalUrl = `${siteUrl}${currentPath}`;
 // Crawlers de Open Graph/Twitter não resolvem caminhos relativos.
 const ogImageUrl = `${siteUrl}/og-image.jpg`;
+// Ilhas React não usam <Image>: a versão otimizada é gerada aqui e vai por prop.
+const anecImagem = await getImage({ src: anecCertificacao, width: 800, format: "webp" });
 ---
 
 <!doctype html>
@@ -83,7 +87,10 @@ const ogImageUrl = `${siteUrl}/og-image.jpg`;
            página, então o navegador cuida disso nativamente (inclusive rolagem de
            âncora com scroll-margin, sem hook nenhum). -->
       <Header currentPath={currentPath} client:load />
-      <AnecPopup client:idle />
+      <AnecPopup
+        client:idle
+        imagem={{ src: anecImagem.src, width: Number(anecImagem.attributes.width), height: Number(anecImagem.attributes.height) }}
+      />
       <main id="main-content" class="flex-1">
         <slot />
       </main>

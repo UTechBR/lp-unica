@@ -1,0 +1,22 @@
+[
+  {
+    "id": "depoimento-1",
+    "titulo": "Depoimento 1",
+    "capa": "../assets/shorts/depoimento-1.jpg"
+  },
+  {
+    "id": "depoimento-3",
+    "titulo": "Depoimento 2",
+    "capa": "../assets/shorts/depoimento-3.jpg"
+  },
+  {
+    "id": "5-anos-unica-dia-1",
+    "titulo": "5 anos da Única",
+    "capa": "../assets/shorts/5-anos-unica-dia-1.jpg"
+  },
+  {
+    "id": "instagram-1",
+    "titulo": "Vídeo do Instagram",
+    "capa": "../assets/shorts/instagram-1.jpg"
+  }
+]

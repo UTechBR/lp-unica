@@ -1,11 +1,11 @@
 import { ArrowUpRight, ShieldAlert } from 'lucide-react';
 import { Container } from './Container';
-import { footerColumns, legalLinks } from '../data/footer';
-import { socialLinks } from '../data/navigation';
+import { footerColumns, legalLinks } from '../config/rodape';
+import { socialLinks } from '../config/navegacao';
 import type { NavItem } from '../types';
 import { cn } from '../utils/cn';
 
-const logoBranca = '/images/logo-unica-branca.png';
+import logoBranca from '../assets/marca/logo-branca.png';
 const ano = new Date().getFullYear();
 
 const linkCls =
@@ -41,7 +41,13 @@ export function Footer() {
       <Container className="grid grid-cols-2 gap-x-6 gap-y-12 py-16 md:gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr]">
         <div className="col-span-2 lg:col-span-1">
           <a href="/" aria-label="Única Promotora — início" className="inline-block rounded-control">
-            <img src={logoBranca} alt="Única Promotora" width={880} height={890} className="h-16 w-auto" />
+            <img
+              src={logoBranca.src}
+              alt="Única Promotora"
+              width={logoBranca.width}
+              height={logoBranca.height}
+              className="h-16 w-auto"
+            />
           </a>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/70">
             Serviço personalizado que impulsiona o crescimento dos nossos parceiros.

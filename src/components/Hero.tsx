@@ -2,8 +2,9 @@ import { Container } from './Container';
 import { LegacyAnchor } from './LegacyAnchor';
 import { LeadForm } from './LeadForm';
 import { BancosHero } from './BancosHero';
+import type { Banco } from '../types/conteudo';
 
-export function Hero() {
+export function Hero({ bancos }: { bancos: Banco[] }) {
   return (
     <>
       {/* ids antigos: o hero e a antiga seção de bancos, para links já distribuídos */}
@@ -33,7 +34,7 @@ export function Hero() {
             <LeadForm />
           </div>
 
-          <BancosHero />
+          <BancosHero bancos={bancos} />
         </Container>
       </section>
     </>

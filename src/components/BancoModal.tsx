@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ExternalLink, Headset, MessageCircleWarning, Phone, X } from 'lucide-react';
-import type { Banco } from '../types/banco';
+import { ExternalLink, Headset, MessageCircleWarning, X } from 'lucide-react';
+import type { Banco } from '../types/conteudo';
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
 import { WhatsappIcon } from './SocialIcons';
 
-function CanalIcon({ label }: { label: string }) {
-  if (label.toLowerCase().includes('whatsapp')) {
+function CanalIcon({ rotulo }: { rotulo: string }) {
+  if (rotulo.toLowerCase().includes('whatsapp')) {
     return <WhatsappIcon width={18} height={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />;
   }
   return <Headset size={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />;
@@ -109,33 +109,15 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
 
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-center sm:text-left">
               <div className="flex h-24 w-auto max-w-[260px] shrink-0 items-center justify-center rounded-surface border border-white/10 bg-white/5 px-6 py-4 sm:h-28">
-                <img src={banco.logo} alt="" className="h-full w-auto max-w-full object-contain" />
+                <img src={banco.logo.src} alt="" className="h-full w-auto max-w-full object-contain" />
               </div>
               <h2 id="banco-modal-title" className="font-heading text-2xl font-bold text-white">
                 {banco.nome}
               </h2>
             </div>
 
-            {(banco.sac || banco.telefone || banco.ouvidoria) && (
+            {banco.ouvidoria && (
               <dl className="mt-6 grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-2">
-                {banco.sac && (
-                  <div className="flex items-start gap-3">
-                    <Headset size={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-                    <div>
-                      <dt className="text-xs font-bold uppercase tracking-wide text-white/50">SAC</dt>
-                      <dd className="text-sm text-white/85">{banco.sac}</dd>
-                    </div>
-                  </div>
-                )}
-                {banco.telefone && (
-                  <div className="flex items-start gap-3">
-                    <Phone size={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-                    <div>
-                      <dt className="text-xs font-bold uppercase tracking-wide text-white/50">Telefone</dt>
-                      <dd className="text-sm text-white/85">{banco.telefone}</dd>
-                    </div>
-                  </div>
-                )}
                 {banco.ouvidoria && (
                   <div className="flex items-start gap-3">
                     <MessageCircleWarning size={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
@@ -152,10 +134,10 @@ export function BancoModal({ banco, onClose }: BancoModalProps) {
               <div className="mt-6 border-t border-white/10 pt-6">
                 <dl className="grid gap-4 sm:grid-cols-2">
                   {banco.canais.map((canal) => (
-                    <div key={canal.label} className="flex items-start gap-3">
-                      <CanalIcon label={canal.label} />
+                    <div key={canal.rotulo} className="flex items-start gap-3">
+                      <CanalIcon rotulo={canal.rotulo} />
                       <div>
-                        <dt className="text-xs font-bold uppercase tracking-wide text-white/50">{canal.label}</dt>
+                        <dt className="text-xs font-bold uppercase tracking-wide text-white/50">{canal.rotulo}</dt>
                         <dd className="text-sm text-white/85">{canal.valor}</dd>
                       </div>
                     </div>

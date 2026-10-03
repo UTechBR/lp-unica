@@ -2,7 +2,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { Container } from './Container';
 import { AnimatedSection } from './AnimatedSection';
 import { ContatoForm } from './ContatoForm';
-import { companyInfo } from '../data/company';
+import { companyInfo } from '../config/empresa';
 
 const contactInfo = [
   { icon: MapPin, label: 'Endereço', value: companyInfo.address },

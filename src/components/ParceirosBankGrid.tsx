@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Container } from './Container';
 import { SectionHeading } from './SectionHeading';
 import { staggerContainer, staggerItem } from './AnimatedSection';
-import { partnerBanks } from '../data/banks';
+import type { Banco } from '../types/conteudo';
 
-export function ParceirosBankGrid() {
+export function ParceirosBankGrid({ bancos }: { bancos: Banco[] }) {
   return (
     <section className="section-padding">
       <Container>
@@ -21,15 +21,15 @@ export function ParceirosBankGrid() {
           viewport={{ once: true, amount: 0.15 }}
           className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
         >
-          {partnerBanks.map((bank) => (
+          {bancos.map((bank) => (
             <motion.div
-              key={bank.name}
+              key={bank.id}
               variants={staggerItem}
               whileHover={{ y: -4 }}
               className="flex h-24 flex-col items-center justify-center gap-2 rounded-surface border border-surface-border bg-secondary p-4 text-center shadow-soft transition-shadow hover:shadow-card"
             >
-              <img src={bank.logo} alt={bank.name} className="max-h-10 w-auto max-w-[110px] object-contain" />
-              <span className="text-[11px] text-white/60">{bank.name}</span>
+              <img src={bank.logo.src} alt={bank.nome} className="max-h-10 w-auto max-w-[110px] object-contain" />
+              <span className="text-[11px] text-white/60">{bank.nome}</span>
             </motion.div>
           ))}
         </motion.div>

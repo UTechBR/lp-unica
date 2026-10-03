@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, X } from 'lucide-react';
-import { POLICY_URLS } from '../data/navigation';
+import { documentos } from '../config/documentos';
 import { cn } from '../utils/cn';
 
-const logo = '/images/cropped-unica-favicon.png';
+import simbolo from '../assets/marca/simbolo.png';
 
 const STORAGE_KEY = 'cmplz_consent';
 
@@ -107,7 +107,7 @@ export function CookieConsent() {
             className="fixed bottom-[90px] right-[105px] z-[110] w-[calc(100vw-2rem)] max-w-[380px] overflow-hidden rounded-surface bg-white text-secondary shadow-card max-sm:bottom-[90px] max-sm:right-4"
           >
             <div className="flex items-center gap-3 px-4 pt-4">
-              <img src={logo} alt="Única Promotora" width={28} height={28} className="h-7 w-7 shrink-0 rounded" />
+              <img src={simbolo.src} alt="Única Promotora" width={28} height={28} className="h-7 w-7 shrink-0 rounded" />
               <h2 className="flex-1 text-sm font-bold text-secondary">Gerenciar Consentimento de Cookies</h2>
               <button
                 type="button"
@@ -217,7 +217,7 @@ export function CookieConsent() {
               <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
                 <li>
                   <a
-                    href={POLICY_URLS.cookies}
+                    href={documentos.cookies.href}
                     target="_blank"
                     rel="noreferrer"
                     className="text-secondary-300 underline hover:text-primary"
@@ -227,7 +227,7 @@ export function CookieConsent() {
                 </li>
                 <li>
                   <a
-                    href={POLICY_URLS.privacidade}
+                    href={documentos.privacidade.href}
                     target="_blank"
                     rel="noreferrer"
                     className="text-secondary-300 underline hover:text-primary"
