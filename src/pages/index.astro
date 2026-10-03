@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Hero } from '../components/Hero.tsx';
-import { MissionVisionValues } from '../components/MissionVisionValues.tsx';
+import { SobreSection } from '../components/SobreSection.tsx';
 import { UnicaShorts } from '../components/UnicaShorts.tsx';
 import { Ecossistema } from '../components/Ecossistema.tsx';
 import { ProductsSection } from '../components/ProductsSection.tsx';
@@ -29,8 +29,8 @@ import { FinalCta } from '../components/FinalCta.tsx';
   <!-- Sem client:*: cards estáticos, sem animação de entrada. -->
   <Ecossistema />
 
-  <!-- Sem client:*: zero JavaScript — mesmo componente estático do piloto da Sobre. -->
-  <MissionVisionValues />
+  <!-- Sem client:*: zero JavaScript. Versão condensada; /sobre usa MissionVisionValues. -->
+  <SobreSection />
 
   <!-- Hidratada: clique pra abrir vídeo em modal + ESC pra fechar. -->
   <UnicaShorts client:visible />

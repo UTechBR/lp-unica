@@ -34,6 +34,18 @@ export const values: ValueItem[] = [
   },
 ];
 
+// Versão condensada para a Home (a página /sobre usa mission, vision e values
+// completos). Derivada dos textos oficiais: validar com quem responde pela marca.
+export const homePositioning =
+  'Prestamos um serviço personalizado que impulsiona o crescimento dos nossos parceiros, com transparência e relações sólidas e duradouras com o mercado.';
+
+export const valueHighlights: ValueItem[] = [
+  { title: 'Integridade', description: 'Ética e transparência em cada operação.', icon: Award },
+  { title: 'Agilidade', description: 'Prontos para as mudanças do mercado.', icon: Target },
+  { title: 'Incentivo', description: 'Foco no crescimento de quem está com a gente.', icon: HandHeart },
+  { title: 'Trabalho em equipe', description: 'Colaboração e respeito em tudo o que fazemos.', icon: Users },
+];
+
 export const companyInfo = {
   legalName: 'Única Promotora',
   address: 'R. Rio de Janeiro, 600 – Sala 401 a 408 - Centro, Belo Horizonte - MG, 30160-041',
