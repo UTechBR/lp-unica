@@ -91,6 +91,7 @@ Substitua o PDF em `public/documentos/` mantendo o nome do arquivo, porque há l
 - **Imagens no código:**
   - Em componentes `.astro`, use `<Image src={…} widths={[…]} sizes="…" />` de `astro:assets`.
   - Em ilhas React, gere a versão otimizada com `getImage()` na página ou no layout e passe por prop (veja `AnecPopup` em `BaseLayout.astro`).
+  - Ao passar itens de conteúdo com imagem para uma ilha React (`client:*`), use `paraIlha(itens)` de `src/lib/conteudo.ts`. Um SVG importado é um componente, não um objeto, e sem essa conversão a ilha inteira deixa de funcionar. No hero, isso derrubaria também o formulário.
   - Logos pequenos podem ser importados direto (`import logo from '../assets/marca/logo-branca.png'` e `logo.src`).
 
 ## Fora desta biblioteca

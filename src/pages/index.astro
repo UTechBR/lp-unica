@@ -6,7 +6,7 @@ import Shorts from '../components/Shorts.astro';
 import { Ecossistema } from '../components/Ecossistema.tsx';
 import { ProductsSection } from '../components/ProductsSection.tsx';
 import { FinalCta } from '../components/FinalCta.tsx';
-import { listar } from '../lib/conteudo';
+import { listar, paraIlha } from '../lib/conteudo';
 
 const [bancos, categorias, ferramentas] = await Promise.all([
   listar('bancos'),
@@ -25,7 +25,7 @@ const [bancos, categorias, ferramentas] = await Promise.all([
   <!-- Hidratada logo (client:load): é o formulário de lead, o objetivo comercial
        principal do site — precisa estar interativo assim que a página carrega,
        sem esperar entrar na viewport (já está visível de cara). -->
-  <Hero client:load bancos={bancos} />
+  <Hero client:load bancos={paraIlha(bancos)} />
   <!-- Sem JS a grade de bancos não é embaralhada; mostra na ordem do arquivo. -->
   <noscript><style>.bancos-hero-grid { opacity: 1 !important; }</style></noscript>
 
