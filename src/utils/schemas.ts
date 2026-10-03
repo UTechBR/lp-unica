@@ -2,6 +2,9 @@ import { z } from 'zod';
 import { brazilianStates } from '../types';
 import { unmaskDigits } from './masks';
 
+/** Mínimo de caracteres de toda área de texto dos formulários (contador no TextArea). */
+export const MIN_TEXTO = 50;
+
 // Mensagens de erro: o mesmo texto para o mesmo tipo de erro em todos os formulários.
 export const msg = {
   nome: 'Informe seu nome completo',
@@ -57,7 +60,7 @@ export const contactFormSchema = z.object({
     contatoAssuntos.map((a) => a.valor) as [ContatoAssunto, ...ContatoAssunto[]],
     { message: msg.selecione('o assunto') },
   ),
-  message: z.string().trim().min(10, msg.minimo(10)).max(1000, msg.maximo(1000)),
+  message: z.string().trim().min(MIN_TEXTO, msg.minimo(MIN_TEXTO)).max(1000, msg.maximo(1000)),
   consent: z.literal(true, { message: msg.consentimento }),
 });
 
@@ -74,7 +77,7 @@ export const ouvidoriaFormSchema = z.object({
   tipo: z.enum(ouvidoriaTipos, { message: msg.selecione('o tipo de manifestação') }),
   /** Nome do banco (bancos.json) ou vazio; opcional. */
   banco: z.string().optional(),
-  message: z.string().trim().min(20, msg.minimo(20)).max(2000, msg.maximo(2000)),
+  message: z.string().trim().min(MIN_TEXTO, msg.minimo(MIN_TEXTO)).max(2000, msg.maximo(2000)),
 });
 
 export type OuvidoriaFormData = z.infer<typeof ouvidoriaFormSchema>;
@@ -101,7 +104,7 @@ export const denunciaAnexos = {
 } as const;
 
 const categoryField = z.enum(denuncieCategories, { message: msg.selecione('a categoria') });
-const descriptionField = z.string().trim().min(20, msg.minimo(20)).max(3000, msg.maximo(3000));
+const descriptionField = z.string().trim().min(MIN_TEXTO, msg.minimo(MIN_TEXTO)).max(3000, msg.maximo(3000));
 
 // Identificação só é exigida quando a denúncia não é anônima. Todas as regras ficam no
 // superRefine, que o zod só executa se o objeto-base for válido: assim todos os erros

@@ -8,7 +8,8 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   error?: string;
   options: { label: string; value: string }[];
-  placeholder?: string;
+  /** Obrigatório no padrão: "Selecione" (ou equivalente curto). */
+  placeholder: string;
   optional?: boolean;
 }
 
@@ -32,11 +33,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             className={cn(controleCls, alturaCls, 'appearance-none pr-10', className)}
             {...rest}
           >
-            {placeholder && (
-              <option value="" disabled>
-                {placeholder}
-              </option>
-            )}
+            <option value="" disabled>
+              {placeholder}
+            </option>
             {options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}

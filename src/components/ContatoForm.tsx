@@ -13,7 +13,7 @@ import {
   mensagemDeErro,
 } from './form/Envio';
 import { formCls } from './form/estilos';
-import { contactFormSchema, contatoAssuntos } from '../utils/schemas';
+import { MIN_TEXTO, contactFormSchema, contatoAssuntos } from '../utils/schemas';
 import type { ContactFormData, ContatoAssunto } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
 import { submitContact } from '../services/leadService';
@@ -106,11 +106,12 @@ export function ContatoForm() {
             </p>
           )}
 
-          <Input id="contato-nome" label="Nome completo" autoComplete="name" error={errors.name?.message} {...register('name')} />
+          <Input id="contato-nome" label="Nome completo" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />
           <div className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
             <Input
               id="contato-email"
               label="E-mail"
+              placeholder="nome@exemplo.com"
               type="email"
               autoComplete="email"
               error={errors.email?.message}
@@ -135,7 +136,15 @@ export function ContatoForm() {
               )}
             />
           </div>
-          <TextArea id="contato-mensagem" label="Mensagem" rows={5} error={errors.message?.message} {...register('message')} />
+          <TextArea
+            id="contato-mensagem"
+            label="Mensagem"
+            placeholder="Conte como podemos ajudar"
+            minChars={MIN_TEXTO}
+            maxChars={1000}
+            error={errors.message?.message}
+            {...register('message')}
+          />
 
           <Consentimento id="contato-consent" error={errors.consent?.message} {...register('consent')}>
             Autorizo a Única Promotora a usar estes dados para responder ao meu contato, conforme a <LinkPrivacidade />.

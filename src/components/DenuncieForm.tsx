@@ -14,7 +14,7 @@ import {
   mensagemDeErro,
 } from './form/Envio';
 import { ajudaCls, campoWrapCls, erroCls, formCls, opcionalCls, rotuloCls } from './form/estilos';
-import { denunciaAnexos, denuncieCategories, denuncieFormSchema } from '../utils/schemas';
+import { MIN_TEXTO, denunciaAnexos, denuncieCategories, denuncieFormSchema } from '../utils/schemas';
 import type { DenuncieFormData } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
 import { submitDenuncia } from '../services/leadService';
@@ -83,11 +83,12 @@ export function DenuncieForm() {
         <fieldset className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
           <legend className="sr-only">Identificação</legend>
           <div className="sm:col-span-2">
-            <Input id="denuncie-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
+            <Input id="denuncie-nome" label="Nome" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />
           </div>
           <Input
             id="denuncie-email"
             label="E-mail"
+            placeholder="nome@exemplo.com"
             type="email"
             autoComplete="email"
             error={errors.email?.message}
@@ -134,8 +135,9 @@ export function DenuncieForm() {
       <TextArea
         id="denuncie-mensagem"
         label="Mensagem"
-        rows={5}
-        placeholder="Descreva os fatos com o máximo de detalhes"
+        placeholder="Descreva os fatos com o máximo de detalhes: o que, quando, onde e quem"
+        minChars={MIN_TEXTO}
+        maxChars={3000}
         error={errors.description?.message}
         {...register('description')}
       />

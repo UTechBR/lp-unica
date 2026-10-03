@@ -6,6 +6,11 @@
 // Comportamento (para um formulário novo, siga LeadForm ou ContatoForm):
 // - Campos: Input, Select e TextArea. Todo campo é obrigatório; só os opcionais são
 //   sinalizados, com `optional` ("(opcional)" no rótulo). Não há asterisco nem aviso geral.
+// - Placeholder em todo campo (obrigatório nos componentes): exemplo do formato nos campos
+//   de dado ("Maria Silva", "nome@exemplo.com", "(31) 99999-9999"), "Selecione" nas listas
+//   e uma instrução nas áreas de texto.
+// - Área de texto: mínimo de MIN_TEXTO (50) caracteres, com contador abaixo à direita
+//   (n/50 até o mínimo; depois n/máximo).
 // - Validação: zod + react-hook-form, só no envio; depois revalida ao digitar. Todos os
 //   erros aparecem juntos e o foco vai ao primeiro (em Controller, passe ref={field.ref}).
 // - Mensagens de erro: sempre de `msg` em utils/schemas.ts.

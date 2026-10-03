@@ -32,7 +32,7 @@ export function LeadForm() {
     formState: { errors, isSubmitting },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
-    defaultValues: { name: '', phone: '', email: '', city: '', state: undefined, consent: false },
+    defaultValues: { name: '', phone: '', email: '', city: '', state: undefined, consent: undefined },
   });
 
   const onSubmit = async (data: LeadFormData) => {
@@ -56,7 +56,7 @@ export function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
-      <Input id="lead-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
+      <Input id="lead-nome" label="Nome" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />
 
       <Controller
         control={control}
@@ -77,10 +77,10 @@ export function LeadForm() {
         )}
       />
 
-      <Input id="lead-email" label="E-mail" type="email" autoComplete="email" error={errors.email?.message} {...register('email')} />
+      <Input id="lead-email" label="E-mail" placeholder="nome@exemplo.com" type="email" autoComplete="email" error={errors.email?.message} {...register('email')} />
 
       <div className="grid grid-cols-[minmax(0,1fr)_96px] gap-3">
-        <Input id="lead-cidade" label="Cidade" autoComplete="address-level2" error={errors.city?.message} {...register('city')} />
+        <Input id="lead-cidade" label="Cidade" placeholder="Belo Horizonte" autoComplete="address-level2" error={errors.city?.message} {...register('city')} />
         <Controller
           control={control}
           name="state"

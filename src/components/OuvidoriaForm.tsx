@@ -6,7 +6,7 @@ import { Select } from './Select';
 import { TextArea } from './TextArea';
 import { AvisoPrivacidade, BotaoEnviar, ErroEnvio, LinkPrivacidade, SucessoEnvio, mensagemDeErro } from './form/Envio';
 import { formCls } from './form/estilos';
-import { ouvidoriaFormSchema, ouvidoriaTipos } from '../utils/schemas';
+import { MIN_TEXTO, ouvidoriaFormSchema, ouvidoriaTipos } from '../utils/schemas';
 import type { OuvidoriaFormData } from '../utils/schemas';
 import { maskPhone } from '../utils/masks';
 import { submitOuvidoria } from '../services/leadService';
@@ -60,11 +60,12 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={formCls}>
       <div className="grid grid-cols-1 gap-x-3 sm:grid-cols-2">
         <div className="sm:col-span-2">
-          <Input id="ouvidoria-nome" label="Nome" autoComplete="name" error={errors.name?.message} {...register('name')} />
+          <Input id="ouvidoria-nome" label="Nome" placeholder="Maria Silva" autoComplete="name" error={errors.name?.message} {...register('name')} />
         </div>
         <Input
           id="ouvidoria-email"
           label="E-mail"
+          placeholder="nome@exemplo.com"
           type="email"
           autoComplete="email"
           error={errors.email?.message}
@@ -128,8 +129,9 @@ export function OuvidoriaForm({ bancos }: { bancos: string[] }) {
       <TextArea
         id="ouvidoria-mensagem"
         label="Mensagem"
-        rows={5}
         placeholder="Conte o que aconteceu, com datas e números de protocolos anteriores, se tiver"
+        minChars={MIN_TEXTO}
+        maxChars={2000}
         error={errors.message?.message}
         {...register('message')}
       />

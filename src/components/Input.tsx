@@ -5,6 +5,8 @@ import { alturaCls, ajudaCls, campoWrapCls, controleCls, erroCls, opcionalCls, r
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  /** Obrigatório no padrão: um exemplo do formato esperado (ex.: "nome@exemplo.com"). */
+  placeholder: string;
   error?: string;
   hint?: string;
   /** Mostra "(opcional)" no rótulo. Sem isso, o campo é tratado como obrigatório. */
