@@ -1,0 +1,174 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+// Vídeos servidos do próprio site (public/videos/), como os PDFs em public/assets_docs,
+// para não depender do WordPress antigo. Para cada vídeo, coloque <arquivo>.mp4
+// (H.264, necessário no iPhone) e, se possível, <arquivo>.webm (mais leve).
+// Cards sem nenhum dos dois arquivos não aparecem; sem nenhum vídeo, a seção some.
+const fontes = [
+  { capa: '/images/CAPA-VIDEO.-01.jpg.jpeg', arquivo: 'depoimento-1', titulo: 'Depoimento 1' },
+  { capa: '/images/CAPA-VIDEO.-02.jpg.jpeg', arquivo: 'depoimento-3', titulo: 'Depoimento 2' },
+  { capa: '/images/CAPA-VIDEO.-03.jpg.jpeg', arquivo: '5-anos-unica-dia-1', titulo: '5 anos da Única' },
+  { capa: '/images/CAPA-VIDEO.-04.jpg.jpeg', arquivo: 'instagram-1', titulo: 'Vídeo do Instagram' },
+];
+
+const publicDir = join(process.cwd(), 'public');
+const existe = (caminho: string) => existsSync(join(publicDir, caminho));
+
+const videos = fontes
+  .map((v) => {
+    const mp4 = `/videos/${v.arquivo}.mp4`;
+    const webm = `/videos/${v.arquivo}.webm`;
+    return { ...v, mp4: existe(mp4) ? mp4 : '', webm: existe(webm) ? webm : '' };
+  })
+  .filter((v) => v.mp4 || v.webm);
+
+const instagram = 'https://instagram.com/unicapromotora/';
+---
+
+{videos.length > 0 && (
+  <>
+    <span id="blog" class="block scroll-mt-20" aria-hidden="true"></span>
+    <section id="shorts" class="scroll-mt-20 bg-white py-16 md:py-24">
+      <div class="container-app">
+        <header class="mx-auto max-w-2xl text-center">
+          <h2 class="font-heading text-[clamp(2rem,1.5rem+3vw,3.5rem)] leading-tight text-secondary">
+            <span class="font-light">Única</span> <strong class="font-bold">shorts</strong>
+          </h2>
+          <p class="mt-4 text-lg text-secondary-400">Depoimentos, eventos e bastidores de quem cresce com a Única.</p>
+        </header>
+
+        <ul class="mt-12 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+          {videos.map((v) => (
+            <li>
+              <button
+                type="button"
+                class="shorts-card group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-secondary"
+                data-mp4={v.mp4}
+                data-webm={v.webm}
+                data-poster={v.capa}
+                aria-label={`Assistir: ${v.titulo}`}
+              >
+                <img
+                  src={v.capa}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover brightness-[.85] grayscale transition duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0 group-focus-visible:brightness-100 group-focus-visible:grayscale-0"
+                />
+                <!-- Duotone vermelho suave (ver regra no guia): só em seção clara; hover/foco revelam a foto. -->
+                <span
+                  class="absolute inset-0 bg-brand opacity-[.55] mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 group-focus-visible:opacity-0"
+                  aria-hidden="true"
+                ></span>
+                <span class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                  <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white text-brand shadow-md transition-transform group-hover:scale-110">
+                    <svg viewBox="0 0 24 24" class="ml-0.5 h-6 w-6" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 flex justify-center">
+          <a
+            href={instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 text-base text-secondary hover:text-black"
+          >
+            <span class="h-px w-8 bg-secondary" aria-hidden="true"></span>
+            Ver mais no Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- <dialog> nativo: fica na camada superior (acima do chat), fecha com Esc,
+           prende o foco e o devolve ao fechar. -->
+      <dialog id="shorts-dialog" class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85" aria-label="Vídeo">
+        <div class="flex flex-col items-center gap-4">
+          <div class="aspect-[9/16] h-[min(78vh,720px)] overflow-hidden rounded-lg bg-black shadow-2xl">
+            <video class="h-full w-full object-cover" controls playsinline preload="none"></video>
+          </div>
+          <a
+            href={instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 text-[15px] text-white/90 hover:text-white"
+          >
+            <span class="h-px w-6 bg-white" aria-hidden="true"></span>
+            Ver mais no Instagram
+          </a>
+        </div>
+        <button
+          type="button"
+          class="shorts-close fixed right-6 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-2xl text-white hover:bg-white/20"
+          aria-label="Fechar vídeo"
+        >
+          ×
+        </button>
+      </dialog>
+    </section>
+  </>
+)}
+
+<style>
+  /* Trava a rolagem do fundo enquanto o vídeo está aberto. */
+  :global(html:has(#shorts-dialog[open])) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('shorts-dialog') as HTMLDialogElement | null;
+
+  if (dialog) {
+    const video = dialog.querySelector('video')!;
+    let origem: HTMLElement | null = null;
+
+    document.querySelectorAll<HTMLButtonElement>('.shorts-card').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        origem = btn;
+        video.poster = btn.dataset.poster ?? '';
+        // Vídeo só começa a baixar ao abrir (preload="none" + fonte injetada aqui).
+        video.replaceChildren();
+        for (const [src, type] of [
+          [btn.dataset.webm, 'video/webm'],
+          [btn.dataset.mp4, 'video/mp4'],
+        ]) {
+          if (!src) continue;
+          const source = document.createElement('source');
+          source.src = src;
+          source.type = type!;
+          video.append(source);
+        }
+        video.load();
+        dialog.showModal();
+        video.play().catch(() => {}); // autoplay pode ser bloqueado; poster e controles seguem visíveis
+      });
+    });
+
+    // Idempotente: roda no fechamento direto e de novo no evento 'close' (Esc).
+    const limpar = () => {
+      if (!video.firstChild) return;
+      video.pause();
+      video.replaceChildren();
+      video.removeAttribute('poster');
+      video.load(); // interrompe o download em andamento
+      origem?.focus();
+    };
+    const fechar = () => {
+      dialog.close();
+      limpar();
+    };
+
+    dialog.querySelector('.shorts-close')!.addEventListener('click', fechar);
+    // Clique no fundo: o alvo é o próprio <dialog>, não o conteúdo.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) fechar();
+    });
+    dialog.addEventListener('close', limpar);
+  }
+</script>

@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Hero } from '../components/Hero.tsx';
 import { SobreSection } from '../components/SobreSection.tsx';
-import { UnicaShorts } from '../components/UnicaShorts.tsx';
+import Shorts from '../components/Shorts.astro';
 import { Ecossistema } from '../components/Ecossistema.tsx';
 import { ProductsSection } from '../components/ProductsSection.tsx';
 import { FinalCta } from '../components/FinalCta.tsx';
@@ -32,8 +32,8 @@ import { FinalCta } from '../components/FinalCta.tsx';
   <!-- Sem client:*: zero JavaScript. Versão condensada; /sobre usa MissionVisionValues. -->
   <SobreSection />
 
-  <!-- Hidratada: clique pra abrir vídeo em modal + ESC pra fechar. -->
-  <UnicaShorts client:visible />
+  <!-- Sem React: <dialog> nativo + script pequeno. Só aparece com vídeos em public/videos/. -->
+  <Shorts />
 
   <!-- Sem client:*: só uma âncora de volta ao formulário. -->
   <FinalCta />
