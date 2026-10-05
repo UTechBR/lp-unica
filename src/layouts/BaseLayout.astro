@@ -86,8 +86,7 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
       <AnecPopup client:idle />
       <CookieConsent client:idle />
     </div>
-    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"
-    ></script>
+    <script is:inline src="https://unpkg.com/blip-chat-widget" type="text/javascript"></script>
     <style>
       @keyframes cookie-consent-pulse {
         0% {
@@ -109,20 +108,15 @@ const canonicalUrl = `https://unicapromotora.com.br${currentPath}`;
         }
       }
     </style>
-    <script>
+    <script is:inline>
       (function () {
-        window.addEventListener("load", function () {
-          const blipChat = new BlipChat()
-            .withAppKey(
-              "dW5pY2FwYXJjZWlybzFwcmQ6NjAxNDJkOWQtMGM2OS00NzA3LTgzNjUtZmMzZGFlY2FlMjM1",
-            )
-            .withButton({
-              color: "#e50e0a",
-              icon: "https://blipmediastore.blob.core.windows.net/permanent/Media_4_59b1da4c-a9f3-4f9b-a9d5-7d1e8cd4b739",
-            })
-            .withCustomCommonUrl("https://unicapromotora.chat.blip.ai/");
-          blipChat.build();
-        });
+        window.onload = function () {
+          new BlipChat()
+            .withAppKey('dW5pY2FwYXJjZWlybzFwcmQ6NjAxNDJkOWQtMGM2OS00NzA3LTgzNjUtZmMzZGFlY2FlMjM1')
+            .withButton({"color":"#e50e0a","icon":"https://blipmediastore.blob.core.windows.net/permanent/Media_4_59b1da4c-a9f3-4f9b-a9d5-7d1e8cd4b739"})
+            .withCustomCommonUrl('https://unicapromotora.chat.blip.ai/')
+            .build();
+        }
       })();
     </script>
   </body>
